@@ -9,7 +9,7 @@
 yarn install
 
 # Step 1 : 실행
-yarn dev
+yarn start
 ```
 
 ## Tech Stack !
