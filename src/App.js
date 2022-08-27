@@ -18,14 +18,12 @@ function App() {
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
 
-
       <Header />
-      <NavBar/>
+      <NavBar />
 
       <button onClick={modalClose}>모달 테스트</button>
       {modalOpen && <Modal modalClose={modalClose}></Modal>}
     </ThemeProvider>
-
   );
 }
 
