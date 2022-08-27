@@ -1,18 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { ReactComponent as Like } from '../images/like.svg';
 import Modal from './Modal';
-// import Axios from '../lib/axios';
+import Axios from '../lib/axios';
 import { TitleAtom } from '../atoms/TitleAtom';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
+
   const modalClose = () => {
     setModalOpen(!modalOpen);
+    fetchList();
   };
 
-  const { name } = useRecoilValue(TitleAtom);
+  const { name, id } = useRecoilValue(TitleAtom);
+  const [items, setItems] = useState([]);
+
+  const like = async (itemId) => {
+    try {
+      await Axios.post(`/item/${itemId}/like`);
+      fetchList();
+    } catch {
+      await dislike(itemId);
+    }
+  };
+
+  const dislike = async (itemId) => {
+    try {
+      await Axios.delete(`/item/${itemId}/like`);
+      fetchList();
+    } catch {
+      console.log('여기에선 진짜 서버에 문제가 있는거고');
+    }
+  };
+
+  const fetchList = async () => {
+    try {
+      const res = await Axios.get(`/item/items/recent?categoryId=${id}`);
+      setItems(res.data.items);
+      console.log(res.data.items);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (id !== '') {
+      fetchList();
+    }
+  }, [id]);
 
   return (
     <ListWrapper>
@@ -24,13 +61,17 @@ const List = () => {
       </Header>
       <ListBox>
         <ListBoxWrapper>
-          <ListItemBox>
-            <ListItem>dsds</ListItem>
-          </ListItemBox>
-          <LikeBox>
-            <Like />
-            <LikeNum>123</LikeNum>
-          </LikeBox>
+          {items.map((item, index) => (
+            <div key={index}>
+              <ListItemBox>
+                <ListItem>{item.name}</ListItem>
+              </ListItemBox>
+              <LikeBox>
+                <Like onClick={() => like(item._id)} />
+                <LikeNum>{item.likeCount}</LikeNum>
+              </LikeBox>
+            </div>
+          ))}
         </ListBoxWrapper>
         <Button onClick={modalClose}>추가하기</Button>
         {modalOpen && <Modal modalClose={modalClose}></Modal>}
