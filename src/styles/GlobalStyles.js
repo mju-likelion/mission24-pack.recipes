@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
     *{
         body{
             margin : 0;
+            color : #424242;
         }
         font-family: 'locus_sangsang';
     }

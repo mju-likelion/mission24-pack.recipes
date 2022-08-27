@@ -12,12 +12,10 @@ import NavBar from './components/NavBar';
 
 import Header from './components/Header';
 import 'normalize.css';
-import { ThemeProvider } from 'styled-components';
-import { defaultTheme } from './styles/theme';
 import Footer from './component/footer';
 
-import Modal from './components/Modal';
-import { useState } from 'react';
+//import Modal from './components/Modal';
+//import { useState } from 'react';
 
 function App() {
   return (
