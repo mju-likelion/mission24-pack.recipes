@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ReactComponent as Logo } from '../../images/logo.svg';
 
 const Header = () => {
   return (
     <>
       <HeaderWrapper>
-        <Logo>잘챙기짐! </Logo>
+        <LogoBox>잘챙기짐! </LogoBox>
         {/* <div>
           <Button onClick={() => {}}>로그인</Button>|
           <Button onClick={() => {}}>회원가입</Button>
@@ -23,10 +24,8 @@ const HeaderWrapper = styled.header`
   padding: 0px 65px;
 `;
 
-const Logo = styled.div`
+const LogoBox = styled(Logo)`
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: 24px;
 `;
 
 // const Button = styled.button`
