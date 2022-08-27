@@ -6,10 +6,10 @@ const Header = () => {
     <>
       <HeaderWrapper>
         <Logo>잘챙기짐! </Logo>
-        <div>
+        {/* <div>
           <Button onClick={() => {}}>로그인</Button>|
           <Button onClick={() => {}}>회원가입</Button>
-        </div>
+        </div> */}
       </HeaderWrapper>
     </>
   );
@@ -29,11 +29,11 @@ const Logo = styled.div`
   font-size: 24px;
 `;
 
-const Button = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-`;
+// const Button = styled.button`
+//   background: none;
+//   border: none;
+//   cursor: pointer;
+//   font-size: 14px;
+// `;
 
 export default Header;
