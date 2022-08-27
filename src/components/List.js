@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { ReactComponent as Like } from '../images/like.svg';
 import Modal from './Modal';
+// import Axios from '../lib/axios';
+import { TitleAtom } from '../atoms/TitleAtom';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -9,17 +12,14 @@ const List = () => {
     setModalOpen(!modalOpen);
   };
 
-  useEffect(() => {
-    //axios예정
-  }, []);
+  const { name } = useRecoilValue(TitleAtom);
 
   return (
     <ListWrapper>
       <Header>
-        TITLE
+        {name}
         <SortDiv>
-          <button onClick={() => {}}>최신순</button> |
-          <button onClick={() => {}}>인기순</button>
+          <button>최신순</button> |<button>인기순</button>
         </SortDiv>
       </Header>
       <ListBox>
@@ -29,7 +29,7 @@ const List = () => {
           </ListItemBox>
           <LikeBox>
             <Like />
-            <LikeNum></LikeNum>
+            <LikeNum>123</LikeNum>
           </LikeBox>
         </ListBoxWrapper>
         <Button onClick={modalClose}>추가하기</Button>
