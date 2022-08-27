@@ -1,11 +1,36 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as OutButton } from '../images/outButton.svg';
+import Axios from '../lib/axios';
+
 const Modal = ({ modalClose }) => {
   const [listNumber, setListNumber] = useState([0]);
-  const Adding = () => {
+  const [itemName, setItemName] = useState(['']);
+
+  const ListAdding = () => {
     alert('눌림');
     setListNumber((prev) => [...prev, 0]);
+    setItemName((prev) => [...prev, '']);
+  };
+
+  const TextHandle = (index, text) => {
+    setItemName((prev) => {
+      const arr = [...prev];
+      arr[index] = text;
+
+      return arr;
+    });
+  };
+
+  const ItemAdding = async () => {
+    for (const item of itemName) {
+      await Axios.post('/item', {
+        categoryId: '630a2982cb5ee1489f13e626',
+        name: item,
+      });
+      // console.log(resp.request);
+      modalClose();
+    }
   };
 
   return (
@@ -16,14 +41,17 @@ const Modal = ({ modalClose }) => {
       <ListWrapper>
         {listNumber.map((_, index) => (
           <div key={index}>
-            <ListText />
+            <ListText
+              onChange={(e) => TextHandle(index, e.target.value)}
+              value={itemName[index]}
+            />
             <ListLine />
           </div>
         ))}
       </ListWrapper>
 
-      <PlusButton onClick={Adding}>+</PlusButton>
-      <AddButton>추가하기</AddButton>
+      <PlusButton onClick={ListAdding}>+</PlusButton>
+      <AddButton onClick={ItemAdding}>추가하기</AddButton>
     </ModalWrapper>
   );
 };
