@@ -8,7 +8,6 @@ const Modal = ({ modalClose }) => {
   const [itemName, setItemName] = useState(['']);
 
   const ListAdding = () => {
-    alert('눌림');
     setListNumber((prev) => [...prev, 0]);
     setItemName((prev) => [...prev, '']);
   };
@@ -57,9 +56,10 @@ const Modal = ({ modalClose }) => {
 };
 
 const ModalWrapper = styled.div`
-  position: absolute;
-  left: 447px;
-  top: 309px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   width: 560px;
   height: auto;
