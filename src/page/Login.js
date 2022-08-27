@@ -16,6 +16,8 @@ const LoginPage = function () {
     try {
       const resp = await Axios.post('/user', { email: id, password: password });
       console.log(resp.data);
+
+      Axios.defaults.headers.Authorization = `Bearer ${resp.data.token}`;
     } catch (e) {
       const errorCode = e.response.data.errorCode;
 

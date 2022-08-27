@@ -23,11 +23,31 @@ function App() {
       <GlobalStyle />
 
       <Header />
-      <NavBar />
       <Routes>
-        <Route path='/' />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
+        <Route
+          path='/'
+          element={
+            <>
+              <NavBar />
+            </>
+          }
+        />
+        <Route
+          path='/login'
+          element={
+            <>
+              <LoginPage />
+            </>
+          }
+        />
+        <Route
+          path='/register'
+          element={
+            <>
+              <RegisterPage />
+            </>
+          }
+        />
       </Routes>
       <Toast />
       <Footer />
