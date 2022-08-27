@@ -12,29 +12,25 @@ import NavBar from './components/NavBar';
 
 import Header from './components/Header';
 import 'normalize.css';
-import { ThemeProvider } from 'styled-components';
-import { defaultTheme } from './styles/theme';
 import Footer from './component/footer';
 
-import Modal from './components/Modal';
-import { useState } from 'react';
+// import Modal from './components/Modal';
+// import { useState } from 'react';
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
 
+      <Header />
+      <NavBar />
       <Routes>
         <Route path='/' />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
       </Routes>
       <Toast />
-
-      <Header />
       <Footer />
-
-      <NavBar />
     </ThemeProvider>
   );
 }

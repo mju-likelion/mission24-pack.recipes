@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import useToast from '../hook/useToast';
-import { ReactComponent as Logo } from '../images/logo.svg';
 import Axios from '../lib/axios';
 
 const LoginPage = function () {
@@ -31,28 +30,37 @@ const LoginPage = function () {
   return (
     <>
       <LoginContainer>
-        <StyledLogo />
-        <IdInput type={'text'} value={id} onChange={idHandle} id='id' />
+        <Title>로그인</Title>
+        <IdInput
+          placeholder='아이디'
+          type={'text'}
+          value={id}
+          onChange={idHandle}
+          id='id'
+        />
         <PasswordInput
+          placeholder='비밀번호'
           type={'text'}
           value={password}
           onChange={passwordHandle}
           id='password'
         />
-        <LoginButton onClick={loginHandle}>로그인</LoginButton>
+        <LoginButton onClick={loginHandle}>로그인하기</LoginButton>
         <RegisterButton>회원가입</RegisterButton>
       </LoginContainer>
     </>
   );
 };
 
-const StyledLogo = styled(Logo)`
-  margin-bottom: 24px;
+const Title = styled.div`
+  font-size: 40px;
+  padding: 10px;
+  margin-bottom: 20px;
 `;
 
 const LoginButton = styled.button`
-  width: 396px;
-  height: 67px;
+  width: 390px;
+  height: 70px;
 
   margin-top: 39px;
   font-size: 34px;
@@ -60,11 +68,13 @@ const LoginButton = styled.button`
   background-color: #d9d9d9;
   border: none;
   color: white;
+
+  border-radius: 30px;
 `;
 
 const RegisterButton = styled.button`
   margin-top: 19px;
-  font-size: 24px;
+  font-size: 18px;
 
   background: none;
   border: none;
@@ -76,7 +86,8 @@ const LoginContainer = styled.div`
   flex-direction: column;
 
   width: 100%;
-  height: 100vh;
+  margin-top: 50px;
+  margin-bottom: 30px;
 
   justify-content: center;
   align-items: center;
@@ -89,6 +100,7 @@ const IdInput = styled.input`
   border-top-right-radius: 20px;
 
   border-bottom: none;
+  padding-left: 20px;
 `;
 
 const PasswordInput = styled.input`
@@ -96,6 +108,7 @@ const PasswordInput = styled.input`
   height: 92px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  padding-left: 20px;
 `;
 
 export default LoginPage;
