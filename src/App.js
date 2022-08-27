@@ -1,11 +1,13 @@
 import GlobalStyle from './styles/GlobalStyles';
+import 'normalize.css';
+import { ThemeProvider } from 'styled-components';
+import { defaultTheme } from './styles/theme';
 
 function App() {
   return (
-    <div>
+    <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
-      <p>TEST</p>
-    </div>
+    </ThemeProvider>
   );
 }
 
