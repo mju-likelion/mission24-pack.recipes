@@ -114,16 +114,14 @@ const LikeNum = styled.div`
 `;
 
 const Button = styled.button`
-  position: absolute;
-  top: 700px;
-  left: 880px;
+  position: fixed;
+  top: 90%;
+  right: 32%;
   background: #a2c79a;
   border-radius: 10px;
   border: none;
   padding: 10px;
   color: white;
-  cursor: pointer;
-  margin-bottom: 23px;
 `;
 
 export default List;
