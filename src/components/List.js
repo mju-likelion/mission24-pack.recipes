@@ -81,7 +81,7 @@ const List = () => {
 };
 
 const ListWrapper = styled.div`
-  margin: 0 auto;
+  margin: 20px auto;
   width: 560px;
   min-height: 774px;
 `;
