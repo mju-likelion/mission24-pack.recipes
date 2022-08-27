@@ -52,6 +52,7 @@ const ToastWrapper = styled.div`
 `;
 
 const ToastItem = styled.div`
+  position: absolute;
   height: 100px;
   display: flex;
   justify-content: center;

@@ -4,25 +4,30 @@ import useToast from '../hook/useToast';
 import { ReactComponent as Logo } from '../images/logo.svg';
 import Axios from '../lib/axios';
 
-const LoginPage = function () {
+function RegisterPage() {
   const [, addToast] = useToast();
 
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
 
   const idHandle = (e) => setId(e.target.value);
+  const nameHandle = (e) => setName(e.target.value);
   const passwordHandle = (e) => setPassword(e.target.value);
 
-  const loginHandle = async () => {
+  const registerHandle = async () => {
     try {
-      const resp = await Axios.post('/user', { email: id, password: password });
-      console.log(resp.data);
+      await Axios.put('/user', { email: id, password: password, name: name });
+      addToast('회원가입 완료!', 2000);
     } catch (e) {
       const errorCode = e.response.data.errorCode;
-
+      console.log(errorCode);
       switch (errorCode) {
-        case 'EMAIL_NOT_EXISTS':
-          addToast('존재하지 않는 계정입니다!', 2000);
+        case 'EMAIL_EXITS':
+          addToast('이미 존재하는 이메일입니다', 2000);
+          break;
+        case 'NAME_EXISTS':
+          addToast('이미 사용중인 이름입니다', 2000);
           break;
       }
     }
@@ -33,18 +38,18 @@ const LoginPage = function () {
       <LoginContainer>
         <StyledLogo />
         <IdInput type={'text'} value={id} onChange={idHandle} id='id' />
+        <NameInput type={'text'} value={name} onChange={nameHandle} id='name' />
         <PasswordInput
           type={'text'}
           value={password}
           onChange={passwordHandle}
           id='password'
         />
-        <LoginButton onClick={loginHandle}>로그인</LoginButton>
-        <RegisterButton>회원가입</RegisterButton>
+        <LoginButton onClick={registerHandle}>회원가입</LoginButton>
       </LoginContainer>
     </>
   );
-};
+}
 
 const StyledLogo = styled(Logo)`
   margin-bottom: 24px;
@@ -60,15 +65,6 @@ const LoginButton = styled.button`
   background-color: #d9d9d9;
   border: none;
   color: white;
-`;
-
-const RegisterButton = styled.button`
-  margin-top: 19px;
-  font-size: 24px;
-
-  background: none;
-  border: none;
-  color: #aaaaaa;
 `;
 
 const LoginContainer = styled.div`
@@ -91,6 +87,13 @@ const IdInput = styled.input`
   border-bottom: none;
 `;
 
+const NameInput = styled.input`
+  width: 433px;
+  height: 92px;
+
+  border-bottom: none;
+`;
+
 const PasswordInput = styled.input`
   width: 433px;
   height: 92px;
@@ -98,4 +101,4 @@ const PasswordInput = styled.input`
   border-bottom-right-radius: 20px;
 `;
 
-export default LoginPage;
+export default RegisterPage;
