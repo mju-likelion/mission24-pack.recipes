@@ -6,6 +6,8 @@ import Header from './components/Header';
 import 'normalize.css';
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './styles/theme';
+import Footer from './component/footer';
+
 import Modal from './components/Modal';
 import { useState } from 'react';
 function App() {
@@ -19,6 +21,8 @@ function App() {
       <GlobalStyle />
 
       <Header />
+      <Footer />
+
       <NavBar />
 
       <button onClick={modalClose}>모달 테스트</button>
