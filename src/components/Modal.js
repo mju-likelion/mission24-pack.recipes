@@ -2,10 +2,14 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as OutButton } from '../images/outButton.svg';
 import Axios from '../lib/axios';
+import { useRecoilValue } from 'recoil';
+import { TitleAtom } from '../atoms/TitleAtom';
 
 const Modal = ({ modalClose }) => {
   const [listNumber, setListNumber] = useState([0]);
   const [itemName, setItemName] = useState(['']);
+
+  const { id } = useRecoilValue(TitleAtom);
 
   const ListAdding = () => {
     setListNumber((prev) => [...prev, 0]);
@@ -24,7 +28,7 @@ const Modal = ({ modalClose }) => {
   const ItemAdding = async () => {
     for (const item of itemName) {
       await Axios.post('/item', {
-        categoryId: '630a2982cb5ee1489f13e626',
+        categoryId: id,
         name: item,
       });
       // console.log(resp.request);
