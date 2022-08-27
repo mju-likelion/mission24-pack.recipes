@@ -60,10 +60,10 @@ const NavBar = () => {
                 setSubcategorySelected(true);
               }}
             >
-              <div>
+              <MajorTopicBox>
                 <MajorTopic>{Topic.categoryName}</MajorTopic>
                 <StyledBtn />
-              </div>
+              </MajorTopicBox>
             </DropDownItem>
           ))}
         </DropDownMenu>
@@ -98,7 +98,7 @@ const DropDownMenu = styled.div`
   justify-content: space-around;
   align-items: center;
   position: absolute;
-  top: 70px;
+  top: 150px;
   left: 0;
   box-shadow: 0px 4px 4px 0px #00000040;
 `;
@@ -126,7 +126,14 @@ const CategoryImg = styled.div`
 const MajorTopic = styled.span`
   margin-right: 20px;
 `;
-
+const MajorTopicBox = styled.div`
+  :hover {
+    color: #bedbb8;
+    ${DropdownBtn} {
+      opacity: 1;
+    }
+  }
+`;
 /*
 const MajorTopicBox = styled.div`
   display: flex;
