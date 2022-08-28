@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Category } from '../images/Category.svg';
-import { ReactComponent as DropdownBtn } from '../images/DropdownBtn.svg';
 import { useEffect, useState } from 'react';
 import Axios from '../lib/axios';
 import { useSetRecoilState } from 'recoil';
@@ -68,7 +67,6 @@ const NavBar = () => {
             >
               <MajorTopicBox>
                 <MajorTopic>{Topic.categoryName}</MajorTopic>
-                <StyledBtn />
               </MajorTopicBox>
             </DropDownItem>
           ))}
@@ -80,7 +78,6 @@ const NavBar = () => {
           {categoryList[selectedCategory].downCategories.map((theme, idx) => (
             <SubTheme
               onClick={() => {
-                //console.log(theme);
                 selectTitle(theme._id, theme.categoryName);
                 setSubcategorySelected(false);
                 setTopicList(false);
@@ -110,7 +107,7 @@ const NavBarStyled = styled.div`
 
 const DropDownMenu = styled.div`
   position: absolute;
-  width: 250px;
+  width: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -121,16 +118,10 @@ const DropDownMenu = styled.div`
 
 const DropDownItem = styled.div`
   width: 100%;
-  height: 130px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const StyledBtn = styled(DropdownBtn)`
-  opacity: 0;
-  position: absolute;
-  left: 200px;
 `;
 
 const CategoryImg = styled.div`
@@ -139,37 +130,61 @@ const CategoryImg = styled.div`
   display: flex;
   align-items: center;
 `;
-const MajorTopic = styled.span`
-  margin-right: 20px;
-`;
+
+const MajorTopic = styled.span``;
+
 const MajorTopicBox = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   :hover {
-    color: #bedbb8;
-    ${DropdownBtn} {
-      opacity: 1;
+    animation-name: 'slidein';
+    animation-duration: 100ms;
+    animation-fill-mode: both;
+  }
+
+  @keyframes slidein {
+    to {
+      color: #a2c79a;
     }
   }
 `;
+
 const SubThemeBox = styled.div`
   position: absolute;
   width: 200px;
-  left: 250px;
+  left: 200px;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 4px 4px 0px #00000040;
 `;
+
 const SubTheme = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  height: 100px;
+  height: 40px;
   width: 200px;
   background-color: white;
+
   :hover {
-    color: #bedbb8;
+    animation-name: 'slidein';
+    animation-duration: 100ms;
+    animation-fill-mode: both;
+  }
+
+  @keyframes slidein {
+    to {
+      color: #a2c79a;
+    }
   }
 `;
+
 const CategoryText = styled.p`
   color: #797979;
   margin-left: 30px;

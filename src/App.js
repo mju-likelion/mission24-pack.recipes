@@ -8,7 +8,7 @@ import { defaultTheme } from './styles/theme';
 import LoginPage from './page/Login';
 import RegisterPage from './page/Register';
 import Toast from './components/Toast';
-import Footer from './components/footer';
+import Footer from './components/Footer';
 import ListBox from './components/List';
 
 import { Routes, Route } from 'react-router-dom';
