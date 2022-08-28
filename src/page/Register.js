@@ -20,7 +20,7 @@ function RegisterPage() {
       addToast('회원가입 완료!', 2000);
     } catch (e) {
       const errorCode = e.response.data.errorCode;
-      console.log(errorCode);
+      //console.log(errorCode);
       switch (errorCode) {
         case 'EMAIL_EXITS':
           addToast('이미 존재하는 이메일입니다', 2000);

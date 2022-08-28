@@ -17,13 +17,13 @@ const LoginPage = function () {
       const resp = await Axios.post('/user', { email: id, password: password });
 
       const { token } = resp.data;
-      console.log(token);
+      //console.log(token);
       localStorage.setItem('access-token', token);
       Axios.defaults.headers.Authorization = `Bearer ${token}`;
 
       location.href = '/';
     } catch (e) {
-      console.log(e);
+      //console.log(e);
       const errorCode = e.response.data.errorCode;
 
       switch (errorCode) {

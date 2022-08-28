@@ -47,7 +47,7 @@ const Modal = ({ modalClose }) => {
             },
           },
         );
-        // console.log(resp.request);
+        // //console.log(resp.request);
         modalClose();
       }
     }

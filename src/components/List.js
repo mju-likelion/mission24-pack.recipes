@@ -39,7 +39,7 @@ const List = () => {
       const id = selectedCategory._id;
       const name = selectedCategory.categoryName;
 
-      console.log(selectedCategory);
+      //console.log(selectedCategory);
       setTitleState({ name, id });
     };
 
@@ -79,7 +79,7 @@ const List = () => {
       });
       fetchList();
     } catch {
-      console.log('여기에선 진짜 서버에 문제가 있는거고');
+      //console.log('여기에선 진짜 서버에 문제가 있는거고');
     }
   };
 
@@ -87,9 +87,9 @@ const List = () => {
     try {
       const res = await Axios.get(`/item/items/${sort}?categoryId=${id}`);
       setItems(res.data.items);
-      console.log(res.data.items);
+      //console.log(res.data.items);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
 

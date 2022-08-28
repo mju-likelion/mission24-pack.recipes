@@ -17,7 +17,7 @@ const NavBar = () => {
       id,
       name,
     };
-    console.log(newObj);
+    //console.log(newObj);
     setTitle(newObj);
   };
   const [selectedCategory, setSelectedCategory] = useState(0);
@@ -74,7 +74,7 @@ const NavBar = () => {
           {categoryList[selectedCategory].downCategories.map((theme, idx) => (
             <SubTheme
               onClick={() => {
-                console.log(theme);
+                //console.log(theme);
                 selectTitle(theme._id, theme.categoryName);
                 setSubcategorySelected(false);
                 setTopicList(false);
