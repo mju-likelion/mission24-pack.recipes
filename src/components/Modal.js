@@ -40,7 +40,6 @@ const Modal = ({ modalClose }) => {
             categoryId: id,
             name: item,
           },
-          {},
           {
             headers: {
               Authorization: `Bearer ${token}`,
