@@ -29,7 +29,7 @@ const Modal = ({ modalClose }) => {
   const [, addToast] = useToast();
 
   const ItemAdding = async () => {
-    if (localStorage.getItem('access-token') === '') {
+    if (!localStorage.getItem('access-token')) {
       addToast('로그인 후 이용해주세요!', 2000);
     } else {
       const token = localStorage.getItem('access-token');

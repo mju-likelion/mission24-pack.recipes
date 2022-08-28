@@ -46,7 +46,7 @@ const List = () => {
   }, []);
 
   const like = async (itemId) => {
-    if (localStorage.getItem('access-token') === '') {
+    if (!localStorage.getItem('access-token')) {
       addToast('로그인 후 이용해주세요!', 2000);
     } else {
       try {

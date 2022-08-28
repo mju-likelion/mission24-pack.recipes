@@ -10,12 +10,16 @@ import useToast, { ToastElem } from '../hook/useToast';
  */
 function ToastElement({ toast, msg }) {
   const toastRef = useRef();
+
   useEffect(() => {
     setTimeout(() => {
-      toastRef.current.style['animation-name'] = 'slideout';
-      toastRef.current.style['animation-duration'] = '0.3s';
+      if (toastRef.current) {
+        toastRef.current.style['animation-name'] = 'slideout';
+        toastRef.current.style['animation-duration'] = '0.3s';
+      }
     }, toast.disappearTime - 300);
   }, []);
+
   return (
     <>
       <ToastItem ref={toastRef}>{msg}</ToastItem>
@@ -61,6 +65,8 @@ const ToastItem = styled.div`
   background-color: #d6e8e3;
   color: black;
   border-radius: 20px;
+
+  z-index: 200;
 
   animation-duration: 1s;
   animation-name: slidein;
