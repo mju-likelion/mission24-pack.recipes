@@ -52,7 +52,7 @@ function RegisterPage() {
         />
         <PasswordInput
           placeholder='비밀번호'
-          type={'text'}
+          type={'password'}
           value={password}
           onChange={passwordHandle}
           id='password'
