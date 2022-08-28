@@ -21,13 +21,11 @@ function Footer() {
 const FooterElement = styled.div`
   width: 100vw;
   height: 80px;
+  margin-top: 50px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  position: fixed;
-  bottom: 0px;
 `;
 
 const FooterEmail = styled.div`
