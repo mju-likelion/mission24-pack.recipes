@@ -212,6 +212,7 @@ const Button = styled.button`
   border: none;
   padding: 10px;
   color: white;
+  z-index: 100;
 `;
 
 export default List;
