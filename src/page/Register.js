@@ -2,8 +2,10 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import useToast from '../hook/useToast';
 import Axios from '../lib/axios';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
+  const navigate = useNavigate();
   const [, addToast] = useToast();
 
   const [id, setId] = useState('');
@@ -17,7 +19,9 @@ function RegisterPage() {
   const registerHandle = async () => {
     try {
       await Axios.put('/user', { email: id, password: password, name: name });
+
       addToast('회원가입 완료!', 2000);
+      navigate('/login');
     } catch (e) {
       const errorCode = e.response.data.errorCode;
       //console.log(errorCode);

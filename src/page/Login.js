@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import useToast from '../hook/useToast';
 import Axios from '../lib/axios';
+import { Link } from 'react-router-dom';
 
 const LoginPage = function () {
   const [, addToast] = useToast();
@@ -53,7 +54,10 @@ const LoginPage = function () {
           id='password'
         />
         <LoginButton onClick={loginHandle}>로그인하기</LoginButton>
-        <RegisterButton>회원가입</RegisterButton>
+
+        <Link to={'/register'}>
+          <RegisterButton>회원가입</RegisterButton>
+        </Link>
       </LoginContainer>
     </>
   );

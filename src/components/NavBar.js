@@ -142,12 +142,12 @@ const MajorTopicBox = styled.div`
   align-items: center;
 
   :hover {
-    animation-name: 'slidein';
+    animation-name: 'topicHover';
     animation-duration: 100ms;
     animation-fill-mode: both;
   }
 
-  @keyframes slidein {
+  @keyframes topicHover {
     to {
       color: #a2c79a;
     }
