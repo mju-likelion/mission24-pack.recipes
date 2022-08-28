@@ -120,7 +120,9 @@ const List = () => {
             </div>
           ))}
         </ListBoxWrapper>
-        <Button onClick={modalClose}>추가하기</Button>
+        <ButtonWrapper>
+          <Button onClick={modalClose}>추가하기</Button>
+        </ButtonWrapper>
         {modalOpen && <Modal modalClose={modalClose}></Modal>}
       </ListBox>
     </ListWrapper>
@@ -163,7 +165,7 @@ const ListBox = styled.div`
 
 const ListBoxWrapper = styled.div`
   margin: 0 auto;
-  height: 506px;
+  height: 576px;
   width: 400px;
 
   overflow: auto;
@@ -202,16 +204,21 @@ const LikeNum = styled.div`
   font-size: 10px;
 `;
 
+const ButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
 const Button = styled.button`
-  position: fixed;
-  top: 90%;
-  right: 32%;
   background: #a2c79a;
   border-radius: 10px;
   border: none;
   padding: 10px;
   color: white;
   z-index: 100;
+  margin-right: 15px;
 `;
 
 export default List;
