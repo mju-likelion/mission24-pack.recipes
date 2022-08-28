@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { ReactComponent as Like } from '../images/like.svg';
 import Modal from './Modal';
@@ -17,8 +17,34 @@ const List = () => {
   };
 
   const { name, id } = useRecoilValue(TitleAtom);
+  const setTitleState = useSetRecoilState(TitleAtom);
   const [items, setItems] = useState([]);
   const [, addToast] = useToast();
+
+  useEffect(() => {
+    const fetch = async () => {
+      const resp = await Axios.get('/category');
+
+      const categories = resp.data.categories;
+      const subcategories = [];
+
+      for (const category of categories) {
+        for (const subcategory of category.downCategories) {
+          subcategories.push(subcategory);
+        }
+      }
+
+      const randIndex = Math.floor(Math.random() * subcategories.length);
+      const selectedCategory = subcategories[randIndex];
+      const id = selectedCategory._id;
+      const name = selectedCategory.categoryName;
+
+      console.log(selectedCategory);
+      setTitleState({ name, id });
+    };
+
+    fetch();
+  }, []);
 
   const like = async (itemId) => {
     if (localStorage.getItem('access-token') === '') {
