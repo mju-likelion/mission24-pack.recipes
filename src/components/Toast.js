@@ -33,9 +33,13 @@ function Toast() {
   return (
     <>
       <ToastWrapper>
-        {toasts.map((toast, index) => {
+        {toasts.map((toast) => {
           return (
-            <ToastElement key={index} toast={toast} msg={toast.toastMsg} />
+            <ToastElement
+              key={toast.index}
+              toast={toast}
+              msg={toast.toastMsg}
+            />
           );
         })}
       </ToastWrapper>
