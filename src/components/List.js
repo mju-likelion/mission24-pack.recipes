@@ -165,7 +165,7 @@ const ListBox = styled.div`
 const ListBoxWrapper = styled.div`
   margin: 0 auto;
   height: 506px;
-  width: 392px;
+  width: 400px;
 
   overflow: auto;
   &::-webkit-scrollbar {
