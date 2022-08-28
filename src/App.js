@@ -1,5 +1,4 @@
 import GlobalStyle from './styles/GlobalStyles';
-import List from './components/List';
 import NavBar from './components/NavBar';
 import Header from './components/Header';
 import 'normalize.css';
