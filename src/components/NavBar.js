@@ -9,19 +9,23 @@ import { TitleAtom } from '../atoms/TitleAtom';
 
 const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
+
   const [categoryList, setList] = useState([]);
   const [TopicList, setTopicList] = useState(false);
   const [subcategorySelected, setSubcategorySelected] = useState(false);
+
   const selectTitle = (id, name) => {
     const newObj = {
       id,
       name,
     };
-    //console.log(newObj);
+
     setTitle(newObj);
   };
+
   const [selectedCategory, setSelectedCategory] = useState(0);
-  const getCategory = async () => {
+
+  const fetchCategory = async () => {
     try {
       const ListData = await Axios.get('/category');
       setList(ListData.data.categories);
@@ -29,9 +33,11 @@ const NavBar = () => {
       return;
     }
   };
+
   useEffect(() => {
-    getCategory();
+    fetchCategory();
   }, []);
+
   return (
     <>
       <NavBarStyled>
@@ -91,16 +97,26 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
+const NavBarStyled = styled.div`
+  width: 100%;
+  border-top: solid 2px #d3d3d3;
+  border-bottom: solid 2px #d3d3d3;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  height: 64px;
+`;
+
 const DropDownMenu = styled.div`
+  position: absolute;
   width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  position: absolute;
-  top: 150px;
-  left: 0;
   box-shadow: 0px 4px 4px 0px #00000040;
+  background-color: white;
 `;
 
 const DropDownItem = styled.div`
@@ -134,42 +150,8 @@ const MajorTopicBox = styled.div`
     }
   }
 `;
-/*
-const MajorTopicBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  color: #bedbb8;
-
-  > div {
-    color: black;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    left: 250px;
-    box-shadow: 0px 4px 4px 0px #00000040;
-    :nth-child(1) {
-      align-self: center;
-    }
-  }
-  ${StyledBtn} {
-    display: inline;
-    opacity: 1;
-    margin-left: 40px;
-    margin: 0px;
-  }
-
-  width: 100%;
-  text-align: center;
-`;
-*/
 const SubThemeBox = styled.div`
-  position: relative;
+  position: absolute;
   width: 200px;
   left: 250px;
   display: flex;
@@ -183,20 +165,11 @@ const SubTheme = styled.div`
   justify-content: space-around;
   height: 100px;
   width: 200px;
+  background-color: white;
   :hover {
     color: #bedbb8;
   }
 `;
-const NavBarStyled = styled.div`
-  width: 100%;
-  border-top: solid 2px #d3d3d3;
-  border-bottom: solid 2px #d3d3d3;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  height: 64px;
-`;
-
 const CategoryText = styled.p`
   color: #797979;
   margin-left: 30px;

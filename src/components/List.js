@@ -39,7 +39,6 @@ const List = () => {
       const id = selectedCategory._id;
       const name = selectedCategory.categoryName;
 
-      //console.log(selectedCategory);
       setTitleState({ name, id });
     };
 
@@ -87,7 +86,6 @@ const List = () => {
     try {
       const res = await Axios.get(`/item/items/${sort}?categoryId=${id}`);
       setItems(res.data.items);
-      //console.log(res.data.items);
     } catch (err) {
       //console.log(err);
     }
@@ -130,7 +128,7 @@ const List = () => {
 };
 
 const ListWrapper = styled.div`
-  margin: 20px auto;
+  margin: 5px auto;
   width: 560px;
   min-height: 774px;
 `;
@@ -141,6 +139,7 @@ const Header = styled.div`
   height: 74px;
   font-size: 44px;
   justify-content: space-between;
+  align-items: flex-end;
 `;
 
 const SortDiv = styled.span`
