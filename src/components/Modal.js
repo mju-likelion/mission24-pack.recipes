@@ -2,10 +2,15 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as OutButton } from '../images/outButton.svg';
 import Axios from '../lib/axios';
+import { useRecoilValue } from 'recoil';
+import { TitleAtom } from '../atoms/TitleAtom';
+import useToast from '../hook/useToast';
 
 const Modal = ({ modalClose }) => {
   const [listNumber, setListNumber] = useState([0]);
   const [itemName, setItemName] = useState(['']);
+
+  const { id } = useRecoilValue(TitleAtom);
 
   const ListAdding = () => {
     setListNumber((prev) => [...prev, 0]);
@@ -21,14 +26,30 @@ const Modal = ({ modalClose }) => {
     });
   };
 
+  const [, addToast] = useToast();
+
   const ItemAdding = async () => {
-    for (const item of itemName) {
-      await Axios.post('/item', {
-        categoryId: '630a2982cb5ee1489f13e626',
-        name: item,
-      });
-      // console.log(resp.request);
-      modalClose();
+    if (localStorage.getItem('access-token') === '') {
+      addToast('로그인 후 이용해주세요!', 2000);
+    } else {
+      const token = localStorage.getItem('access-token');
+      for (const item of itemName) {
+        await Axios.post(
+          '/item',
+          {
+            categoryId: id,
+            name: item,
+          },
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        // console.log(resp.request);
+        modalClose();
+      }
     }
   };
 

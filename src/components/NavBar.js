@@ -12,10 +12,12 @@ const NavBar = () => {
   const [categoryList, setList] = useState([]);
   const [TopicList, setTopicList] = useState(false);
   const [subcategorySelected, setSubcategorySelected] = useState(false);
-  const selectTitle = (id) => {
+  const selectTitle = (id, name) => {
     const newObj = {
       id,
+      name,
     };
+    console.log(newObj);
     setTitle(newObj);
   };
   const [selectedCategory, setSelectedCategory] = useState(0);
@@ -72,7 +74,8 @@ const NavBar = () => {
           {categoryList[selectedCategory].downCategories.map((theme, idx) => (
             <SubTheme
               onClick={() => {
-                selectTitle(theme._id);
+                console.log(theme);
+                selectTitle(theme._id, theme.categoryName);
                 setSubcategorySelected(false);
                 setTopicList(false);
               }}

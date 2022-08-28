@@ -15,10 +15,15 @@ const LoginPage = function () {
   const loginHandle = async () => {
     try {
       const resp = await Axios.post('/user', { email: id, password: password });
-      console.log(resp.data);
 
-      Axios.defaults.headers.Authorization = `Bearer ${resp.data.token}`;
+      const { token } = resp.data;
+      console.log(token);
+      localStorage.setItem('access-token', token);
+      Axios.defaults.headers.Authorization = `Bearer ${token}`;
+
+      location.href = '/';
     } catch (e) {
+      console.log(e);
       const errorCode = e.response.data.errorCode;
 
       switch (errorCode) {

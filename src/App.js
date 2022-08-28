@@ -1,27 +1,23 @@
 import GlobalStyle from './styles/GlobalStyles';
 
+import NavBar from './components/NavBar';
+import Header from './components/Header';
 import 'normalize.css';
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './styles/theme';
-import Toast from './component/Toast';
-import RegisterPage from './page/Register';
-import { Route, Routes } from 'react-router-dom';
+
 import LoginPage from './page/Login';
-
-import NavBar from './components/NavBar';
-
-import Header from './components/Header';
-import 'normalize.css';
+import RegisterPage from './page/Register';
+import Toast from './component/Toast';
 import Footer from './component/footer';
+import ListBox from './components/List';
 
-// import Modal from './components/Modal';
-// import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
-
       <Header />
       <Routes>
         <Route
@@ -29,6 +25,7 @@ function App() {
           element={
             <>
               <NavBar />
+              <ListBox />
             </>
           }
         />
