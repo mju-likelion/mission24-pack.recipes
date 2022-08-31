@@ -19,7 +19,9 @@ function Footer() {
 }
 
 const FooterElement = styled.div`
-  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   height: 80px;
 
   display: flex;
