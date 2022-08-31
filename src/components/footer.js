@@ -6,7 +6,7 @@ import { ReactComponent as InstagramIcon } from '../images/instagram.svg';
 function Footer() {
   return (
     <>
-      <FooterElement>
+      <FooterWrapper>
         <FooterEmail>mju@likelion.org</FooterEmail>
         <FooterIcons>
           <GithubStyledIcon
@@ -14,18 +14,19 @@ function Footer() {
               window.open(
                 'https://github.com/mju-likelion/mission24-team3-frontend',
                 '_blank',
+                'rel = noopener noreferrer ',
               )
             }
           />
           <VerticalLine />
           <InstagramStyledIcon />
         </FooterIcons>
-      </FooterElement>
+      </FooterWrapper>
     </>
   );
 }
 
-const FooterElement = styled.div`
+const FooterWrapper = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
