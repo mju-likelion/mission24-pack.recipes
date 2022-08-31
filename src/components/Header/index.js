@@ -8,13 +8,13 @@ const Header = () => {
     <>
       <HeaderWrapper>
         <Link to={'/'}>
-          <LogoBox>잘챙기짐! </LogoBox>
+          <LogoBox />
         </Link>
         <LinkBox>
           <Link to={'/login'}>
             <Button>로그인</Button>
           </Link>
-          <a>|</a>
+          <p>|</p>
           <Link to={'/register'}>
             <Button>회원가입</Button>
           </Link>
@@ -25,11 +25,12 @@ const Header = () => {
 };
 
 const HeaderWrapper = styled.header`
+  height: 100px;
+  padding: 0px 65px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
-  padding: 0px 65px;
 `;
 
 const LogoBox = styled(Logo)`
@@ -39,7 +40,9 @@ const LogoBox = styled(Logo)`
 const LinkBox = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
+
 const Button = styled.button`
   background: none;
   border: none;

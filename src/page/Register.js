@@ -72,7 +72,7 @@ const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  margin-top: 50px;
+  margin-top: 10%;
   margin-bottom: 40px;
 
   justify-content: center;
@@ -81,7 +81,7 @@ const LoginContainer = styled.div`
 
 const Title = styled.div`
   font-size: 40px;
-  color: #bedbb8;
+  color: ${({ theme }) => theme.colors.primary};
 
   padding: 10px;
   margin-bottom: 20px;

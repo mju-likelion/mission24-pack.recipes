@@ -63,9 +63,21 @@ const LoginPage = function () {
   );
 };
 
+const LoginContainer = styled.div`
+  width: 100%;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 10%;
+  margin-bottom: 30px;
+`;
+
 const Title = styled.div`
   font-size: 40px;
-  color: #bedbb8;
+  color: ${({ theme }) => theme.colors.primary};
 
   padding: 10px;
   margin-bottom: 20px;
@@ -93,18 +105,6 @@ const RegisterButton = styled.button`
   background: none;
   border: none;
   color: #aaaaaa;
-`;
-
-const LoginContainer = styled.div`
-  width: 100%;
-  display: flex;
-
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  margin-top: 50px;
-  margin-bottom: 30px;
 `;
 
 const IdInput = styled.input`
