@@ -61,17 +61,17 @@ function RegisterPage() {
           onChange={passwordHandle}
           id='password'
         />
-        <LoginButton onClick={registerHandle}>회원가입</LoginButton>
+        <RegisterButton onClick={registerHandle}>회원가입</RegisterButton>
       </LoginContainer>
     </>
   );
 }
 
 const LoginContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 
-  width: 100%;
   margin-top: 50px;
   margin-bottom: 40px;
 
@@ -81,9 +81,11 @@ const LoginContainer = styled.div`
 
 const Title = styled.div`
   font-size: 40px;
+  color: #bedbb8;
+
   padding: 10px;
   margin-bottom: 20px;
-  color: #bedbb8;
+  user-select: none;
 `;
 
 const NameInput = styled.input`
@@ -95,6 +97,7 @@ const NameInput = styled.input`
   border: 2px solid #bbbbbb;
   border-bottom: none;
   padding-left: 20px;
+
   :focus {
     outline: #bbbbbb;
   }
@@ -107,6 +110,7 @@ const IdInput = styled.input`
   border: 2px solid #bbbbbb;
   border-bottom: none;
   padding-left: 20px;
+
   :focus {
     outline: #bbbbbb;
   }
@@ -120,17 +124,18 @@ const PasswordInput = styled.input`
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   padding-left: 20px;
+
   :focus {
     outline: #bbbbbb;
   }
 `;
 
-const LoginButton = styled.button`
+const RegisterButton = styled.button`
   width: 300px;
   height: 64px;
 
   margin-top: 39px;
-  font-size: 34px;
+  font-size: 30px;
 
   background-color: #d9d9d9;
   border: none;
