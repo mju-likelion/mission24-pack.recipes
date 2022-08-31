@@ -53,7 +53,20 @@ const NavBar = () => {
             });
           }}
         />
-        <CategoryText>카테고리</CategoryText>
+        <CategoryText
+          onClick={() => {
+            setTopicList((prev) => {
+              if (prev) {
+                setSelectedCategory(false);
+                return false;
+              } else {
+                return true;
+              }
+            });
+          }}
+        >
+          카테고리
+        </CategoryText>
       </NavBarStyled>
       {TopicList && (
         <DropDownMenu>
@@ -113,7 +126,8 @@ const DropDownMenu = styled.div`
   justify-content: space-around;
   align-items: center;
   box-shadow: 0px 4px 4px 0px #00000040;
-  background-color: white;
+  background-color: #ffffff;
+  padding: 30px 0;
 `;
 
 const DropDownItem = styled.div`
@@ -122,6 +136,7 @@ const DropDownItem = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px 0;
 `;
 
 const CategoryImg = styled.div`
@@ -171,6 +186,7 @@ const SubTheme = styled.div`
   height: 40px;
   width: 200px;
   background-color: white;
+  padding: 5px 0;
 
   :hover {
     animation-name: 'slidein';
