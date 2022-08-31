@@ -10,14 +10,15 @@ const Header = () => {
         <Link to={'/'}>
           <LogoBox>잘챙기짐! </LogoBox>
         </Link>
-        <div>
+        <LinkBox>
           <Link to={'/login'}>
             <Button>로그인</Button>
           </Link>
+          <a>|</a>
           <Link to={'/register'}>
-            |<Button>회원가입</Button>
+            <Button>회원가입</Button>
           </Link>
-        </div>
+        </LinkBox>
       </HeaderWrapper>
     </>
   );
@@ -35,6 +36,10 @@ const LogoBox = styled(Logo)`
   cursor: pointer;
 `;
 
+const LinkBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 const Button = styled.button`
   background: none;
   border: none;
