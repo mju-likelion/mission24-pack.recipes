@@ -9,7 +9,14 @@ function Footer() {
       <FooterElement>
         <FooterEmail>mju@likelion.org</FooterEmail>
         <FooterIcons>
-          <GithubStyledIcon />
+          <GithubStyledIcon
+            onClick={() =>
+              window.open(
+                'https://github.com/mju-likelion/mission24-team3-frontend',
+                '_blank',
+              )
+            }
+          />
           <VerticalLine />
           <InstagramStyledIcon />
         </FooterIcons>
