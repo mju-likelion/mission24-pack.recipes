@@ -40,19 +40,19 @@ function RegisterPage() {
     <>
       <LoginContainer>
         <Title>회원가입</Title>
-        <IdInput
-          placeholder='아이디'
-          type={'text'}
-          value={id}
-          onChange={idHandle}
-          id='id'
-        />
         <NameInput
           placeholder='이름'
           type={'text'}
           value={name}
           onChange={nameHandle}
           id='name'
+        />
+        <IdInput
+          placeholder='아이디'
+          type={'text'}
+          value={id}
+          onChange={idHandle}
+          id='id'
         />
         <PasswordInput
           placeholder='비밀번호'
@@ -83,11 +83,51 @@ const Title = styled.div`
   font-size: 40px;
   padding: 10px;
   margin-bottom: 20px;
+  color: #bedbb8;
+`;
+
+const NameInput = styled.input`
+  width: 433px;
+  height: 92px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+
+  border: 2px solid #bbbbbb;
+  border-bottom: none;
+  padding-left: 20px;
+  :focus {
+    outline: #bbbbbb;
+  }
+`;
+
+const IdInput = styled.input`
+  width: 433px;
+  height: 92px;
+
+  border: 2px solid #bbbbbb;
+  border-bottom: none;
+  padding-left: 20px;
+  :focus {
+    outline: #bbbbbb;
+  }
+`;
+
+const PasswordInput = styled.input`
+  width: 433px;
+  height: 92px;
+
+  border: 2px solid #bbbbbb;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding-left: 20px;
+  :focus {
+    outline: #bbbbbb;
+  }
 `;
 
 const LoginButton = styled.button`
-  width: 390px;
-  height: 70px;
+  width: 300px;
+  height: 64px;
 
   margin-top: 39px;
   font-size: 34px;
@@ -96,33 +136,7 @@ const LoginButton = styled.button`
   border: none;
   color: white;
 
-  border-radius: 30px;
-`;
-
-const IdInput = styled.input`
-  width: 433px;
-  height: 92px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-
-  border-bottom: none;
-  padding-left: 20px;
-`;
-
-const NameInput = styled.input`
-  width: 433px;
-  height: 92px;
-
-  border-bottom: none;
-  padding-left: 20px;
-`;
-
-const PasswordInput = styled.input`
-  width: 433px;
-  height: 92px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  padding-left: 20px;
+  border-radius: 20px;
 `;
 
 export default RegisterPage;
