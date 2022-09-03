@@ -12,42 +12,47 @@ import Footer from './components/Footer';
 import ListBox from './components/List';
 
 import { Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <GlobalStyle />
-      <Header />
-      <Routes>
-        <Route
-          path='/'
-          element={
-            <>
-              <NavBar />
-              <ListBox />
-            </>
-          }
-        />
-        <Route
-          path='/login'
-          element={
-            <>
-              <LoginPage />
-            </>
-          }
-        />
-        <Route
-          path='/register'
-          element={
-            <>
-              <RegisterPage />
-            </>
-          }
-        />
-      </Routes>
-      <Toast />
-      <Footer />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={defaultTheme}>
+        <GlobalStyle />
+        <Header />
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <>
+                <NavBar />
+                <ListBox />
+              </>
+            }
+          />
+          <Route
+            path='/login'
+            element={
+              <>
+                <LoginPage />
+              </>
+            }
+          />
+          <Route
+            path='/register'
+            element={
+              <>
+                <RegisterPage />
+              </>
+            }
+          />
+        </Routes>
+        <Toast />
+        <Footer />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 
