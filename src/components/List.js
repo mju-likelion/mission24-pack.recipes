@@ -165,7 +165,7 @@ const ListBox = styled.div`
 
 const ListBoxWrapper = styled.div`
   margin: 0 auto;
-  height: 576px;
+  height: 520px;
   width: 400px;
 
   overflow: auto;
@@ -197,7 +197,7 @@ const ListItem = styled.div`
 const LikeBox = styled.div`
   width: 16px;
   height: 30px;
-  margin: -30px 0 0 370px;
+  margin: -26px 0 0 370px;
 `;
 
 const LikeNum = styled.div`
@@ -207,7 +207,6 @@ const LikeNum = styled.div`
 const ButtonWrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row;
   justify-content: flex-end;
 `;
 
@@ -218,7 +217,7 @@ const Button = styled.button`
   padding: 10px;
   color: white;
   z-index: 100;
-  margin-right: 15px;
+  margin: 50px 18px 0 0;
 `;
 
 export default List;

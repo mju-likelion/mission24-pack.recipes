@@ -27,8 +27,6 @@ function Footer() {
 }
 
 const FooterWrapper = styled.div`
-  position: fixed;
-  bottom: 0;
   width: 100%;
   height: 80px;
 
@@ -44,7 +42,6 @@ const FooterEmail = styled.div`
 
 const FooterIcons = styled.div`
   display: flex;
-  flex-direction: row;
   margin-right: 60px;
   align-items: center;
 `;
