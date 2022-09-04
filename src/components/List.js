@@ -7,6 +7,8 @@ import Axios from '../lib/axios';
 import { TitleAtom } from '../atoms/TitleAtom';
 import useToast from '../hooks/useToast';
 
+import useCategory from '../hooks/useCategory';
+
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [sort, setSort] = useState('recent');
@@ -16,6 +18,9 @@ const List = () => {
     fetchList();
   };
 
+  const { data, isLoading } = useCategory();
+  const categories = data?.categories;
+
   const { name, id } = useRecoilValue(TitleAtom);
   const setTitleState = useSetRecoilState(TitleAtom);
   const [items, setItems] = useState([]);
@@ -23,27 +28,25 @@ const List = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const resp = await Axios.get('/category');
+      if (!isLoading) {
+        const subcategories = [];
 
-      const categories = resp.data.categories;
-      const subcategories = [];
-
-      for (const category of categories) {
-        for (const subcategory of category.downCategories) {
-          subcategories.push(subcategory);
+        for (const category of categories) {
+          for (const subcategory of category.downCategories) {
+            subcategories.push(subcategory);
+          }
         }
+
+        const randIndex = Math.floor(Math.random() * subcategories.length);
+        const selectedCategory = subcategories[randIndex];
+        const id = selectedCategory._id;
+        const name = selectedCategory.categoryName;
+
+        setTitleState({ name, id });
       }
-
-      const randIndex = Math.floor(Math.random() * subcategories.length);
-      const selectedCategory = subcategories[randIndex];
-      const id = selectedCategory._id;
-      const name = selectedCategory.categoryName;
-
-      setTitleState({ name, id });
     };
-
     fetch();
-  }, []);
+  }, [isLoading]);
 
   const like = async (itemId) => {
     if (!localStorage.getItem('access-token')) {
