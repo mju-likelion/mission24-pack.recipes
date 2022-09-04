@@ -4,7 +4,7 @@ import { ReactComponent as OutButton } from '../images/outButton.svg';
 import Axios from '../lib/axios';
 import { useRecoilValue } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
-import useToast from '../hook/useToast';
+import useToast from '../hooks/useToast';
 
 const Modal = ({ modalClose }) => {
   const [listNumber, setListNumber] = useState([0]);

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import useToast, { ToastElem } from '../hook/useToast';
+import useToast, { ToastElem } from '../hooks/useToast';
 
 /**
  *

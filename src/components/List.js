@@ -5,7 +5,7 @@ import { ReactComponent as Like } from '../images/like.svg';
 import Modal from './Modal';
 import Axios from '../lib/axios';
 import { TitleAtom } from '../atoms/TitleAtom';
-import useToast from '../hook/useToast';
+import useToast from '../hooks/useToast';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
