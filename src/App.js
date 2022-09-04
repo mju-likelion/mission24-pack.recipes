@@ -13,8 +13,21 @@ import ListBox from './components/List';
 
 import { Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Axios from './lib/axios';
 
-const queryClient = new QueryClient();
+const defaultQueryFn = async ({ queryKey }) => {
+  const { data } = await Axios.get(queryKey[0]);
+  return data;
+};
+
+// provide the default query function to your app with defaultOptions
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      queryFn: defaultQueryFn,
+    },
+  },
+});
 
 function App() {
   return (
