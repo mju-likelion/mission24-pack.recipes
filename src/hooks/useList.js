@@ -5,7 +5,9 @@ const useList = (sort, id) => {
     data: list,
     isLoading: listLoading,
     error: listError,
-  } = useQuery([`/item/items/${sort}?categoryId=${id}`]);
+  } = useQuery([
+    `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
+  ]);
 
   return {
     list,

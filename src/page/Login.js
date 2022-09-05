@@ -15,7 +15,10 @@ const LoginPage = function () {
 
   const loginHandle = async () => {
     try {
-      const resp = await Axios.post('/user', { email: id, password: password });
+      const resp = await Axios.post('/users', {
+        email: id,
+        password: password,
+      });
 
       const { token } = resp.data;
       //console.log(token);
