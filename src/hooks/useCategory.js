@@ -1,12 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 
 const useCategory = () => {
-  const { data, isLoading, error } = useQuery(['/category']);
+  const {
+    data: category,
+    isLoading: categoryLoading,
+    error: categoryError,
+  } = useQuery(['/category']);
 
   return {
-    data,
-    isLoading,
-    error,
+    category,
+    categoryLoading,
+    categoryError,
   };
 };
 
