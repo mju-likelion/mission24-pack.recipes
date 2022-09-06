@@ -201,6 +201,7 @@ const LikeBox = styled.div`
 
 const LikeNum = styled.div`
   font-size: 10px;
+  text-align: center;
 `;
 
 const ButtonWrapper = styled.div`
