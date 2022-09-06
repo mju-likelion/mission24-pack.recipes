@@ -1,11 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postLike } from '../api/List';
 
-const useLike = (sort, id, itemId) => {
+const useLike = (sort, id) => {
   const queryClient = useQueryClient();
-
   return useMutation(
-    () => {
+    (itemId) => {
       postLike(itemId);
     },
     {

@@ -15,6 +15,7 @@ import useDisLike from '../hooks/useDisLike';
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [sort, setSort] = useState('likeCount');
+
   const modalClose = () => {
     setModalOpen(!modalOpen);
     // fetchList();
@@ -26,7 +27,6 @@ const List = () => {
   const setTitleState = useSetRecoilState(TitleAtom);
 
   const { list } = useList(sort, id);
-  const [itemId, setItemId] = useState([]);
 
   const queryClient = useQueryClient();
 
@@ -50,18 +50,18 @@ const List = () => {
     fetch();
   }, [categoryLoading]);
 
-  const postLike = useLike(sort, id, itemId);
-  const deleteLike = useDisLike(sort, id, itemId);
+  const postLike = useLike(sort, id);
+  const deleteLike = useDisLike(sort, id);
 
-  const like = async () => {
-    await postLike.mutateAsync();
+  const like = async (itemId) => {
+    await postLike.mutateAsync(itemId);
     queryClient.invalidateQueries([
       `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
     ]);
   };
 
-  const dislike = async () => {
-    await deleteLike.mutateAsync();
+  const dislike = async (itemId) => {
+    await deleteLike.mutateAsync(itemId);
     queryClient.invalidateQueries([
       `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
     ]);
@@ -90,19 +90,13 @@ const List = () => {
                   {item?.likes ? (
                     <RedLike
                       onClick={() => {
-                        {
-                          setItemId(item._id);
-                          dislike();
-                        }
+                        dislike(item._id);
                       }}
                     />
                   ) : (
                     <Like
                       onClick={() => {
-                        {
-                          setItemId(item._id);
-                          like();
-                        }
+                        like(item._id);
                       }}
                     />
                   )}

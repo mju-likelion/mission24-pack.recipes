@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { dislike } from '../api/List';
 
-const useDisLike = (sort, id, itemId) => {
+const useDisLike = (sort, id) => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    () => {
+    (itemId) => {
       dislike(itemId);
     },
     {
