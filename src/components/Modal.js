@@ -35,7 +35,7 @@ const Modal = ({ modalClose }) => {
       const token = localStorage.getItem('access-token');
       for (const item of itemName) {
         await Axios.post(
-          '/item',
+          '/items',
           {
             categoryId: id,
             name: item,
