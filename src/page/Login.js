@@ -26,13 +26,11 @@ const LoginPage = function () {
       });
 
       const { token } = resp.data;
-      //console.log(token);
       localStorage.setItem('access-token', token);
       Axios.defaults.headers.Authorization = `Bearer ${token}`;
 
       location.href = '/';
     } catch (e) {
-      //console.log(e);
       const errorCode = e.response.data.errorCode;
 
       switch (errorCode) {
@@ -53,7 +51,12 @@ const LoginPage = function () {
           type={'password'}
           {...register('password')}
         />
-        <LoginButton type='submit' onClick={loginHandle} active={isValid}>
+        <LoginButton
+          type='submit'
+          onClick={loginHandle}
+          active={isValid}
+          disabled={isValid}
+        >
           로그인
         </LoginButton>
 

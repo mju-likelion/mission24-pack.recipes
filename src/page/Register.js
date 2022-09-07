@@ -6,8 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 function RegisterPage() {
-  const { register, watch, handleSubmit, getValues } = useForm();
   const [isValid, setIsValid] = useState(false);
+  const navigate = useNavigate();
+  const [, addToast] = useToast();
+  const { register, watch, handleSubmit, getValues } = useForm();
+
+  //버튼 비활성화를 위해 입력창값들이 바뀔 때마다 버튼 비활성화 여부 판단
   useEffect(() => {
     const subscribe = watch((data) => {
       if (data.name && data.id && data.password && data.confirmPassword)
@@ -16,11 +20,13 @@ function RegisterPage() {
     });
     return () => subscribe.unsubscribe();
   }, [watch]);
-  const navigate = useNavigate();
-  const [, addToast] = useToast();
+
+  //유효성 검사에서 오류가 있을 때 토스트 메세지를 띄워줄 함수
   function onInValid(error) {
-    addToast(error.confirmPassword.message, 2000);
+    if (error.id) addToast(error.id.message, 2000);
+    else addToast(error.confirmPassword.message, 2000);
   }
+
   const registerHandle = async (data) => {
     try {
       await Axios.put('/user', {
@@ -49,12 +55,23 @@ function RegisterPage() {
       <SigninContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
         <Title>회원가입</Title>
         <NameInput placeholder='이름' type={'text'} {...register('name')} />
-        <IdInput placeholder='아이디' type={'text'} {...register('id')} />
+        <IdInput
+          placeholder='아이디'
+          type={'text'}
+          {...register('id', {
+            pattern: {
+              value:
+                /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+              message: '이메일 형식으로 입력해주세요',
+            },
+          })}
+        />
         <PasswordInput
           placeholder='비밀번호'
           type={'password'}
           {...register('password')}
         />
+
         <PasswordInput
           placeholder='비밀번호 확인'
           type={'password'}
@@ -66,7 +83,12 @@ function RegisterPage() {
             },
           })}
         />
-        <RegisterButton active={isValid} type='submit' onClick={registerHandle}>
+        <RegisterButton
+          active={isValid}
+          type='submit'
+          onClick={registerHandle}
+          disabled={!isValid}
+        >
           회원가입
         </RegisterButton>
       </SigninContainer>
