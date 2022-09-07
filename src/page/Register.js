@@ -1,30 +1,38 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import styled, { css } from 'styled-components';
 import useToast from '../hook/useToast';
 import Axios from '../lib/axios';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 function RegisterPage() {
+  const { register, watch, handleSubmit, getValues } = useForm();
+  const [isValid, setIsValid] = useState(false);
+  useEffect(() => {
+    const subscribe = watch((data) => {
+      if (data.name && data.id && data.password && data.confirmPassword)
+        setIsValid(true);
+      else setIsValid(false);
+    });
+    return () => subscribe.unsubscribe();
+  }, [watch]);
   const navigate = useNavigate();
   const [, addToast] = useToast();
-
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-
-  const idHandle = (e) => setId(e.target.value);
-  const nameHandle = (e) => setName(e.target.value);
-  const passwordHandle = (e) => setPassword(e.target.value);
-
-  const registerHandle = async () => {
+  function onInValid(error) {
+    addToast(error.confirmPassword.message, 2000);
+  }
+  const registerHandle = async (data) => {
     try {
-      await Axios.put('/user', { email: id, password: password, name: name });
-
+      await Axios.put('/user', {
+        email: data.id,
+        password: data.password,
+        name: data.name,
+      });
       addToast('회원가입 완료!', 2000);
       navigate('/login');
     } catch (e) {
       const errorCode = e.response.data.errorCode;
-      //console.log(errorCode);
+
       switch (errorCode) {
         case 'EMAIL_EXITS':
           addToast('이미 존재하는 이메일입니다', 2000);
@@ -38,36 +46,35 @@ function RegisterPage() {
 
   return (
     <>
-      <LoginContainer>
+      <SigninContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
         <Title>회원가입</Title>
-        <NameInput
-          placeholder='이름'
-          type={'text'}
-          value={name}
-          onChange={nameHandle}
-          id='name'
-        />
-        <IdInput
-          placeholder='아이디'
-          type={'text'}
-          value={id}
-          onChange={idHandle}
-          id='id'
-        />
+        <NameInput placeholder='이름' type={'text'} {...register('name')} />
+        <IdInput placeholder='아이디' type={'text'} {...register('id')} />
         <PasswordInput
           placeholder='비밀번호'
           type={'password'}
-          value={password}
-          onChange={passwordHandle}
-          id='password'
+          {...register('password')}
         />
-        <RegisterButton onClick={registerHandle}>회원가입</RegisterButton>
-      </LoginContainer>
+        <PasswordInput
+          placeholder='비밀번호 확인'
+          type={'password'}
+          {...register('confirmPassword', {
+            validate: {
+              confirmPassword: (pw) =>
+                pw === getValues('password') ||
+                '동일한 비밀번호를 입력해주세요',
+            },
+          })}
+        />
+        <RegisterButton active={isValid} type='submit' onClick={registerHandle}>
+          회원가입
+        </RegisterButton>
+      </SigninContainer>
     </>
   );
 }
 
-const LoginContainer = styled.div`
+const SigninContainer = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -121,12 +128,15 @@ const PasswordInput = styled.input`
   height: 92px;
 
   border: 2px solid #bbbbbb;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+
   padding-left: 20px;
 
   :focus {
     outline: #bbbbbb;
+  }
+  :nth-last-child(2) {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
   }
 `;
 
@@ -142,6 +152,11 @@ const RegisterButton = styled.button`
   color: white;
 
   border-radius: 20px;
+  ${(props) =>
+    props.active &&
+    css`
+      background-color: ${({ theme }) => theme.colors.primary};
+    `}
 `;
 
 export default RegisterPage;

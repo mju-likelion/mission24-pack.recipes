@@ -1,21 +1,29 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import styled, { css } from 'styled-components';
 import useToast from '../hook/useToast';
 import Axios from '../lib/axios';
 import { Link } from 'react-router-dom';
-
+import { useForm } from 'react-hook-form';
 const LoginPage = function () {
+  const { register, handleSubmit, watch } = useForm();
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    const subscribe = watch((data) => {
+      if (data.id && data.password) {
+        setIsValid(true);
+      } else setIsValid(false);
+    });
+    return () => subscribe.unsubscribe();
+  }, []);
   const [, addToast] = useToast();
 
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-
-  const idHandle = (e) => setId(e.target.value);
-  const passwordHandle = (e) => setPassword(e.target.value);
-
-  const loginHandle = async () => {
+  const loginHandle = async (data) => {
     try {
-      const resp = await Axios.post('/user', { email: id, password: password });
+      const resp = await Axios.post('/user', {
+        email: data.id,
+        password: data.password,
+      });
 
       const { token } = resp.data;
       //console.log(token);
@@ -37,23 +45,17 @@ const LoginPage = function () {
 
   return (
     <>
-      <LoginContainer>
+      <LoginContainer onSubmit={handleSubmit(loginHandle)}>
         <Title>로그인</Title>
-        <IdInput
-          placeholder='아이디'
-          type={'text'}
-          value={id}
-          onChange={idHandle}
-          id='id'
-        />
+        <IdInput placeholder='아이디' type={'text'} {...register('id')} />
         <PasswordInput
           placeholder='비밀번호'
           type={'password'}
-          value={password}
-          onChange={passwordHandle}
-          id='password'
+          {...register('password')}
         />
-        <LoginButton onClick={loginHandle}>로그인</LoginButton>
+        <LoginButton type='submit' onClick={loginHandle} active={isValid}>
+          로그인
+        </LoginButton>
 
         <Link to={'/register'}>
           <RegisterButton>회원가입</RegisterButton>
@@ -63,7 +65,7 @@ const LoginPage = function () {
   );
 };
 
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
   width: 100%;
   display: flex;
 
@@ -96,6 +98,11 @@ const LoginButton = styled.button`
   color: white;
 
   border-radius: 20px;
+  ${(props) =>
+    props.active &&
+    css`
+      background-color: ${({ theme }) => theme.colors.primary};
+    `}
 `;
 
 const RegisterButton = styled.button`
