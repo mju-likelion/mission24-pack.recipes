@@ -20,7 +20,6 @@ const defaultQueryFn = async ({ queryKey }) => {
   return data;
 };
 
-// provide the default query function to your app with defaultOptions
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
