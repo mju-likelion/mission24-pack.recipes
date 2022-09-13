@@ -7,7 +7,7 @@ import { defaultTheme } from './styles/theme';
 
 import LoginPage from './page/Login';
 import RegisterPage from './page/Register';
-import Toast from './components/Toast';
+// import Toast from './components/Toast';
 import Footer from './components/Footer';
 import ListBox from './components/List';
 
@@ -65,7 +65,9 @@ function App() {
             }
           />
         </Routes>
-        <Toast />
+        {/* <Toast /> 
+        recoil로 만든 토스트메시지인데, 아직 삭제를 할지 말지 몰라서 우선 놔뒀습니다.
+        */}
         <StyledToastContainer
           position='bottom-center'
           autoClose={2000}
