@@ -108,7 +108,7 @@ const List = () => {
           <ButtonWrapper>
             <Button onClick={modalClose}>추가하기</Button>
           </ButtonWrapper>
-          {modalOpen && <Modal modalClose={modalClose}></Modal>}
+          {modalOpen && <Modal modalClose={modalClose} />}
         </ListBox>
       )}
     </ListWrapper>
