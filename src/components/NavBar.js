@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as Category } from '../images/Category.svg';
+import { ReactComponent as CategoryIcon } from '../images/Category.svg';
 import { useEffect, useState } from 'react';
 import Axios from '../lib/axios';
 import { useSetRecoilState } from 'recoil';
@@ -12,6 +12,8 @@ const NavBar = () => {
   const [categoryList, setList] = useState([]);
   const [TopicList, setTopicList] = useState(false);
   const [subcategorySelected, setSubcategorySelected] = useState(false);
+
+  const [isHoverIcon, setIsHoverIcon] = useState(0);
 
   const selectTitle = (id, name) => {
     const newObj = {
@@ -26,7 +28,7 @@ const NavBar = () => {
 
   const fetchCategory = async () => {
     try {
-      const ListData = await Axios.get('/category');
+      const ListData = await Axios.get('/categories');
       setList(ListData.data.categories);
     } catch (e) {
       return;
@@ -40,9 +42,8 @@ const NavBar = () => {
   return (
     <>
       <NavBarStyled>
-        <CategoryImg />
-        <Category
-          onClick={() => {
+        <CategoryBox
+          onMouseOver={() => {
             setTopicList((prev) => {
               if (prev) {
                 setSelectedCategory(false);
@@ -51,35 +52,28 @@ const NavBar = () => {
                 return true;
               }
             });
-          }}
-        />
-        <CategoryText
-          onClick={() => {
-            setTopicList((prev) => {
-              if (prev) {
-                setSelectedCategory(false);
-                return false;
-              } else {
-                return true;
-              }
-            });
+            setIsHoverIcon(0);
           }}
         >
-          카테고리
-        </CategoryText>
+          <CategoryIcon />
+          <CategoryText>카테고리</CategoryText>
+        </CategoryBox>
       </NavBarStyled>
       {TopicList && (
         <DropDownMenu>
           {categoryList.map((Topic, index) => (
             <DropDownItem
               key={index}
-              onClick={() => {
+              onMouseOver={() => {
                 setSelectedCategory(index);
                 setSubcategorySelected(true);
               }}
             >
               <MajorTopicBox>
-                <MajorTopic>{Topic.categoryName}</MajorTopic>
+                <MajorTopic onMouseOver={() => setIsHoverIcon(1)}>
+                  {Topic.categoryName}
+                </MajorTopic>
+                {isHoverIcon ? <HoverText>&gt;</HoverText> : ' '}
               </MajorTopicBox>
             </DropDownItem>
           ))}
@@ -118,6 +112,16 @@ const NavBarStyled = styled.div`
   height: 64px;
 `;
 
+const CategoryBox = styled.div`
+  width: 149px;
+  height: 40px;
+  margin-left: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background-color: blue;
+`;
+
 const DropDownMenu = styled.div`
   position: absolute;
   width: 200px;
@@ -139,15 +143,7 @@ const DropDownItem = styled.div`
   padding: 10px 0;
 `;
 
-const CategoryImg = styled.div`
-  margin-left: 20px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-`;
-
-const MajorTopic = styled.span``;
-
+//카테고리 대분류 박스
 const MajorTopicBox = styled.div`
   width: 100%;
   height: 100%;
@@ -169,6 +165,18 @@ const MajorTopicBox = styled.div`
   }
 `;
 
+const MajorTopic = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const HoverText = styled.p`
+  position: absolute;
+  left: 150px;
+`;
+
+//카테고리 소분류 박스
 const SubThemeBox = styled.div`
   position: absolute;
   width: 200px;
