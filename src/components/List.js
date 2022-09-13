@@ -10,7 +10,7 @@ import { TitleAtom } from '../atoms/TitleAtom';
 import useCategory from '../hooks/useCategory';
 import useList from '../hooks/useList';
 import useLike from '../hooks/useLike';
-import useDisLike from '../hooks/useDisLike';
+import useDislike from '../hooks/useDislike';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -51,7 +51,7 @@ const List = () => {
   }, [categoryLoading]);
 
   const postLike = useLike(sort, id);
-  const deleteLike = useDisLike(sort, id);
+  const deleteLike = useDislike(sort, id);
 
   const like = async (itemId) => {
     await postLike.mutateAsync(itemId);
