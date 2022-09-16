@@ -13,6 +13,10 @@ import ListBox from './components/List';
 
 import { Routes, Route } from 'react-router-dom';
 
+import styled from 'styled-components';
+import { ToastContainer, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -46,9 +50,34 @@ function App() {
         />
       </Routes>
       <Toast />
+      <StyledToastContainer
+        position='bottom-center'
+        autoClose={2000}
+        hideProgressBar
+        transition={Slide}
+        closeButton={false}
+        limit={1}
+      />
       <Footer />
     </ThemeProvider>
   );
 }
+
+const StyledToastContainer = styled(ToastContainer)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .Toastify__toast {
+    box-shadow: none;
+    background-color: ${({ theme }) => theme.colors.green};
+    border-radius: 20px;
+    height: 100px;
+    width: 392px;
+    line-height: 30px;
+  }
+`;
 
 export default App;
