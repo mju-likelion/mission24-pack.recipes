@@ -70,7 +70,7 @@ function App() {
         */}
         <StyledToastContainer
           position='bottom-center'
-          autoClose={2000}
+          autoClose={4000}
           hideProgressBar
           transition={Slide}
           closeButton={false}
