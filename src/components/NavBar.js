@@ -26,7 +26,7 @@ const NavBar = () => {
 
   const fetchCategory = async () => {
     try {
-      const ListData = await Axios.get('/category');
+      const ListData = await Axios.get('/categories');
       setList(ListData.data.categories);
     } catch (e) {
       return;

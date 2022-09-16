@@ -1,133 +1,126 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { useQueryClient } from '@tanstack/react-query';
 import { ReactComponent as Like } from '../images/like.svg';
+import { ReactComponent as RedLike } from '../images/redLike.svg';
 import Modal from './Modal';
-import Axios from '../lib/axios';
 import { TitleAtom } from '../atoms/TitleAtom';
-import useToast from '../hook/useToast';
+
+import useCategory from '../hooks/useCategory';
+import useList from '../hooks/useList';
+import useLike from '../hooks/useLike';
+import useDislike from '../hooks/useDislike';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [sort, setSort] = useState('recent');
+  const [sort, setSort] = useState('likeCount');
 
   const modalClose = () => {
     setModalOpen(!modalOpen);
-    fetchList();
+    // fetchList();
   };
+  const { category, categoryLoading } = useCategory();
+  const categories = category?.categories;
 
   const { name, id } = useRecoilValue(TitleAtom);
   const setTitleState = useSetRecoilState(TitleAtom);
-  const [items, setItems] = useState([]);
-  const [, addToast] = useToast();
+
+  const { list } = useList(sort, id);
+
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const fetch = async () => {
-      const resp = await Axios.get('/category');
-
-      const categories = resp.data.categories;
-      const subcategories = [];
-
-      for (const category of categories) {
-        for (const subcategory of category.downCategories) {
-          subcategories.push(subcategory);
+      if (!categoryLoading) {
+        const subcategories = [];
+        for (const category of categories) {
+          for (const subcategory of category.downCategories) {
+            subcategories.push(subcategory);
+          }
         }
+        const randIndex = Math.floor(Math.random() * subcategories.length);
+        const selectedCategory = subcategories[randIndex];
+        const id = selectedCategory._id;
+        const name = selectedCategory.categoryName;
+
+        setTitleState({ name, id });
       }
-
-      const randIndex = Math.floor(Math.random() * subcategories.length);
-      const selectedCategory = subcategories[randIndex];
-      const id = selectedCategory._id;
-      const name = selectedCategory.categoryName;
-
-      setTitleState({ name, id });
     };
-
     fetch();
-  }, []);
+  }, [categoryLoading]);
+
+  const postLike = useLike(sort, id);
+  const deleteLike = useDislike(sort, id);
 
   const like = async (itemId) => {
-    if (!localStorage.getItem('access-token')) {
-      addToast('로그인 후 이용해주세요!', 2000);
-    } else {
-      try {
-        const token = localStorage.getItem('access-token');
-        await Axios.post(
-          `/item/${itemId}/like`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-        fetchList();
-      } catch {
-        await dislike(itemId);
-      }
-    }
+    await postLike.mutateAsync(itemId);
+    queryClient.invalidateQueries([
+      `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
+    ]);
   };
 
   const dislike = async (itemId) => {
-    const token = localStorage.getItem('access-token');
-
-    try {
-      await Axios.delete(`/item/${itemId}/like`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      fetchList();
-    } catch {
-      //console.log('여기에선 진짜 서버에 문제가 있는거고');
-    }
+    await deleteLike.mutateAsync(itemId);
+    queryClient.invalidateQueries([
+      `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
+    ]);
   };
-
-  const fetchList = async () => {
-    try {
-      const res = await Axios.get(`/item/items/${sort}?categoryId=${id}`);
-      setItems(res.data.items);
-    } catch (err) {
-      //console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    if (id !== '') {
-      fetchList();
-    }
-  }, [id, sort]);
 
   return (
     <ListWrapper>
       <Header>
         {name}
         <SortDiv>
-          <button onClick={() => setSort('recent')}>최신순</button> |
-          <button onClick={() => setSort('like')}>인기순</button>
+          <button onClick={() => setSort('createdAt')}>최신순</button> |
+          <button onClick={() => setSort('likeCount')}>인기순</button>
         </SortDiv>
       </Header>
-      <ListBox>
-        <ListBoxWrapper>
-          {items.map((item, index) => (
-            <div key={index}>
-              <ListItemBox>
-                <ListItem>{item.name}</ListItem>
-              </ListItemBox>
-              <LikeBox>
-                <Like onClick={() => like(item._id)} />
-                <LikeNum>{item.likeCount}</LikeNum>
-              </LikeBox>
-            </div>
-          ))}
-        </ListBoxWrapper>
-        <ButtonWrapper>
-          <Button onClick={modalClose}>추가하기</Button>
-        </ButtonWrapper>
-        {modalOpen && <Modal modalClose={modalClose}></Modal>}
-      </ListBox>
+      {categoryLoading ? (
+        <LoadingComponent>Loading...</LoadingComponent>
+      ) : (
+        <ListBox>
+          <ListBoxWrapper>
+            {list?.items?.map((item, index) => (
+              <div key={index}>
+                <ListItemBox>
+                  <ListItem>{item.name}</ListItem>
+                </ListItemBox>
+                <LikeBox>
+                  {item?.likes ? (
+                    <RedLike
+                      onClick={() => {
+                        dislike(item._id);
+                      }}
+                    />
+                  ) : (
+                    <Like
+                      onClick={() => {
+                        like(item._id);
+                      }}
+                    />
+                  )}
+                  <LikeNum>{item.likeCount}</LikeNum>
+                </LikeBox>
+              </div>
+            ))}
+          </ListBoxWrapper>
+          <ButtonWrapper>
+            <Button onClick={modalClose}>추가하기</Button>
+          </ButtonWrapper>
+          {modalOpen && <Modal modalClose={modalClose} />}
+        </ListBox>
+      )}
     </ListWrapper>
   );
 };
+
+const LoadingComponent = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  padding-top: 300px;
+`;
 
 const ListWrapper = styled.div`
   margin: 5px auto;
@@ -202,6 +195,7 @@ const LikeBox = styled.div`
 
 const LikeNum = styled.div`
   font-size: 10px;
+  text-align: center;
 `;
 
 const ButtonWrapper = styled.div`
