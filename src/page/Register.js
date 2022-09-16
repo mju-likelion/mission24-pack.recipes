@@ -28,7 +28,7 @@ function RegisterPage() {
 
   const registerHandle = async (data) => {
     try {
-      await Axios.put('/user', {
+      await Axios.post('/auth/register', {
         email: data.id,
         password: data.password,
         name: data.name,

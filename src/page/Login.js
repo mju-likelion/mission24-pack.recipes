@@ -15,28 +15,25 @@ const LoginPage = function () {
       } else setIsValid(false);
     });
     return () => subscribe.unsubscribe();
-  }, []);
+  }, [watch]);
 
   const loginHandle = async (data) => {
     try {
-      const resp = await Axios.post('/user', {
+      const resp = await Axios.post('/auth/login', {
         email: data.id,
         password: data.password,
       });
       const { token } = resp.data;
       localStorage.setItem('access-token', token);
       Axios.defaults.headers.Authorization = `Bearer ${token}`;
-
       location.href = '/';
+      toast('로그인 성공');
     } catch (e) {
       const errorCode = e.response.data.errorCode;
 
       switch (errorCode) {
         case 'EMAIL_NOT_EXISTS':
           toast('존재하지 않는 계정입니다!');
-          break;
-        default:
-          toast(errorCode);
           break;
       }
     }
@@ -56,7 +53,7 @@ const LoginPage = function () {
           type='submit'
           onClick={loginHandle}
           active={isValid}
-          disabled={isValid}
+          disabled={!isValid}
         >
           로그인
         </LoginButton>
