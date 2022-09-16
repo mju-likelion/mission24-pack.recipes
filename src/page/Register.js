@@ -167,17 +167,18 @@ const RegisterButton = styled.button`
 
   margin-top: 39px;
   font-size: 30px;
-
-  background-color: #d9d9d9;
   border: none;
   color: white;
 
   border-radius: 20px;
   ${(props) =>
-    props.active &&
-    css`
-      background-color: ${({ theme }) => theme.colors.primary};
-    `}
+    props.active
+      ? css`
+          background-color: ${({ theme }) => theme.colors.green};
+        `
+      : css`
+          background-color: #d9d9d9;
+        `}
 `;
 
 export default RegisterPage;
