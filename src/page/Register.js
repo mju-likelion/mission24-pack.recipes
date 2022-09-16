@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import useToast from '../hook/useToast';
 import Axios from '../lib/axios';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 function RegisterPage() {
   const [isValid, setIsValid] = useState(false);
   const navigate = useNavigate();
-  const [, addToast] = useToast();
   const { register, watch, handleSubmit, getValues } = useForm();
 
   //버튼 비활성화를 위해 입력창값들이 바뀔 때마다 버튼 비활성화 여부 판단
@@ -23,8 +22,8 @@ function RegisterPage() {
 
   //유효성 검사에서 오류가 있을 때 토스트 메세지를 띄워줄 함수
   function onInValid(error) {
-    if (error.id) addToast(error.id.message, 2000);
-    else addToast(error.confirmPassword.message, 2000);
+    if (error.id) toast(error.id.message, 2000);
+    else toast(error.confirmPassword.message, 2000);
   }
 
   const registerHandle = async (data) => {
@@ -34,17 +33,17 @@ function RegisterPage() {
         password: data.password,
         name: data.name,
       });
-      addToast('회원가입 완료!', 2000);
+      toast('회원가입 완료!');
       navigate('/login');
     } catch (e) {
       const errorCode = e.response.data.errorCode;
 
       switch (errorCode) {
         case 'EMAIL_EXITS':
-          addToast('이미 존재하는 이메일입니다', 2000);
+          toast('이미 존재하는 이메일입니다');
           break;
         case 'NAME_EXISTS':
-          addToast('이미 사용중인 이름입니다', 2000);
+          toast('이미 사용중인 이름입니다');
           break;
       }
     }

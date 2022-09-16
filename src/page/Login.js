@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import useToast from '../hook/useToast';
 import Axios from '../lib/axios';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 const LoginPage = function () {
   const { register, handleSubmit, watch } = useForm();
   const [isValid, setIsValid] = useState(false);
@@ -16,7 +16,6 @@ const LoginPage = function () {
     });
     return () => subscribe.unsubscribe();
   }, []);
-  const [, addToast] = useToast();
 
   const loginHandle = async (data) => {
     try {
@@ -24,7 +23,6 @@ const LoginPage = function () {
         email: data.id,
         password: data.password,
       });
-
       const { token } = resp.data;
       localStorage.setItem('access-token', token);
       Axios.defaults.headers.Authorization = `Bearer ${token}`;
@@ -35,7 +33,10 @@ const LoginPage = function () {
 
       switch (errorCode) {
         case 'EMAIL_NOT_EXISTS':
-          addToast('존재하지 않는 계정입니다!', 2000);
+          toast('존재하지 않는 계정입니다!');
+          break;
+        default:
+          toast(errorCode);
           break;
       }
     }
