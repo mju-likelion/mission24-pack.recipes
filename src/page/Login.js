@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import useToast from '../hook/useToast';
+import useToast from '../hooks/useToast';
 import Axios from '../lib/axios';
 import { Link } from 'react-router-dom';
 
@@ -15,7 +15,10 @@ const LoginPage = function () {
 
   const loginHandle = async () => {
     try {
-      const resp = await Axios.post('/user', { email: id, password: password });
+      const resp = await Axios.post('/users', {
+        email: id,
+        password: password,
+      });
 
       const { token } = resp.data;
       //console.log(token);
