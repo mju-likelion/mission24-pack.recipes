@@ -10,10 +10,10 @@ const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
 
   const [categoryList, setList] = useState([]);
-  const [TopicList, setTopicList] = useState(false);
-  const [subcategorySelected, setSubcategorySelected] = useState(false);
+  const [TopicList, setTopicList] = useState(false); //대분류 카테고리
+  const [subcategorySelected, setSubcategorySelected] = useState(false); //소분류 카테고리
 
-  const [isHoverIcon, setIsHoverIcon] = useState(0);
+  // const [isHoverIcon, setIsHoverIcon] = useState(0);
 
   const selectTitle = (id, name) => {
     const newObj = {
@@ -52,7 +52,7 @@ const NavBar = () => {
                 return true;
               }
             });
-            setIsHoverIcon(0);
+            // setIsHoverIcon(0);
           }}
         >
           <CategoryIcon />
@@ -60,26 +60,25 @@ const NavBar = () => {
         </CategoryBox>
       </NavBarStyled>
       {TopicList && (
-        <DropDownMenu>
-          {categoryList.map((Topic, index) => (
-            <DropDownItem
-              key={index}
-              onMouseOver={() => {
-                setSelectedCategory(index);
-                setSubcategorySelected(true);
-              }}
-            >
-              <MajorTopicBox>
-                <MajorTopic onMouseOver={() => setIsHoverIcon(1)}>
-                  {Topic.categoryName}
-                </MajorTopic>
-                {isHoverIcon ? <HoverText>&gt;</HoverText> : ' '}
-              </MajorTopicBox>
-            </DropDownItem>
-          ))}
-        </DropDownMenu>
+        <DropDownIs>
+          <DropDownMenu>
+            {categoryList.map((Topic, index) => (
+              <DropDownItem
+                key={index}
+                // onMouseOver={() => {
+                //   setSelectedCategory(index);
+                //   setSubcategorySelected(true);
+                // }}
+              >
+                <MajorTopicBox>
+                  <MajorTopic>{Topic.categoryName}</MajorTopic>
+                  {/* {isHoverIcon ? <HoverText>&gt;</HoverText> : ' '} */}
+                </MajorTopicBox>
+              </DropDownItem>
+            ))}
+          </DropDownMenu>
+        </DropDownIs>
       )}
-
       {subcategorySelected && categoryList[selectedCategory] ? (
         <SubThemeBox>
           {categoryList[selectedCategory].downCategories.map((theme, idx) => (
@@ -96,11 +95,30 @@ const NavBar = () => {
           ))}
         </SubThemeBox>
       ) : undefined}
+      <TestBox1>p</TestBox1>
+      <TestBox2>c</TestBox2>
     </>
   );
 };
 
 export default NavBar;
+
+const TestBox1 = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: pink;
+  margin-top: 100px;
+`;
+
+const TestBox2 = styled.div`
+  width: 30px;
+  height: 30px;
+  background-color: aqua;
+
+  ${TestBox1}:hover + & {
+    background-color: pink;
+  }
+`;
 
 const NavBarStyled = styled.div`
   width: 100%;
@@ -115,6 +133,7 @@ const NavBarStyled = styled.div`
 const CategoryBox = styled.div`
   width: 149px;
   height: 40px;
+
   margin-left: 20px;
   height: 100%;
   display: flex;
@@ -134,6 +153,11 @@ const DropDownMenu = styled.div`
   padding: 30px 0;
 `;
 
+const DropDownIs = styled.div`
+  ${CategoryBox}:hover + & {
+    display: block;
+  }
+`;
 const DropDownItem = styled.div`
   width: 100%;
   height: 40px;
@@ -171,10 +195,10 @@ const MajorTopic = styled.div`
   align-items: center;
 `;
 
-const HoverText = styled.p`
-  position: absolute;
-  left: 150px;
-`;
+// const HoverText = styled.p`
+//   position: absolute;
+//   left: 150px;
+// `;
 
 //카테고리 소분류 박스
 const SubThemeBox = styled.div`
