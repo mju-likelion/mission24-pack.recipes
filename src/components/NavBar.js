@@ -1,19 +1,21 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CategoryIcon } from '../images/Category.svg';
 import { useEffect, useState } from 'react';
-import Axios from '../lib/axios';
 import { useSetRecoilState } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
+import useCategory from '../hooks/useCategory';
 
 const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
 
-  const [categoryList, setList] = useState([]);
-  const [TopicList, setTopicList] = useState(false); //대분류 카테고리
-  const [subcategorySelected, setSubcategorySelected] = useState(false); //소분류 카테고리
+  const [categoryList, setCategoryList] = useState([]); //카테고리 리스트가 카테고리 변경하는거
+  const [isShowMainCategory, setIsShowMainCategory] = useState(false); //대분류 카테고리 isShow
+  const [isShowDetailCategory, setIsShowDetailCategory] = useState(false); //소분류 카테고리
 
-  // const [isHoverIcon, setIsHoverIcon] = useState(0);
+  const { category } = useCategory();
+  const [isHoverIcon, setIsHoverIcon] = useState(false);
 
   const selectTitle = (id, name) => {
     const newObj = {
@@ -26,25 +28,26 @@ const NavBar = () => {
 
   const [selectedCategory, setSelectedCategory] = useState(0);
 
-  const fetchCategory = async () => {
-    try {
-      const ListData = await Axios.get('/categories');
-      setList(ListData.data.categories);
-    } catch (e) {
-      return;
-    }
-  };
+  // const fetchCategory = () => {
+  //   setCategoryList(category?.categories);
+  // };
 
-  useEffect(() => {
-    fetchCategory();
-  }, []);
+  // useEffect(() => {
+  //   fetchCategory();
+  // }, [categoryList]);
+  // console.log(categoryList, 'categoryList');
+
+  // console.log(useCategory(), 'useCategory()');
+  // console.log(categoryList, 'setCategoryList(category?.categories)');
+  // console.log(category, 'category');
+  // console.log(category?.categories, 'category?.categories');
 
   return (
     <>
       <NavBarStyled>
         <CategoryBox
-          onMouseOver={() => {
-            setTopicList((prev) => {
+          onClick={() => {
+            setIsShowMainCategory((prev) => {
               if (prev) {
                 setSelectedCategory(false);
                 return false;
@@ -59,40 +62,42 @@ const NavBar = () => {
           <CategoryText>카테고리</CategoryText>
         </CategoryBox>
       </NavBarStyled>
-      {TopicList && (
-        <DropDownIs>
-          <DropDownMenu>
-            {categoryList.map((Topic, index) => (
-              <DropDownItem
-                key={index}
-                // onMouseOver={() => {
-                //   setSelectedCategory(index);
-                //   setSubcategorySelected(true);
-                // }}
-              >
-                <MajorTopicBox>
-                  <MajorTopic>{Topic.categoryName}</MajorTopic>
-                  {/* {isHoverIcon ? <HoverText>&gt;</HoverText> : ' '} */}
-                </MajorTopicBox>
-              </DropDownItem>
-            ))}
-          </DropDownMenu>
-        </DropDownIs>
-      )}
-      {subcategorySelected && categoryList[selectedCategory] ? (
-        <SubThemeBox>
-          {categoryList[selectedCategory].downCategories.map((theme, idx) => (
-            <SubTheme
+      {isShowMainCategory && (
+        // <DropDownIs>
+        <DropDownMenu>
+          {category?.categories.map((Topic, index) => (
+            <DropDownItem
+              key={index}
               onClick={() => {
-                selectTitle(theme._id, theme.categoryName);
-                setSubcategorySelected(false);
-                setTopicList(false);
+                setSelectedCategory(index);
+                setIsShowDetailCategory(true);
               }}
-              key={idx}
             >
-              {theme.categoryName}
-            </SubTheme>
+              <MajorTopicBox>
+                <MajorTopic>{Topic?.categoryName}</MajorTopic>
+                {/* {isHoverIcon ? <HoverText>&gt;</HoverText> : ' '} */}
+              </MajorTopicBox>
+            </DropDownItem>
           ))}
+        </DropDownMenu>
+        // </DropDownIs>
+      )}
+      {isShowDetailCategory && category?.categories[selectedCategory] ? (
+        <SubThemeBox>
+          {category?.categories[selectedCategory]?.downCategories.map(
+            (theme, idx) => (
+              <SubTheme
+                onClick={() => {
+                  selectTitle(theme?._id, theme?.categoryName);
+                  setIsShowDetailCategory(false);
+                  setIsShowMainCategory(false);
+                }}
+                key={idx}
+              >
+                {theme?.categoryName}
+              </SubTheme>
+            ),
+          )}
         </SubThemeBox>
       ) : undefined}
       <TestBox1>p</TestBox1>
@@ -153,11 +158,12 @@ const DropDownMenu = styled.div`
   padding: 30px 0;
 `;
 
-const DropDownIs = styled.div`
-  ${CategoryBox}:hover + & {
-    display: block;
-  }
-`;
+// const DropDownIs = styled.div`
+//   ${CategoryBox}:hover + & {
+//     display: block;
+//   }
+// `;
+
 const DropDownItem = styled.div`
   width: 100%;
   height: 40px;
