@@ -4,6 +4,7 @@ import Axios from '../lib/axios';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useMutation } from '@tanstack/react-query';
 
 function RegisterPage() {
   const [isValid, setIsValid] = useState(false);
@@ -26,71 +27,98 @@ function RegisterPage() {
     else toast(error.confirmPassword.message, 2000);
   }
 
-  const registerHandle = async (data) => {
-    try {
-      await Axios.post('/auth/register', {
-        email: data.id,
-        password: data.password,
-        name: data.name,
-      });
-      toast('회원가입 완료!');
-      navigate('/login');
-    } catch (e) {
-      const errorCode = e.response.data.errorCode;
+  const mutation = useMutation((data) => {
+    Axios.post('/auth/register', {
+      email: data.id,
+      password: data.password,
+      name: data.name,
+    });
+  });
 
-      switch (errorCode) {
-        case 'EMAIL_EXITS':
-          toast('이미 존재하는 이메일입니다');
-          break;
-        case 'NAME_EXISTS':
-          toast('이미 사용중인 이름입니다');
-          break;
-      }
-    }
+  const handleRegister = (data) => {
+    mutation.mutate(data, {
+      onError: (e) => {
+        const errorCode = e.response.data.errorCode;
+
+        switch (errorCode) {
+          case 'EMAIL_EXITS':
+            toast('이미 존재하는 이메일입니다');
+            break;
+          case 'NAME_EXISTS':
+            toast('이미 사용중인 이름입니다');
+            break;
+        }
+      },
+      onSuccess: () => {
+        toast('회원가입 완료!');
+        navigate('/login');
+      },
+    });
   };
+  // const registerHandle = async (data) => {
+  //   try {
+  //     await Axios.post('/auth/register', {
+  //       email: data.id,
+  //       password: data.password,
+  //       name: data.name,
+  //     });
+  //     toast('회원가입 완료!');
+  //     navigate('/login');
+  //   } catch (e) {
+  //     const errorCode = e.response.data.errorCode;
+
+  //     switch (errorCode) {
+  //       case 'EMAIL_EXITS':
+  //         toast('이미 존재하는 이메일입니다');
+  //         break;
+  //       case 'NAME_EXISTS':
+  //         toast('이미 사용중인 이름입니다');
+  //         break;
+  //     }
+  //   }
+  // };
 
   return (
     <>
-      <SigninContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
-        <Title>회원가입</Title>
-        <NameInput placeholder='이름' type={'text'} {...register('name')} />
-        <IdInput
-          placeholder='아이디'
-          type={'text'}
-          {...register('id', {
-            pattern: {
-              value:
-                /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-              message: '이메일 형식으로 입력해주세요',
-            },
-          })}
-        />
-        <PasswordInput
-          placeholder='비밀번호'
-          type={'password'}
-          {...register('password')}
-        />
+      {mutation.isLoading ? (
+        <div>Loading</div>
+      ) : (
+        <SigninContainer onSubmit={handleSubmit(handleRegister, onInValid)}>
+          <Title>회원가입</Title>
+          <NameInput placeholder='이름' type={'text'} {...register('name')} />
+          <IdInput
+            placeholder='아이디'
+            type={'text'}
+            {...register('id', {
+              pattern: {
+                value:
+                  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+                message: '이메일 형식으로 입력해주세요',
+              },
+            })}
+          />
+          <PasswordInput
+            placeholder='비밀번호'
+            type={'password'}
+            {...register('password')}
+          />
 
-        <PasswordInput
-          placeholder='비밀번호 확인'
-          type={'password'}
-          {...register('confirmPassword', {
-            validate: {
-              confirmPassword: (pw) =>
-                pw === getValues('password') ||
-                '동일한 비밀번호를 입력해주세요',
-            },
-          })}
-        />
-        <RegisterButton
-          active={isValid}
-          type='submit'
-          onClick={registerHandle}
-          disabled={!isValid}
-        >
-          회원가입
-        </RegisterButton>
-      </SigninContainer>
+          <PasswordInput
+            placeholder='비밀번호 확인'
+            type={'password'}
+            {...register('confirmPassword', {
+              validate: {
+                confirmPassword: (pw) =>
+                  pw === getValues('password') ||
+                  '동일한 비밀번호를 입력해주세요',
+              },
+            })}
+          />
+          <RegisterButton active={isValid} type='submit' disabled={!isValid}>
+            회원가입
+          </RegisterButton>
+        </SigninContainer>
+      )}
     </>
   );
 }
