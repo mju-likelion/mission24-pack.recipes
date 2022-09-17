@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
 import useCategory from '../hooks/useCategory';
+import { useEffect } from 'react';
 
 const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
@@ -38,6 +39,13 @@ const NavBar = () => {
     setIsShowDetailCategory(false);
     setIsShowMainCategory(false);
   };
+
+  // useEffect(() => {
+  //   const fetch = async () => {
+  //     if (!categoryLoading) {
+  //     }
+  //   };
+  // });
 
   return (
     <>
@@ -110,6 +118,8 @@ const CategoryBox = styled.div`
   display: flex;
   align-items: center;
   margin-left: 20px;
+
+  cursor: pointer;
 `;
 
 const CategoryTitle = styled.p`
@@ -129,6 +139,8 @@ const DropDownMenu = styled.div`
   box-shadow: 0px 4px 4px 0px #00000040;
   background-color: #ffffff;
   padding: 30px 0;
+
+  cursor: pointer;
 `;
 
 const DropDownItem = styled.div`
@@ -186,6 +198,8 @@ const SubThemeBox = styled.div`
   flex-direction: column;
 
   box-shadow: 0px 4px 4px 0px #00000040;
+
+  cursor: pointer;
 `;
 
 const SubTheme = styled.div`
