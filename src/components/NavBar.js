@@ -94,8 +94,6 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
-
 const NavBarStyled = styled.div`
   width: 100%;
   height: 64px;
@@ -230,3 +228,5 @@ const LoadingComponent = styled.div`
   font-size: 30px;
   padding-top: 300px;
 `;
+
+export default NavBar;
