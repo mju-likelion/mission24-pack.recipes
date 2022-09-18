@@ -13,7 +13,7 @@ const NavBar = () => {
   const [isShowMainCategory, setIsShowMainCategory] = useState(false); //대분류 카테고리 isShow
   const [isShowDetailCategory, setIsShowDetailCategory] = useState(false); //소분류 카테고리
 
-  const { category } = useCategory();
+  const { category, categoryLoading, categoryError } = useCategory();
 
   const selectTitle = (id, name) => {
     const newObj = {
@@ -40,25 +40,22 @@ const NavBar = () => {
     setIsShowMainCategory(false);
   };
 
-  // useEffect(() => {
-  //   const fetch = async () => {
-  //     if (!categoryLoading) {
-  //     }
-  //   };
-  // });
-
   return (
     <>
-      <NavBarStyled>
-        <CategoryBox
-          onMouseEnter={() => {
-            isHoverMainCategory();
-          }}
-        >
-          <CategoryIcon />
-          <CategoryTitle>카테고리</CategoryTitle>
-        </CategoryBox>
-      </NavBarStyled>
+      {categoryLoading ? (
+        <LoadingComponent>Loading...</LoadingComponent>
+      ) : (
+        <NavBarStyled>
+          <CategoryBox
+            onMouseEnter={() => {
+              isHoverMainCategory();
+            }}
+          >
+            <CategoryIcon />
+            <CategoryTitle>카테고리</CategoryTitle>
+          </CategoryBox>
+        </NavBarStyled>
+      )}
       {isShowMainCategory && (
         <DropDownMenu>
           {category?.categories.map((Topic, index) => (
@@ -225,4 +222,11 @@ const SubTheme = styled.div`
       color: #a2c79a;
     }
   }
+`;
+
+const LoadingComponent = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  padding-top: 300px;
 `;
