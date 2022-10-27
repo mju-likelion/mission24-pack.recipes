@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CategoryIcon } from '../images/Category.svg';
@@ -6,14 +5,13 @@ import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
 import useCategory from '../hooks/useCategory';
-import { useEffect } from 'react';
 
 const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
   const [isShowMainCategory, setIsShowMainCategory] = useState(false); //대분류 카테고리 isShow
   const [isShowDetailCategory, setIsShowDetailCategory] = useState(false); //소분류 카테고리
 
-  const { category, categoryLoading, categoryError } = useCategory();
+  const { category, categoryLoading } = useCategory();
 
   const selectTitle = (id, name) => {
     const newObj = {
@@ -107,20 +105,24 @@ const NavBarStyled = styled.div`
 `;
 
 const CategoryBox = styled.div`
-  width: 149px;
-  height: 100%;
-
   display: flex;
   align-items: center;
   margin-left: 20px;
 
   cursor: pointer;
+  @media screen and (max-width: 387px) {
+    margin: 0 20px 0 auto;
+  }
 `;
 
 const CategoryTitle = styled.p`
   color: #797979;
   margin-left: 30px;
   user-select: none;
+
+  @media screen and (max-width: 387px) {
+    display: none;
+  }
 `;
 
 const DropDownMenu = styled.div`
