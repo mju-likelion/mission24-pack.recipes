@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { setCookie } from '../util/Cookie';
+import { tryLogin } from '../api/LoginRegister';
 
 const LoginPage = function () {
   const { register, handleSubmit, watch } = useForm();
@@ -21,11 +22,8 @@ const LoginPage = function () {
 
   const loginHandle = async (data) => {
     try {
-      const resp = await Axios.post('/auth/login', {
-        email: data.id,
-        password: data.password,
-      });
-      const { accessToken, refreshToken } = resp.data;
+      const res = await tryLogin(data);
+      const { accessToken, refreshToken } = res.data;
       localStorage.setItem('accessToken', accessToken);
       Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
       setCookie('refreshToken', refreshToken);
@@ -33,7 +31,6 @@ const LoginPage = function () {
       toast('로그인 성공');
     } catch (e) {
       const errorCode = e.response.data.errorCode;
-
       switch (errorCode) {
         case 'EMAIL_NOT_EXISTS':
           toast('존재하지 않는 계정입니다!');

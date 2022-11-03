@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import Axios from '../lib/axios';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { tryRegister } from '../api/LoginRegister';
 
 function RegisterPage() {
   const [isValid, setIsValid] = useState(false);
@@ -28,11 +28,7 @@ function RegisterPage() {
 
   const registerHandle = async (data) => {
     try {
-      await Axios.post('/auth/register', {
-        email: data.id,
-        password: data.password,
-        name: data.name,
-      });
+      await tryRegister(data);
       toast('회원가입 완료!');
       navigate('/login');
     } catch (e) {
