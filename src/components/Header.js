@@ -2,9 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as Logo } from '../images/logo.svg';
+import { removeCookie } from '../util/Cookie';
+import { toast } from 'react-toastify';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    removeCookie('refreshToken');
+    setIsLogin((prev) => !prev);
+    toast('로그아웃 되었습니다.');
+  };
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
       setIsLogin(true);
@@ -18,7 +26,7 @@ const Header = () => {
       <LinkBox>
         {isLogin ? (
           <>
-            <Button>로그아웃</Button>
+            <Button onClick={handleLogout}>로그아웃</Button>
           </>
         ) : (
           <>
