@@ -7,6 +7,9 @@ const GlobalStyle = createGlobalStyle`
             color : #424242;
         }
         font-family: 'locus_sangsang';
+        a {
+            text-decoration: none;
+        }
     }
 `;
 
