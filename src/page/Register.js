@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import useToast from '../hook/useToast';
+import useToast from '../hooks/useToast';
 import Axios from '../lib/axios';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
+  const navigate = useNavigate();
   const [, addToast] = useToast();
 
   const [id, setId] = useState('');
@@ -16,8 +18,10 @@ function RegisterPage() {
 
   const registerHandle = async () => {
     try {
-      await Axios.put('/user', { email: id, password: password, name: name });
+      await Axios.put('/users', { email: id, password: password, name: name });
+
       addToast('회원가입 완료!', 2000);
+      navigate('/login');
     } catch (e) {
       const errorCode = e.response.data.errorCode;
       //console.log(errorCode);
@@ -36,19 +40,19 @@ function RegisterPage() {
     <>
       <LoginContainer>
         <Title>회원가입</Title>
-        <IdInput
-          placeholder='아이디'
-          type={'text'}
-          value={id}
-          onChange={idHandle}
-          id='id'
-        />
         <NameInput
           placeholder='이름'
           type={'text'}
           value={name}
           onChange={nameHandle}
           id='name'
+        />
+        <IdInput
+          placeholder='아이디'
+          type={'text'}
+          value={id}
+          onChange={idHandle}
+          id='id'
         />
         <PasswordInput
           placeholder='비밀번호'
@@ -57,18 +61,18 @@ function RegisterPage() {
           onChange={passwordHandle}
           id='password'
         />
-        <LoginButton onClick={registerHandle}>회원가입</LoginButton>
+        <RegisterButton onClick={registerHandle}>회원가입</RegisterButton>
       </LoginContainer>
     </>
   );
 }
 
 const LoginContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 
-  width: 100%;
-  margin-top: 50px;
+  margin-top: 10%;
   margin-bottom: 40px;
 
   justify-content: center;
@@ -77,48 +81,67 @@ const LoginContainer = styled.div`
 
 const Title = styled.div`
   font-size: 40px;
+  color: ${({ theme }) => theme.colors.primary};
+
   padding: 10px;
   margin-bottom: 20px;
-`;
-
-const LoginButton = styled.button`
-  width: 390px;
-  height: 70px;
-
-  margin-top: 39px;
-  font-size: 34px;
-
-  background-color: #d9d9d9;
-  border: none;
-  color: white;
-
-  border-radius: 30px;
-`;
-
-const IdInput = styled.input`
-  width: 433px;
-  height: 92px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-
-  border-bottom: none;
-  padding-left: 20px;
+  user-select: none;
 `;
 
 const NameInput = styled.input`
   width: 433px;
   height: 92px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 
+  border: 2px solid #bbbbbb;
   border-bottom: none;
   padding-left: 20px;
+
+  :focus {
+    outline: #bbbbbb;
+  }
+`;
+
+const IdInput = styled.input`
+  width: 433px;
+  height: 92px;
+
+  border: 2px solid #bbbbbb;
+  border-bottom: none;
+  padding-left: 20px;
+
+  :focus {
+    outline: #bbbbbb;
+  }
 `;
 
 const PasswordInput = styled.input`
   width: 433px;
   height: 92px;
+
+  border: 2px solid #bbbbbb;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   padding-left: 20px;
+
+  :focus {
+    outline: #bbbbbb;
+  }
+`;
+
+const RegisterButton = styled.button`
+  width: 300px;
+  height: 64px;
+
+  margin-top: 39px;
+  font-size: 30px;
+
+  background-color: #d9d9d9;
+  border: none;
+  color: white;
+
+  border-radius: 20px;
 `;
 
 export default RegisterPage;

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import useToast from '../hook/useToast';
+import useToast from '../hooks/useToast';
 import Axios from '../lib/axios';
+import { Link } from 'react-router-dom';
 
 const LoginPage = function () {
   const [, addToast] = useToast();
@@ -14,7 +15,10 @@ const LoginPage = function () {
 
   const loginHandle = async () => {
     try {
-      const resp = await Axios.post('/user', { email: id, password: password });
+      const resp = await Axios.post('/users', {
+        email: id,
+        password: password,
+      });
 
       const { token } = resp.data;
       //console.log(token);
@@ -52,31 +56,49 @@ const LoginPage = function () {
           onChange={passwordHandle}
           id='password'
         />
-        <LoginButton onClick={loginHandle}>로그인하기</LoginButton>
-        <RegisterButton>회원가입</RegisterButton>
+        <LoginButton onClick={loginHandle}>로그인</LoginButton>
+
+        <Link to={'/register'}>
+          <RegisterButton>회원가입</RegisterButton>
+        </Link>
       </LoginContainer>
     </>
   );
 };
 
+const LoginContainer = styled.div`
+  width: 100%;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 10%;
+  margin-bottom: 30px;
+`;
+
 const Title = styled.div`
   font-size: 40px;
+  color: ${({ theme }) => theme.colors.primary};
+
   padding: 10px;
   margin-bottom: 20px;
+  user-select: none;
 `;
 
 const LoginButton = styled.button`
-  width: 390px;
-  height: 70px;
+  width: 300px;
+  height: 64px;
 
   margin-top: 39px;
-  font-size: 34px;
+  font-size: 30px;
 
   background-color: #d9d9d9;
   border: none;
   color: white;
 
-  border-radius: 30px;
+  border-radius: 20px;
 `;
 
 const RegisterButton = styled.button`
@@ -88,34 +110,34 @@ const RegisterButton = styled.button`
   color: #aaaaaa;
 `;
 
-const LoginContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-  margin-top: 50px;
-  margin-bottom: 30px;
-
-  justify-content: center;
-  align-items: center;
-`;
-
 const IdInput = styled.input`
   width: 433px;
   height: 92px;
+
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 
+  border: 2px solid #bbbbbb;
   border-bottom: none;
   padding-left: 20px;
+
+  :focus {
+    outline: #bbbbbb;
+  }
 `;
 
 const PasswordInput = styled.input`
   width: 433px;
   height: 92px;
+
+  border: 2px solid #bbbbbb;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   padding-left: 20px;
+
+  :focus {
+    outline: #bbbbbb;
+  }
 `;
 
 export default LoginPage;

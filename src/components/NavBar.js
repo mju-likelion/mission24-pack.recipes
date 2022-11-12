@@ -1,203 +1,230 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as Category } from '../images/Category.svg';
-import { ReactComponent as DropdownBtn } from '../images/DropdownBtn.svg';
-import { useEffect, useState } from 'react';
-import Axios from '../lib/axios';
+import { ReactComponent as CategoryIcon } from '../images/Category.svg';
+import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
+import useCategory from '../hooks/useCategory';
 
 const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
-  const [categoryList, setList] = useState([]);
-  const [TopicList, setTopicList] = useState(false);
-  const [subcategorySelected, setSubcategorySelected] = useState(false);
+  const [isShowMainCategory, setIsShowMainCategory] = useState(false); //대분류 카테고리 isShow
+  const [isShowDetailCategory, setIsShowDetailCategory] = useState(false); //소분류 카테고리
+
+  const { category, categoryLoading } = useCategory();
+
   const selectTitle = (id, name) => {
     const newObj = {
       id,
       name,
     };
-    //console.log(newObj);
     setTitle(newObj);
   };
   const [selectedCategory, setSelectedCategory] = useState(0);
-  const getCategory = async () => {
-    try {
-      const ListData = await Axios.get('/category');
-      setList(ListData.data.categories);
-    } catch (e) {
-      return;
-    }
+
+  const isHoverMainCategory = () => {
+    setIsShowMainCategory((prev) => {
+      if (prev) {
+        setSelectedCategory(false);
+        return false;
+      } else {
+        return true;
+      }
+    });
   };
-  useEffect(() => {
-    getCategory();
-  }, []);
+
+  const isHoverDetailCategory = () => {
+    setIsShowDetailCategory(false);
+    setIsShowMainCategory(false);
+  };
+
   return (
     <>
-      <NavBarStyled>
-        <CategoryImg />
-        <Category
-          onClick={() => {
-            setTopicList((prev) => {
-              if (prev) {
-                setSelectedCategory(false);
-                return false;
-              } else {
-                return true;
-              }
-            });
-          }}
-        />
-        <CategoryText>카테고리</CategoryText>
-      </NavBarStyled>
-      {TopicList && (
+      {categoryLoading ? (
+        <LoadingComponent>Loading...</LoadingComponent>
+      ) : (
+        <NavBarStyled>
+          <CategoryBox
+            onMouseEnter={() => {
+              isHoverMainCategory();
+            }}
+          >
+            <CategoryIcon />
+            <CategoryTitle>카테고리</CategoryTitle>
+          </CategoryBox>
+        </NavBarStyled>
+      )}
+      {isShowMainCategory && (
         <DropDownMenu>
-          {categoryList.map((Topic, index) => (
+          {category?.categories.map((Topic, index) => (
             <DropDownItem
               key={index}
-              onClick={() => {
+              onMouseOver={() => {
                 setSelectedCategory(index);
-                setSubcategorySelected(true);
+                setIsShowDetailCategory(true);
               }}
             >
               <MajorTopicBox>
-                <MajorTopic>{Topic.categoryName}</MajorTopic>
-                <StyledBtn />
+                <MajorTopic>{Topic?.categoryName}</MajorTopic>
               </MajorTopicBox>
             </DropDownItem>
           ))}
         </DropDownMenu>
       )}
-
-      {subcategorySelected && categoryList[selectedCategory] ? (
+      {isShowDetailCategory && category?.categories[selectedCategory] ? (
         <SubThemeBox>
-          {categoryList[selectedCategory].downCategories.map((theme, idx) => (
-            <SubTheme
-              onClick={() => {
-                //console.log(theme);
-                selectTitle(theme._id, theme.categoryName);
-                setSubcategorySelected(false);
-                setTopicList(false);
-              }}
-              key={idx}
-            >
-              {theme.categoryName}
-            </SubTheme>
-          ))}
+          {category?.categories[selectedCategory]?.downCategories.map(
+            (theme, idx) => (
+              <SubTheme
+                onClick={() => {
+                  selectTitle(theme?._id, theme?.categoryName);
+                  isHoverDetailCategory();
+                }}
+                key={idx}
+              >
+                {theme?.categoryName}
+              </SubTheme>
+            ),
+          )}
         </SubThemeBox>
       ) : undefined}
     </>
   );
 };
 
-export default NavBar;
+const NavBarStyled = styled.div`
+  width: 100%;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+
+  margin: 0;
+  border-top: solid 2px #d3d3d3;
+  border-bottom: solid 2px #d3d3d3;
+`;
+
+const CategoryBox = styled.div`
+  width: 149px;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+
+  cursor: pointer;
+`;
+
+const CategoryTitle = styled.p`
+  color: #797979;
+  margin-left: 30px;
+  user-select: none;
+`;
+
 const DropDownMenu = styled.div`
-  width: 250px;
+  width: 200px;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  position: absolute;
-  top: 150px;
-  left: 0;
+
   box-shadow: 0px 4px 4px 0px #00000040;
+  background-color: #ffffff;
+  padding: 30px 0;
+
+  cursor: pointer;
 `;
 
 const DropDownItem = styled.div`
   width: 100%;
-  height: 130px;
+  height: 40px;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
+  padding: 10px 0;
 `;
 
-const StyledBtn = styled(DropdownBtn)`
-  opacity: 0;
+//카테고리 대분류 박스
+const MajorTopicBox = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  :hover {
+    animation-name: 'topicHover';
+    animation-duration: 100ms;
+    animation-fill-mode: both;
+    &::after {
+      content: '>';
+      position: absolute;
+      right: 30px;
+    }
+  }
+
+  @keyframes topicHover {
+    to {
+      color: #a2c79a;
+    }
+  }
+`;
+
+const MajorTopic = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+//카테고리 소분류 박스
+const SubThemeBox = styled.div`
+  width: 200px;
+
   position: absolute;
   left: 200px;
+
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0px 4px 4px 0px #00000040;
+
+  cursor: pointer;
 `;
 
-const CategoryImg = styled.div`
-  margin-left: 20px;
-  height: 100%;
+const SubTheme = styled.div`
+  height: 40px;
+  width: 200px;
+
   display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-`;
-const MajorTopic = styled.span`
-  margin-right: 20px;
-`;
-const MajorTopicBox = styled.div`
+
+  background-color: white;
+  padding: 5px 0;
+
   :hover {
-    color: #bedbb8;
-    ${DropdownBtn} {
-      opacity: 1;
+    animation-name: 'slidein';
+    animation-duration: 100ms;
+    animation-fill-mode: both;
+  }
+
+  @keyframes slidein {
+    to {
+      color: #a2c79a;
     }
   }
 `;
-/*
-const MajorTopicBox = styled.div`
+
+const LoadingComponent = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-
-  color: #bedbb8;
-
-  > div {
-    color: black;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    left: 250px;
-    box-shadow: 0px 4px 4px 0px #00000040;
-    :nth-child(1) {
-      align-self: center;
-    }
-  }
-  ${StyledBtn} {
-    display: inline;
-    opacity: 1;
-    margin-left: 40px;
-    margin: 0px;
-  }
-
-  width: 100%;
-  text-align: center;
-`;
-*/
-const SubThemeBox = styled.div`
-  position: relative;
-  width: 200px;
-  left: 250px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0px 4px 4px 0px #00000040;
-`;
-const SubTheme = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  height: 100px;
-  width: 200px;
-  :hover {
-    color: #bedbb8;
-  }
-`;
-const NavBarStyled = styled.div`
-  width: 100%;
-  border-top: solid 2px #d3d3d3;
-  border-bottom: solid 2px #d3d3d3;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  height: 64px;
+  font-size: 30px;
+  padding-top: 300px;
 `;
 
-const CategoryText = styled.p`
-  color: #797979;
-  margin-left: 30px;
-`;
+export default NavBar;
