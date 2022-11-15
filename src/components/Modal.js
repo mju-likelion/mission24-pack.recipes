@@ -29,24 +29,15 @@ const Modal = ({ modalClose }) => {
   const [, addToast] = useToast();
 
   const ItemAdding = async () => {
-    if (!localStorage.getItem('access-token')) {
+    if (!localStorage.getItem('accessToken')) {
       addToast('로그인 후 이용해주세요!', 2000);
     } else {
-      const token = localStorage.getItem('access-token');
       for (const item of itemName) {
-        await Axios.post(
-          '/items',
-          {
-            categoryId: id,
-            name: item,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-        // //console.log(resp.request);
+        await Axios.post('/items', {
+          categoryId: id,
+          name: item,
+        });
+
         modalClose();
       }
     }

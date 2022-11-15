@@ -1,6 +1,8 @@
 import Axios from '../lib/axios';
+import { getCookie } from '../util/Cookie';
 
-export const refreshAccessToken = async (token) => {
+export const refreshAccessToken = async () => {
+  const token = getCookie('refreshToken');
   const res = await Axios.post('/auth/refresh', {
     refreshToken: token,
   });
