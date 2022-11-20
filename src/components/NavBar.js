@@ -2,17 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CategoryIcon } from '../images/Category.svg';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
 import useCategory from '../hooks/useCategory';
+import { toast } from 'react-toastify';
 
 const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
   const [isShowMainCategory, setIsShowMainCategory] = useState(false); //대분류 카테고리 isShow
   const [isShowDetailCategory, setIsShowDetailCategory] = useState(false); //소분류 카테고리
-
   const { category, categoryLoading } = useCategory();
-
+  const [isMobileCategory, setIsMobileCategory] = useState(false);
   const selectTitle = (id, name) => {
     const newObj = {
       id,
@@ -20,12 +21,30 @@ const NavBar = () => {
     };
     setTitle(newObj);
   };
+
   const [selectedCategory, setSelectedCategory] = useState(0);
+  const token = localStorage.getItem('accessToken');
+  const width = document.body.clientWidth;
 
   const isHoverMainCategory = () => {
+    if (width > 375) {
+      setIsShowMainCategory((prev) => {
+        if (prev) {
+          setSelectedCategory(false);
+          setIsMobileCategory(false);
+          return false;
+        } else {
+          return true;
+        }
+      });
+    }
+  };
+
+  const isClickMainCategory = () => {
     setIsShowMainCategory((prev) => {
       if (prev) {
         setSelectedCategory(false);
+        setIsMobileCategory(false);
         return false;
       } else {
         return true;
@@ -36,6 +55,21 @@ const NavBar = () => {
   const isHoverDetailCategory = () => {
     setIsShowDetailCategory(false);
     setIsShowMainCategory(false);
+    setIsMobileCategory(false);
+  };
+
+  const onBackClick = () => {
+    setIsShowDetailCategory(false);
+  };
+
+  const onMobileClick = () => {
+    if (width <= 375) setIsMobileCategory(!isMobileCategory);
+  };
+
+  const onLogOut = () => {
+    localStorage.removeItem('accessToken');
+    setIsMobileCategory(false);
+    toast('로그아웃 되었습니다.');
   };
 
   return (
@@ -49,11 +83,42 @@ const NavBar = () => {
               isHoverMainCategory();
             }}
           >
-            <CategoryIcon />
+            <CategoryIcon
+              onClick={() => {
+                onMobileClick();
+              }}
+            />
             <CategoryTitle>카테고리</CategoryTitle>
           </CategoryBox>
         </NavBarStyled>
       )}
+
+      {isMobileCategory && (
+        <DropDownMenu>
+          <MobileMenu
+            onClick={() => {
+              isClickMainCategory();
+            }}
+          >
+            카테고리
+          </MobileMenu>
+          {token ? (
+            <MobileMenuBox onClick={onLogOut}>
+              <MobileMenu>로그아웃</MobileMenu>
+            </MobileMenuBox>
+          ) : (
+            <MobileMenuBox>
+              <Link to={'/login'}>
+                <MobileMenu>로그인</MobileMenu>
+              </Link>
+              <Link to={'/register'}>
+                <MobileMenu>회원가입</MobileMenu>
+              </Link>
+            </MobileMenuBox>
+          )}
+        </DropDownMenu>
+      )}
+
       {isShowMainCategory && (
         <DropDownMenu>
           {category?.categories.map((Topic, index) => (
@@ -86,6 +151,13 @@ const NavBar = () => {
               </SubTheme>
             ),
           )}
+          <Back
+            onClick={() => {
+              onBackClick();
+            }}
+          >
+            뒤로 가기
+          </Back>
         </SubThemeBox>
       ) : undefined}
     </>
@@ -110,7 +182,8 @@ const CategoryBox = styled.div`
   margin-left: 20px;
 
   cursor: pointer;
-  @media screen and (max-width: 387px) {
+
+  @media screen and (max-width: 375px) {
     margin: 0 20px 0 auto;
   }
 `;
@@ -120,24 +193,46 @@ const CategoryTitle = styled.p`
   margin-left: 30px;
   user-select: none;
 
-  @media screen and (max-width: 387px) {
+  @media screen and (max-width: 375px) {
     display: none;
   }
 `;
 
 const DropDownMenu = styled.div`
   width: 200px;
+  height: 260px;
+
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
 
   box-shadow: 0px 4px 4px 0px #00000040;
   background-color: #ffffff;
   padding: 30px 0;
 
   cursor: pointer;
+
+  @media screen and (max-width: 375px) {
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const MobileMenuBox = styled.div`
+  height: 260px;
+`;
+
+const MobileMenu = styled.button`
+  display: none;
+
+  @media screen and (max-width: 375px) {
+    display: flex;
+    padding: 30px 0;
+    cursor: pointer;
+
+    background: none;
+    border: none;
+  }
 `;
 
 const DropDownItem = styled.div`
@@ -188,6 +283,7 @@ const MajorTopic = styled.div`
 const SubThemeBox = styled.div`
   width: 200px;
 
+  background-color: white;
   position: absolute;
   left: 200px;
 
@@ -197,6 +293,14 @@ const SubThemeBox = styled.div`
   box-shadow: 0px 4px 4px 0px #00000040;
 
   cursor: pointer;
+
+  @media screen and (max-width: 375px) {
+    height: 320px;
+    position: absolute;
+    display: flex;
+    left: auto;
+    right: 0;
+  }
 `;
 
 const SubTheme = styled.div`
@@ -208,7 +312,6 @@ const SubTheme = styled.div`
   justify-content: space-around;
   align-items: center;
 
-  background-color: white;
   padding: 5px 0;
 
   :hover {
@@ -221,6 +324,24 @@ const SubTheme = styled.div`
     to {
       color: #a2c79a;
     }
+  }
+
+  @media screen and (max-width: 375px) {
+  }
+`;
+
+const Back = styled.div`
+  display: none;
+  @media screen and (max-width: 375px) {
+    height: 40px;
+    width: 200px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    padding: 5px 0;
   }
 `;
 
