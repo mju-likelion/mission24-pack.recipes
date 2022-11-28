@@ -10,7 +10,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     removeCookie('refreshToken');
-    setIsLogin((prev) => !prev);
+    setIsLogin(!isLogin);
     window.location.replace('/');
     toast('로그아웃 되었습니다.');
   };
@@ -26,9 +26,7 @@ const Header = () => {
       </Link>
       <LinkBox>
         {isLogin ? (
-          <>
-            <Button onClick={handleLogout}>로그아웃</Button>
-          </>
+          <Button onClick={handleLogout}>로그아웃</Button>
         ) : (
           <>
             <Link to={'/login'}>

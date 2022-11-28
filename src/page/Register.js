@@ -49,17 +49,7 @@ function RegisterPage() {
     <SigninContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
       <Title>회원가입</Title>
       <NameInput placeholder='이름' type={'text'} {...register('name')} />
-      <IdInput
-        placeholder='아이디'
-        type={'text'}
-        {...register('id', {
-          pattern: {
-            value:
-              /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-            message: '이메일 형식으로 입력해주세요',
-          },
-        })}
-      />
+      <IdInput placeholder='아이디' type={'text'} {...register('id')} />
       <PasswordInput
         placeholder='비밀번호'
         type={'password'}
