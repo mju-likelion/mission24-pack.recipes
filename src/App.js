@@ -10,6 +10,7 @@ import RegisterPage from './page/Register';
 // import Toast from './components/Toast';
 import Footer from './components/Footer';
 import ListBox from './components/List';
+import NotFound from './components/NotFound';
 
 import { Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -56,6 +57,7 @@ function App() {
               </>
             }
           />
+          <Route path='/*' element={<NotFound />} />
           <Route
             path='/register'
             element={
