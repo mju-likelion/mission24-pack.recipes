@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as OutButton } from '../images/outButton.svg';
 import Axios from '../lib/axios';
@@ -11,7 +11,7 @@ const Modal = ({ modalClose }) => {
   const [itemName, setItemName] = useState(['']);
 
   const { id } = useRecoilValue(TitleAtom);
-
+  const outside = useRef();
   const ListAdding = () => {
     setListNumber((prev) => [...prev, 0]);
     setItemName((prev) => [...prev, '']);
@@ -46,7 +46,6 @@ const Modal = ({ modalClose }) => {
             },
           },
         );
-        // //console.log(resp.request);
         modalClose();
       }
     }
@@ -54,27 +53,38 @@ const Modal = ({ modalClose }) => {
 
   return (
     //모달이 열릴 때 openModal 클래스 생성
-    <ModalWrapper>
-      <CloseButton onClick={modalClose} />
-      <Title>작성하기</Title>
-      <ListWrapper>
-        {listNumber.map((_, index) => (
-          <div key={index}>
-            <ListText
-              onChange={(e) => TextHandle(index, e.target.value)}
-              value={itemName[index]}
-            />
-            <ListLine />
-          </div>
-        ))}
-      </ListWrapper>
+    <ModalBg ref={outside} onClick={modalClose}>
+      <ModalWrapper>
+        <CloseButton onClick={modalClose} />
+        <Title>작성하기</Title>
+        <ListWrapper>
+          {listNumber.map((_, index) => (
+            <div key={index}>
+              <ListText
+                onChange={(e) => TextHandle(index, e.target.value)}
+                value={itemName[index]}
+              />
+              <ListLine />
+            </div>
+          ))}
+        </ListWrapper>
 
-      <PlusButton onClick={ListAdding}>+</PlusButton>
-      <AddButton onClick={ItemAdding}>추가하기</AddButton>
-    </ModalWrapper>
+        <PlusButton onClick={ListAdding}>+</PlusButton>
+        <AddButton onClick={ItemAdding}>추가하기</AddButton>
+      </ModalWrapper>
+    </ModalBg>
   );
 };
 
+const ModalBg = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  background: rgba(0, 0, 0, 0.2);
+`;
 const ModalWrapper = styled.div`
   position: fixed;
   top: 50%;
@@ -84,7 +94,7 @@ const ModalWrapper = styled.div`
   width: 560px;
   height: auto;
   background: #d6e8e3;
-  opacity: 0.9;
+  /* opacity: 0.9; */
   border-radius: 36px;
   display: flex;
   flex-direction: column;
@@ -100,7 +110,7 @@ const ModalWrapper = styled.div`
 const CloseButton = styled(OutButton)`
   display: flex;
   margin-left: 480px;
-  margin-top: 14px;
+  margin-top: 30px;
 
   @media screen and (max-width: 599px) {
     margin-right: 30%;
@@ -161,6 +171,7 @@ const ListText = styled.input`
   background: none;
   border: none;
   font-size: 25px;
+  color: #424242;
   :focus {
     outline: none;
   }
@@ -175,10 +186,8 @@ const ListLine = styled.hr`
   display: flex;
   align-items: center;
   width: auto;
-
-  @media screen and (max-width: 599px) {
-    width: auto;
-  }
+  border: solid 1px #77977b;
+  background-color: #77977b;
 `;
 
 const AddButton = styled.button`
