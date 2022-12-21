@@ -12,6 +12,7 @@ const Modal = ({ modalClose }) => {
 
   const { id } = useRecoilValue(TitleAtom);
   const outside = useRef();
+  const inside = useRef();
   const ListAdding = () => {
     setListNumber((prev) => [...prev, 0]);
     setItemName((prev) => [...prev, '']);
@@ -53,8 +54,9 @@ const Modal = ({ modalClose }) => {
 
   return (
     //모달이 열릴 때 openModal 클래스 생성
-    <ModalBg ref={outside} onClick={modalClose}>
-      <ModalWrapper>
+    <>
+      <ModalBg ref={outside} onClick={modalClose} />
+      <ModalWrapper ref={inside}>
         <CloseButton onClick={modalClose} />
         <Title>작성하기</Title>
         <ListWrapper>
@@ -72,7 +74,7 @@ const Modal = ({ modalClose }) => {
         <PlusButton onClick={ListAdding}>+</PlusButton>
         <AddButton onClick={ItemAdding}>추가하기</AddButton>
       </ModalWrapper>
-    </ModalBg>
+    </>
   );
 };
 
@@ -82,6 +84,8 @@ const ModalBg = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
+  width: 100%;
+  height: 100%;
 
   background: rgba(0, 0, 0, 0.2);
 `;
