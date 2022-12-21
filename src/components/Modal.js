@@ -90,12 +90,22 @@ const ModalWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 599px) {
+    width: 80%;
+    height: 45%;
+  }
 `;
 
 const CloseButton = styled(OutButton)`
   display: flex;
   margin-left: 480px;
   margin-top: 14px;
+
+  @media screen and (max-width: 599px) {
+    margin-right: 30%;
+    margin-top: 5%;
+  }
 `;
 
 const Title = styled.p`
@@ -105,6 +115,10 @@ const Title = styled.p`
   display: flex;
   justify-content: center;
   padding-bottom: 20px;
+
+  @media screen and (max-width: 599px) {
+    margin-top: 10px;
+  }
 `;
 
 const PlusButton = styled.div`
@@ -116,6 +130,10 @@ const PlusButton = styled.div`
   line-height: 50px;
   font-size: 40px;
   margin: 28px;
+
+  @media screen and (max-width: 599px) {
+    margin-top: 5%;
+  }
 `;
 
 const ListWrapper = styled.div`
@@ -142,15 +160,25 @@ const ListText = styled.input`
   margin-left: 20px;
   background: none;
   border: none;
+  font-size: 25px;
   :focus {
     outline: none;
+  }
+
+  @media screen and (max-width: 599px) {
+    padding: 2%;
+    font-size: 20px;
   }
 `;
 
 const ListLine = styled.hr`
   display: flex;
   align-items: center;
-  width: 300px;
+  width: auto;
+
+  @media screen and (max-width: 599px) {
+    width: auto;
+  }
 `;
 
 const AddButton = styled.button`
@@ -167,6 +195,9 @@ const AddButton = styled.button`
   margin-bottom: 23px;
   border: 0;
   :active {
+  }
+  @media screen and (max-width: 599px) {
+    padding: 2%;
   }
 `;
 export default Modal;
