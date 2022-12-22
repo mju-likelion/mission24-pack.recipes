@@ -28,15 +28,16 @@ const NavBar = () => {
 
   const isHoverMainCategory = () => {
     if (width > 375) {
-      setIsShowMainCategory((prev) => {
-        if (prev) {
-          setSelectedCategory(false);
-          setIsMobileCategory(false);
-          return false;
-        } else {
-          return true;
-        }
-      });
+      if (width < 599)
+        setIsShowMainCategory((prev) => {
+          if (prev) {
+            setSelectedCategory(false);
+            setIsMobileCategory(false);
+            return false;
+          } else {
+            return true;
+          }
+        });
     }
   };
 
@@ -63,7 +64,9 @@ const NavBar = () => {
   };
 
   const onMobileClick = () => {
-    if (width <= 375) setIsMobileCategory(!isMobileCategory);
+    if (width <= 375) {
+      if (width < 599) setIsMobileCategory(!isMobileCategory);
+    }
   };
 
   const onLogOut = () => {
@@ -183,7 +186,7 @@ const CategoryBox = styled.div`
 
   cursor: pointer;
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     margin: 0 20px 0 auto;
   }
 `;
@@ -193,7 +196,7 @@ const CategoryTitle = styled.p`
   margin-left: 30px;
   user-select: none;
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     display: none;
   }
 `;
@@ -210,7 +213,7 @@ const DropDownMenu = styled.div`
 
   cursor: pointer;
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     right: 0;
     display: flex;
     flex-direction: column;
@@ -225,7 +228,7 @@ const MobileMenuBox = styled.div`
 const MobileMenu = styled.button`
   display: none;
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     display: flex;
     padding: 30px 0;
     cursor: pointer;
@@ -294,7 +297,7 @@ const SubThemeBox = styled.div`
 
   cursor: pointer;
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     height: 320px;
     position: absolute;
     display: flex;
@@ -326,13 +329,13 @@ const SubTheme = styled.div`
     }
   }
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 599px) {
   }
 `;
 
 const Back = styled.div`
   display: none;
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     height: 40px;
     width: 200px;
 
