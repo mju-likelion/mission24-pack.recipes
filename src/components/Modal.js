@@ -4,7 +4,7 @@ import { ReactComponent as OutButton } from '../images/outButton.svg';
 import Axios from '../lib/axios';
 import { useRecoilValue } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
-import useToast from '../hook/useToast';
+import useToast from '../hooks/useToast';
 
 const Modal = ({ modalClose }) => {
   const [listNumber, setListNumber] = useState([0]);
@@ -29,13 +29,13 @@ const Modal = ({ modalClose }) => {
   const [, addToast] = useToast();
 
   const ItemAdding = async () => {
-    if (localStorage.getItem('access-token') === '') {
+    if (!localStorage.getItem('access-token')) {
       addToast('로그인 후 이용해주세요!', 2000);
     } else {
       const token = localStorage.getItem('access-token');
       for (const item of itemName) {
         await Axios.post(
-          '/item',
+          '/items',
           {
             categoryId: id,
             name: item,

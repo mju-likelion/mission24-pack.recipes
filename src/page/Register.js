@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import useToast from '../hook/useToast';
+import useToast from '../hooks/useToast';
 import Axios from '../lib/axios';
-import { Input, LoginButton } from './Login';
+import { Input, LoginButton as RegisterButton } from './Login';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
+  const navigate = useNavigate();
   const [, addToast] = useToast();
 
   const [id, setId] = useState('');
@@ -17,8 +19,10 @@ function RegisterPage() {
 
   const registerHandle = async () => {
     try {
-      await Axios.put('/user', { email: id, password: password, name: name });
+      await Axios.put('/users', { email: id, password: password, name: name });
+
       addToast('회원가입 완료!', 2000);
+      navigate('/login');
     } catch (e) {
       const errorCode = e.response.data.errorCode;
       //console.log(errorCode);
@@ -37,19 +41,19 @@ function RegisterPage() {
     <>
       <LoginContainer>
         <Title>회원가입</Title>
-        <IdInput
-          placeholder='아이디'
-          type={'text'}
-          value={id}
-          onChange={idHandle}
-          id='id'
-        />
         <NameInput
           placeholder='이름'
           type={'text'}
           value={name}
           onChange={nameHandle}
           id='name'
+        />
+        <IdInput
+          placeholder='아이디'
+          type={'text'}
+          value={id}
+          onChange={idHandle}
+          id='id'
         />
         <PasswordInput
           placeholder='비밀번호'
@@ -58,17 +62,18 @@ function RegisterPage() {
           onChange={passwordHandle}
           id='password'
         />
-        <LoginButton onClick={registerHandle}>회원가입</LoginButton>
+        <RegisterButton onClick={registerHandle}>회원가입</RegisterButton>
       </LoginContainer>
     </>
   );
 }
 
 const LoginContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-top: 50px;
+
+  margin-top: 10%;
   margin-bottom: 40px;
   justify-content: center;
   align-items: center;
@@ -76,6 +81,8 @@ const LoginContainer = styled.div`
 
 const Title = styled.div`
   font-size: 40px;
+  color: ${({ theme }) => theme.colors.primary};
+
   padding: 10px;
   margin-bottom: 20px;
 `;
