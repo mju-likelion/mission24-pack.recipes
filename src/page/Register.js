@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import useToast from '../hook/useToast';
 import Axios from '../lib/axios';
+import { Input } from './Login';
 
 function RegisterPage() {
   const [, addToast] = useToast();
@@ -66,11 +67,9 @@ function RegisterPage() {
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-
   width: 100%;
   margin-top: 50px;
   margin-bottom: 40px;
-
   justify-content: center;
   align-items: center;
 `;
@@ -84,41 +83,28 @@ const Title = styled.div`
 const LoginButton = styled.button`
   width: 390px;
   height: 70px;
-
   margin-top: 39px;
   font-size: 34px;
-
   background-color: #d9d9d9;
   border: none;
   color: white;
-
   border-radius: 30px;
 `;
 
-const IdInput = styled.input`
-  width: 433px;
-  height: 92px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-
+const NameInput = styled(Input)`
+  border-radius: 20px 20px 0 0;
   border-bottom: none;
-  padding-left: 20px;
 `;
 
-const NameInput = styled.input`
-  width: 433px;
-  height: 92px;
-
+const IdInput = styled(Input)`
   border-bottom: none;
-  padding-left: 20px;
 `;
 
-const PasswordInput = styled.input`
-  width: 433px;
-  height: 92px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  padding-left: 20px;
+const PasswordInput = styled(Input)`
+  :nth-last-child(2) {
+    border-radius: 0 0 20px 20px;
+    border-top: none;
+  }
 `;
 
 export default RegisterPage;

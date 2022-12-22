@@ -68,21 +68,17 @@ const Title = styled.div`
 const LoginButton = styled.button`
   width: 390px;
   height: 70px;
-
   margin-top: 39px;
   font-size: 34px;
-
   background-color: #d9d9d9;
   border: none;
   color: white;
-
   border-radius: 30px;
 `;
 
 const RegisterButton = styled.button`
   margin-top: 19px;
   font-size: 18px;
-
   background: none;
   border: none;
   color: #aaaaaa;
@@ -91,31 +87,32 @@ const RegisterButton = styled.button`
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-
   width: 100%;
   margin-top: 50px;
   margin-bottom: 30px;
-
   justify-content: center;
   align-items: center;
 `;
 
-const IdInput = styled.input`
+export const Input = styled.input`
   width: 433px;
   height: 92px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-
-  border-bottom: none;
+  border: 2px solid #bbbbbb;
+  :focus {
+    outline: #bbbbbb;
+  }
   padding-left: 20px;
 `;
 
-const PasswordInput = styled.input`
-  width: 433px;
-  height: 92px;
+const IdInput = styled(Input)`
+  border-radius: 20px 20px 0 0;
+  border-bottom: none;
+`;
+
+const PasswordInput = styled(Input)`
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  padding-left: 20px;
+  border-radius: 0 0 20px 20px;
 `;
 
 export default LoginPage;
