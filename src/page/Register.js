@@ -2,7 +2,12 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import useToast from '../hooks/useToast';
 import Axios from '../lib/axios';
-import { Input, LoginButton as RegisterButton } from './Login';
+import {
+  Input,
+  LoginButton as RegisterButton,
+  Title,
+  LoginContainer,
+} from './Login';
 import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
@@ -39,7 +44,7 @@ function RegisterPage() {
 
   return (
     <>
-      <LoginContainer>
+      <RegisterContainer>
         <Title>회원가입</Title>
         <NameInput
           placeholder='이름'
@@ -63,28 +68,13 @@ function RegisterPage() {
           id='password'
         />
         <RegisterButton onClick={registerHandle}>회원가입</RegisterButton>
-      </LoginContainer>
+      </RegisterContainer>
     </>
   );
 }
 
-const LoginContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-
-  margin-top: 10%;
+const RegisterContainer = styled(LoginContainer)`
   margin-bottom: 40px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Title = styled.div`
-  font-size: 40px;
-  color: ${({ theme }) => theme.colors.primary};
-
-  padding: 10px;
-  margin-bottom: 20px;
 `;
 
 const NameInput = styled(Input)`

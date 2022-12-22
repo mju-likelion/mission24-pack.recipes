@@ -21,13 +21,11 @@ const LoginPage = function () {
       });
 
       const { token } = resp.data;
-      //console.log(token);
       localStorage.setItem('access-token', token);
       Axios.defaults.headers.Authorization = `Bearer ${token}`;
 
       location.href = '/';
     } catch (e) {
-      //console.log(e);
       const errorCode = e.response.data.errorCode;
 
       switch (errorCode) {
@@ -66,17 +64,19 @@ const LoginPage = function () {
   );
 };
 
-const LoginContainer = styled.div`
-  width: 100%;
+export const LoginContainer = styled.div`
+  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 10%;
-  margin-bottom: 30px;
+  margin: 10% 0 30px 0;
+  @media screen and (max-width: 599px) {
+    margin-bottom: 182px;
+  }
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
   font-size: 40px;
   color: ${({ theme }) => theme.colors.primary};
   padding: 10px;
@@ -118,7 +118,7 @@ export const Input = styled.input`
   }
   padding-left: 20px;
   @media screen and (max-width: 599px) {
-    width: 70%;
+    width: 80%;
     font-size: 20px;
   }
 `;
@@ -129,8 +129,7 @@ const IdInput = styled(Input)`
 `;
 
 const PasswordInput = styled(Input)`
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-radius: 0 0 20px 20px;
   border-radius: 0 0 20px 20px;
 `;
 
