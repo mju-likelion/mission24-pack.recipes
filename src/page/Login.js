@@ -65,7 +65,7 @@ const Title = styled.div`
   margin-bottom: 20px;
 `;
 
-const LoginButton = styled.button`
+export const LoginButton = styled.button`
   width: 390px;
   height: 70px;
   margin-top: 39px;
@@ -74,6 +74,12 @@ const LoginButton = styled.button`
   border: none;
   color: white;
   border-radius: 30px;
+  @media screen and (max-width: 599px) {
+    width: 150px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+  }
 `;
 
 const RegisterButton = styled.button`
@@ -102,6 +108,10 @@ export const Input = styled.input`
     outline: #bbbbbb;
   }
   padding-left: 20px;
+  @media screen and (max-width: 599px) {
+    width: 80%;
+    font-size: 20px;
+  }
 `;
 
 const IdInput = styled(Input)`

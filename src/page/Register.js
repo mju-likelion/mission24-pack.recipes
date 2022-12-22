@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import useToast from '../hook/useToast';
 import Axios from '../lib/axios';
-import { Input } from './Login';
+import { Input, LoginButton } from './Login';
 
 function RegisterPage() {
   const [, addToast] = useToast();
@@ -78,17 +78,6 @@ const Title = styled.div`
   font-size: 40px;
   padding: 10px;
   margin-bottom: 20px;
-`;
-
-const LoginButton = styled.button`
-  width: 390px;
-  height: 70px;
-  margin-top: 39px;
-  font-size: 34px;
-  background-color: #d9d9d9;
-  border: none;
-  color: white;
-  border-radius: 30px;
 `;
 
 const NameInput = styled(Input)`
