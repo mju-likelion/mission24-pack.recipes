@@ -71,7 +71,7 @@ export const LoginContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin: 10% 0 30px 0;
-  @media screen and (max-width: 599px) {
+  @media screen and (min-width: 375px) and (max-width: 599px) {
     margin-bottom: 182px;
   }
 `;
@@ -93,7 +93,7 @@ export const LoginButton = styled.button`
   border: none;
   color: white;
   border-radius: 20px;
-  @media screen and (max-width: 599px) {
+  @media screen and (min-width: 375px) and(max-width: 599px) {
     width: 150px;
     height: 40px;
     font-size: 20px;
@@ -117,7 +117,7 @@ export const Input = styled.input`
     outline: #bbbbbb;
   }
   padding-left: 20px;
-  @media screen and (max-width: 599px) {
+  @media screen and (min-width: 375px) and (max-width: 599px) {
     width: 80%;
     font-size: 20px;
   }
@@ -129,7 +129,6 @@ const IdInput = styled(Input)`
 `;
 
 const PasswordInput = styled(Input)`
-  border-radius: 0 0 20px 20px;
   border-radius: 0 0 20px 20px;
 `;
 
