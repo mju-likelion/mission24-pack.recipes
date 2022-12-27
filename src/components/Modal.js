@@ -98,7 +98,6 @@ const ModalWrapper = styled.div`
   width: 560px;
   height: auto;
   background: #d6e8e3;
-  /* opacity: 0.9; */
   border-radius: 36px;
   display: flex;
   flex-direction: column;
