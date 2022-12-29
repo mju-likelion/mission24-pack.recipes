@@ -144,7 +144,7 @@ const PlusButton = styled.div`
     color: #a2c79a;
   }
 
-  @media screen and (max-width: 599px) and (min-width: 375px) {
+  @media screen and (max-width: 599px) {
     margin-top: 5%;
   }
 `;
@@ -183,7 +183,7 @@ const ListText = styled.input`
     outline: none;
   }
 
-  @media screen and (max-width: 599px) and (min-width: 375px) {
+  @media screen and (max-width: 599px) {
     padding: 2%;
     font-size: 20px;
   }
@@ -214,7 +214,8 @@ const AddButton = styled.button`
   :hover {
     background: #bcd7b6;
   }
-  @media screen and (max-width: 599px) and (min-width: 375px) {
+
+  @media screen and (max-width: 599px) {
     padding: 2%;
   }
 `;
