@@ -45,7 +45,11 @@ export const addItem = async (id, itemName) => {
         });
       }
     } catch (e) {
-      toast('추가할 수 없습니다. 다시 시도해 주세요.');
+      if (e.response.status === 500) {
+        toast('추가할 목록을 입력해 주세요.');
+      } else {
+        toast('추가할 목록을 다시 입력해 주세요.');
+      }
     }
   }
 };

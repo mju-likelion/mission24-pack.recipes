@@ -7,12 +7,17 @@ import usePlus from '../hooks/usePlus';
 import { useQueryClient } from '@tanstack/react-query';
 
 const Modal = ({ modalClose, sort }) => {
+  // 리스트 정보
   const [listNumber, setListNumber] = useState([0]);
   const [itemName, setItemName] = useState(['']);
 
+  // 해당 카테고리 id
   const { id } = useRecoilValue(TitleAtom);
+
+  // 모달 백그라운드 구분
   const outside = useRef();
   const inside = useRef();
+
   const ListAdding = () => {
     setListNumber((prev) => [...prev, 0]);
     setItemName((prev) => [...prev, '']);
@@ -22,14 +27,14 @@ const Modal = ({ modalClose, sort }) => {
     setItemName((prev) => {
       const arr = [...prev];
       arr[index] = text;
-
       return arr;
     });
   };
 
-  const listUpdate = usePlus(sort, id, itemName);
+  const listUpdate = usePlus(id, sort, itemName);
   const queryClient = useQueryClient();
 
+  //추가하기 기능
   const rePlus = async (itemId, sort) => {
     await listUpdate.mutateAsync(itemId);
     modalClose();
@@ -37,10 +42,8 @@ const Modal = ({ modalClose, sort }) => {
       `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
     ]);
   };
-  //커리 무효화가 안 됨 reactQueryDevTools
 
   return (
-    //모달이 열릴 때 openModal 클래스 생성
     <>
       <ModalBg ref={outside} onClick={modalClose} />
       <ModalWrapper ref={inside}>
@@ -57,7 +60,6 @@ const Modal = ({ modalClose, sort }) => {
             </div>
           ))}
         </ListWrapper>
-
         <PlusButton onClick={ListAdding}>+</PlusButton>
         <AddButton onClick={rePlus}>추가하기</AddButton>
       </ModalWrapper>
@@ -71,6 +73,7 @@ const ModalBg = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
+
   width: 100%;
   height: 100%;
 
@@ -84,6 +87,7 @@ const ModalWrapper = styled.div`
 
   width: 560px;
   height: auto;
+
   background: #d6e8e3;
   border-radius: 36px;
   display: flex;
@@ -109,12 +113,13 @@ const CloseButton = styled(OutButton)`
 `;
 
 const Title = styled.p`
-  font-weight: 400;
-  font-size: 40px;
-  line-height: 70px;
   display: flex;
   justify-content: center;
   padding-bottom: 20px;
+
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 70px;
 
   @media screen and (max-width: 599px) {
     margin-top: 10px;
@@ -124,12 +129,19 @@ const Title = styled.p`
 const PlusButton = styled.div`
   width: 40px;
   height: 40px;
-  background: #ffffff;
+
+  background: #a2c79a;
+  color: #ffffff;
   border-radius: 50px;
   text-align: center;
   line-height: 50px;
   font-size: 40px;
   margin: 28px;
+
+  :hover {
+    background: #ffffff;
+    color: #a2c79a;
+  }
 
   @media screen and (max-width: 599px) {
     margin-top: 5%;
@@ -144,11 +156,13 @@ const ListWrapper = styled.div`
   &::-webkit-scrollbar {
     width: 8px; /* 스크롤바의 너비 */
   }
+
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: #bedbb8;
     height: 1%; /* 스크롤바의 길이 */
   }
+
   &::-webkit-scrollbar-track {
     background: #ffffff; /* 스크롤바 뒷 배경 색상 */
   }
@@ -159,9 +173,11 @@ const ListText = styled.input`
   justify-content: left;
   margin-left: 20px;
   background: none;
+
   border: none;
   font-size: 25px;
   color: #424242;
+
   :focus {
     outline: none;
   }
@@ -193,10 +209,14 @@ const AddButton = styled.button`
   background: #ffffff;
   margin-bottom: 23px;
   border: 0;
-  :active {
+
+  :hover {
+    background: #bcd7b6;
   }
+
   @media screen and (max-width: 599px) {
     padding: 2%;
   }
 `;
+
 export default Modal;
