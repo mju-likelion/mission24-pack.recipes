@@ -1,16 +1,22 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ItemAdding } from '../api/List';
+import { addItem } from '../api/List';
 
-const usePlus = () => {
+const usePlus = (sort, id, itemName) => {
   const queryClient = useQueryClient();
   return useMutation(
     () => {
-      ItemAdding();
+      addItem(id, itemName); //api 함수 ?
     },
     {
       onSuccess: () => {
-        return queryClient.invalidateQueries();
+        return queryClient.invalidateQueries([
+          `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
+        ]);
       },
+      onError: (err) => {
+        alert('글을 저장하지 못했습니다.', err);
+      },
+      onSettled: () => {},
     },
   );
 };

@@ -1,12 +1,12 @@
 import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as OutButton } from '../images/outButton.svg';
-import Axios from '../lib/axios';
 import { useRecoilValue } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
-import useToast from '../hooks/useToast';
+import usePlus from '../hooks/usePlus';
+import { useQueryClient } from '@tanstack/react-query';
 
-const Modal = ({ modalClose }) => {
+const Modal = ({ modalClose, sort }) => {
   const [listNumber, setListNumber] = useState([0]);
   const [itemName, setItemName] = useState(['']);
 
@@ -27,30 +27,17 @@ const Modal = ({ modalClose }) => {
     });
   };
 
-  const [, addToast] = useToast();
+  const listUpdate = usePlus(sort, id, itemName);
+  const queryClient = useQueryClient();
 
-  const ItemAdding = async () => {
-    if (!localStorage.getItem('access-token')) {
-      addToast('로그인 후 이용해주세요!', 2000);
-    } else {
-      const token = localStorage.getItem('access-token');
-      for (const item of itemName) {
-        await Axios.post(
-          '/items',
-          {
-            categoryId: id,
-            name: item,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-        modalClose();
-      }
-    }
+  const rePlus = async (itemId, sort) => {
+    await listUpdate.mutateAsync(itemId);
+    modalClose();
+    queryClient.invalidateQueries([
+      `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
+    ]);
   };
+  //커리 무효화가 안 됨 reactQueryDevTools
 
   return (
     //모달이 열릴 때 openModal 클래스 생성
@@ -72,7 +59,7 @@ const Modal = ({ modalClose }) => {
         </ListWrapper>
 
         <PlusButton onClick={ListAdding}>+</PlusButton>
-        <AddButton onClick={ItemAdding}>추가하기</AddButton>
+        <AddButton onClick={rePlus}>추가하기</AddButton>
       </ModalWrapper>
     </>
   );
