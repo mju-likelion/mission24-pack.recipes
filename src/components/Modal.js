@@ -87,6 +87,7 @@ const ModalWrapper = styled.div`
 
   width: 560px;
   height: auto;
+  z-index: 100;
 
   background: #d6e8e3;
   border-radius: 36px;
@@ -143,7 +144,7 @@ const PlusButton = styled.div`
     color: #a2c79a;
   }
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     margin-top: 5%;
   }
 `;
@@ -182,7 +183,7 @@ const ListText = styled.input`
     outline: none;
   }
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     padding: 2%;
     font-size: 20px;
   }
@@ -213,8 +214,7 @@ const AddButton = styled.button`
   :hover {
     background: #bcd7b6;
   }
-
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     padding: 2%;
   }
 `;
