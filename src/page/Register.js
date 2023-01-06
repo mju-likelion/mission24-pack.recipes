@@ -29,7 +29,7 @@ function RegisterPage() {
   const registerHandle = async (data) => {
     try {
       await tryRegister(data);
-      toast('회원가입 완료!');
+      toast('회원가입에 성공했습니다!');
       navigate('/login');
     } catch (e) {
       const errorCode = e.response.data.errorCode;

@@ -28,7 +28,7 @@ const LoginPage = function () {
       Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
       setCookie('refreshToken', refreshToken);
       location.href = '/';
-      toast('로그인 성공');
+      toast('로그인에 성공했습니다!');
     } catch (e) {
       const errorCode = e.response.data.errorCode;
       switch (errorCode) {

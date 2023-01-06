@@ -11,14 +11,15 @@ const Header = () => {
     localStorage.removeItem('accessToken');
     removeCookie('refreshToken');
     setIsLogin(!isLogin);
-    window.location.replace('/');
     toast('로그아웃 되었습니다.');
+    window.location.replace('/');
   };
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
       setIsLogin(true);
     }
   }, [isLogin]);
+
   return (
     <HeaderWrapper>
       <Link to={'/'}>

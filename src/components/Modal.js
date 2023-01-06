@@ -4,7 +4,7 @@ import { ReactComponent as OutButton } from '../images/outButton.svg';
 import Axios from '../lib/axios';
 import { useRecoilValue } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
-import { toast } from 'react-toastify';
+import useToast from '../hooks/useToast';
 
 const Modal = ({ modalClose }) => {
   const [listNumber, setListNumber] = useState([0]);
@@ -26,16 +26,27 @@ const Modal = ({ modalClose }) => {
     });
   };
 
-  const ItemAdding = async () => {
-    if (!localStorage.getItem('accessToken')) {
-      toast('로그인 후 이용해주세요!', 2000);
-    } else {
-      for (const item of itemName) {
-        await Axios.post('/items', {
-          categoryId: id,
-          name: item,
-        });
+  const [, addToast] = useToast();
 
+  const ItemAdding = async () => {
+    if (!localStorage.getItem('access-token')) {
+      addToast('로그인 후 이용해주세요!', 2000);
+    } else {
+      const token = localStorage.getItem('access-token');
+      for (const item of itemName) {
+        await Axios.post(
+          '/items',
+          {
+            categoryId: id,
+            name: item,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        // //console.log(resp.request);
         modalClose();
       }
     }
@@ -145,14 +156,14 @@ const ListLine = styled.hr`
 const AddButton = styled.button`
   width: 120px;
   height: 40px;
-
   display: flex;
   justify-content: center;
-  align-items: center;
 
+  align-items: center;
   font-size: 20px;
   border-radius: 10px;
   background: #ffffff;
+
   margin-bottom: 23px;
   border: 0;
   :active {
