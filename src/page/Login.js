@@ -20,15 +20,14 @@ const LoginPage = function () {
         password: password,
       });
 
-      const { accessToken } = resp.data;
-      localStorage.setItem('accessToken', accessToken);
-      Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
-
+      const { token } = resp.data;
+      //console.log(token);
+      localStorage.setItem('access-token', token);
+      Axios.defaults.headers.Authorization = `Bearer ${token}`;
       location.href = '/';
     } catch (e) {
       //console.log(e);
       const errorCode = e.response.data.errorCode;
-
       switch (errorCode) {
         case 'EMAIL_NOT_EXISTS':
           addToast('존재하지 않는 계정입니다!', 2000);

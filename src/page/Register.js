@@ -18,11 +18,7 @@ function RegisterPage() {
 
   const registerHandle = async () => {
     try {
-      await Axios.post('/auth/register', {
-        email: id,
-        password: password,
-        name: name,
-      });
+      await Axios.put('/users', { email: id, password: password, name: name });
 
       addToast('회원가입 완료!', 2000);
       navigate('/login');

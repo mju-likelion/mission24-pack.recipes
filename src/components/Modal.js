@@ -35,7 +35,7 @@ const Modal = ({ modalClose, sort }) => {
   const queryClient = useQueryClient();
 
   //추가하기 기능
-  const rePlus = async (itemId, sort) => {
+  const plus = async (itemId, sort) => {
     await listUpdate.mutateAsync(itemId);
     modalClose();
     queryClient.invalidateQueries([
@@ -61,7 +61,7 @@ const Modal = ({ modalClose, sort }) => {
           ))}
         </ListWrapper>
         <PlusButton onClick={ListAdding}>+</PlusButton>
-        <AddButton onClick={rePlus}>추가하기</AddButton>
+        <AddButton onClick={plus}>추가하기</AddButton>
       </ModalWrapper>
     </>
   );
@@ -96,7 +96,7 @@ const ModalWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     width: 80%;
     height: 45%;
   }
@@ -107,7 +107,7 @@ const CloseButton = styled(OutButton)`
   margin-left: 480px;
   margin-top: 30px;
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     margin-right: 30%;
     margin-top: 5%;
   }
@@ -122,7 +122,7 @@ const Title = styled.p`
   font-size: 40px;
   line-height: 70px;
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     margin-top: 10px;
   }
 `;
@@ -131,7 +131,7 @@ const PlusButton = styled.div`
   width: 40px;
   height: 40px;
 
-  background: #a2c79a;
+  background-color: ${({ theme }) => theme.colors.primary};
   color: #ffffff;
   border-radius: 50px;
   text-align: center;
@@ -144,7 +144,7 @@ const PlusButton = styled.div`
     color: #a2c79a;
   }
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     margin-top: 5%;
   }
 `;
@@ -177,13 +177,13 @@ const ListText = styled.input`
 
   border: none;
   font-size: 25px;
-  color: #424242;
+  color: ${({ theme }) => theme.colors.primary};
 
   :focus {
     outline: none;
   }
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     padding: 2%;
     font-size: 20px;
   }
@@ -212,10 +212,11 @@ const AddButton = styled.button`
   border: 0;
 
   :hover {
-    background: #bcd7b6;
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: #ffffff;
   }
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     padding: 2%;
   }
 `;

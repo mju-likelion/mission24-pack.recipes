@@ -5,7 +5,7 @@ const usePlus = (sort, id, itemName) => {
   const queryClient = useQueryClient();
   return useMutation(
     () => {
-      addItem(id, itemName); //api 함수 ?
+      addItem(id, itemName);
     },
     {
       onSuccess: () => {
@@ -16,7 +16,6 @@ const usePlus = (sort, id, itemName) => {
       onError: (err) => {
         alert('글을 저장하지 못했습니다.', err);
       },
-      onSettled: () => {},
     },
   );
 };
