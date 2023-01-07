@@ -35,7 +35,7 @@ const Modal = ({ modalClose, sort }) => {
   const queryClient = useQueryClient();
 
   //추가하기 기능
-  const plus = async (itemId, sort) => {
+  const itemplus = async (itemId, sort) => {
     await listUpdate.mutateAsync(itemId);
     modalClose();
     queryClient.invalidateQueries([
@@ -61,7 +61,7 @@ const Modal = ({ modalClose, sort }) => {
           ))}
         </ListWrapper>
         <PlusButton onClick={ListAdding}>+</PlusButton>
-        <AddButton onClick={plus}>추가하기</AddButton>
+        <AddButton onClick={itemplus}>추가하기</AddButton>
       </ModalWrapper>
     </>
   );
