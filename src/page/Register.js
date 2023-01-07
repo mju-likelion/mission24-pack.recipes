@@ -53,7 +53,7 @@ function RegisterPage() {
           onChange={nameHandle}
           id='name'
         />
-        <IdInput
+        <Input
           placeholder='아이디'
           type={'text'}
           value={id}
@@ -79,10 +79,6 @@ const RegisterContainer = styled(LoginContainer)`
 
 const NameInput = styled(Input)`
   border-radius: 20px 20px 0 0;
-  border-bottom: none;
-`;
-
-const IdInput = styled(Input)`
   border-bottom: none;
 `;
 
