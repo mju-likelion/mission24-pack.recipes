@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 import { addItem } from '../api/List';
 
 const usePlus = (sort, id, itemName) => {
@@ -14,7 +15,7 @@ const usePlus = (sort, id, itemName) => {
         ]);
       },
       onError: (err) => {
-        alert('글을 저장하지 못했습니다.', err);
+        toast('글을 저장하지 못했습니다.', err);
       },
     },
   );
