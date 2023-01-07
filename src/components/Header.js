@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as Logo } from '../images/logo.svg';
 import { removeCookie } from '../util/Cookie';
@@ -7,12 +7,13 @@ import { toast } from 'react-toastify';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     removeCookie('refreshToken');
     setIsLogin(!isLogin);
+    navigate('/');
     toast('로그아웃 되었습니다.');
-    window.location.replace('/');
   };
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
