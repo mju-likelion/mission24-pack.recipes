@@ -8,6 +8,9 @@ const GlobalStyle = createGlobalStyle`
             overflow-x: hidden;
         }
         font-family: 'locus_sangsang';
+        a {
+            text-decoration: none;
+        }
     }
 `;
 
