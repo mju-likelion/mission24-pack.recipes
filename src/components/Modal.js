@@ -131,8 +131,8 @@ const PlusButton = styled.div`
   width: 40px;
   height: 40px;
 
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: #ffffff;
+  background-color: #ffffff;
+
   border-radius: 50px;
   text-align: center;
   line-height: 50px;
@@ -150,8 +150,8 @@ const PlusButton = styled.div`
 `;
 
 const ListWrapper = styled.div`
-  width: 328px;
-  height: 150px;
+  width: 330px;
+  height: 180px;
   overflow: auto;
 
   &::-webkit-scrollbar {
@@ -160,7 +160,7 @@ const ListWrapper = styled.div`
 
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #bedbb8;
+    background: #77977b;
     height: 1%; /* 스크롤바의 길이 */
   }
 
@@ -174,10 +174,8 @@ const ListText = styled.input`
   justify-content: left;
   margin-left: 20px;
   background: none;
-
   border: none;
   font-size: 25px;
-  color: ${({ theme }) => theme.colors.primary};
 
   :focus {
     outline: none;
@@ -193,8 +191,10 @@ const ListLine = styled.hr`
   display: flex;
   align-items: center;
   width: auto;
-  border: solid 1px #77977b;
-  background-color: #77977b;
+  margin-bottom: 5%;
+  height: 1px;
+  border: solid 1px #9bb89e;
+  background-color: #9bb89e;
 `;
 
 const AddButton = styled.button`
