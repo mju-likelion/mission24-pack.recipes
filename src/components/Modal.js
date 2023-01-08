@@ -156,14 +156,14 @@ const ListLine = styled.hr`
 const AddButton = styled.button`
   width: 120px;
   height: 40px;
-
   display: flex;
   justify-content: center;
-  align-items: center;
 
+  align-items: center;
   font-size: 20px;
   border-radius: 10px;
   background: #ffffff;
+
   margin-bottom: 23px;
   border: 0;
   :active {
