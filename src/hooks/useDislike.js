@@ -6,7 +6,7 @@ const useDislike = (sort, id) => {
 
   return useMutation(
     (itemId) => {
-      dislike(itemId);
+      return dislike(itemId);
     },
     {
       onSuccess: () => {
