@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Axios from '../lib/axios';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -93,22 +93,19 @@ export const LoginButton = styled.button`
     font-size: 20px;
     border-radius: 10px;
   }
-  ${(props) =>
-    props.active
-      ? css`
-          background-color: ${({ theme }) => theme.colors.green};
-        `
-      : css`
-          background-color: #d9d9d9;
-        `}
+  background-color: ${(props) =>
+    props.active ? props.theme.colors.primary : '#d3d3d3'};
 `;
 
 const RegisterButton = styled.button`
-  margin-top: 19px;
-  font-size: 18px;
+  margin-top: 25px;
+  font-size: 24px;
   background: none;
   border: none;
   color: #aaaaaa;
+  @media screen and (min-width: 375px) and(max-width: 599px) {
+    font-size: 18px;
+  }
 `;
 
 export const Input = styled.input`
