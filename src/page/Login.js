@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Axios from '../lib/axios';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -59,17 +59,19 @@ const LoginPage = function () {
   );
 };
 
-const LoginContainer = styled.form`
+export const LoginContainer = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 10%;
-  margin-bottom: 30px;
+  margin: 10% 0 30px 0;
+  @media screen and (min-width: 375px) and (max-width: 599px) {
+    margin-bottom: 182px;
+  }
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
   font-size: 40px;
   color: ${({ theme }) => theme.colors.primary};
   padding: 10px;
@@ -77,7 +79,7 @@ const Title = styled.div`
   user-select: none;
 `;
 
-const LoginButton = styled.button`
+export const LoginButton = styled.button`
   width: 300px;
   height: 64px;
   margin-top: 39px;
@@ -85,47 +87,48 @@ const LoginButton = styled.button`
   border: none;
   color: white;
   border-radius: 20px;
-  ${(props) =>
-    props.active
-      ? css`
-          background-color: ${({ theme }) => theme.colors.green};
-        `
-      : css`
-          background-color: #d9d9d9;
-        `}
+  @media screen and (min-width: 375px) and(max-width: 599px) {
+    width: 150px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+  }
+  background-color: ${(props) =>
+    props.active ? props.theme.colors.primary : '#d3d3d3'};
 `;
 
 const RegisterButton = styled.button`
-  margin-top: 19px;
-  font-size: 18px;
+  margin-top: 25px;
+  font-size: 24px;
   background: none;
   border: none;
   color: #aaaaaa;
+  @media screen and (min-width: 375px) and(max-width: 599px) {
+    font-size: 18px;
+  }
 `;
 
-const IdInput = styled.input`
+export const Input = styled.input`
   width: 433px;
   height: 92px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
   border: 2px solid #bbbbbb;
+  :focus {
+    outline: #bbbbbb;
+  }
+  padding-left: 20px;
+  @media screen and (min-width: 375px) and (max-width: 599px) {
+    width: 80%;
+    font-size: 20px;
+  }
+`;
+
+const IdInput = styled(Input)`
+  border-radius: 20px 20px 0 0;
   border-bottom: none;
-  padding-left: 20px;
-  :focus {
-    outline: #bbbbbb;
-  }
 `;
 
-const PasswordInput = styled.input`
-  width: 433px;
-  height: 92px;
-  border: 2px solid #bbbbbb;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  padding-left: 20px;
-  :focus {
-    outline: #bbbbbb;
-  }
+const PasswordInput = styled(Input)`
+  border-radius: 0 0 20px 20px;
 `;
 
 export default LoginPage;

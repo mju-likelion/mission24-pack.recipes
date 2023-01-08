@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import {
+  Input,
+  LoginButton as RegisterButton,
+  Title,
+  LoginContainer,
+} from './Login';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -46,10 +52,10 @@ function RegisterPage() {
   };
 
   return (
-    <SigninContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
+    <RegisterContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
       <Title>회원가입</Title>
       <NameInput placeholder='이름' type={'text'} {...register('name')} />
-      <IdInput placeholder='아이디' type={'text'} {...register('id')} />
+      <Input placeholder='아이디' type={'text'} {...register('id')} />
       <PasswordInput
         placeholder='비밀번호'
         type={'password'}
@@ -69,82 +75,24 @@ function RegisterPage() {
       <RegisterButton active={isValid} type='submit' disabled={!isValid}>
         회원가입
       </RegisterButton>
-    </SigninContainer>
+    </RegisterContainer>
   );
 }
 
-const SigninContainer = styled.form`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 10%;
+const RegisterContainer = styled(LoginContainer)`
   margin-bottom: 40px;
-  justify-content: center;
-  align-items: center;
 `;
 
-const Title = styled.div`
-  font-size: 40px;
-  color: ${({ theme }) => theme.colors.primary};
-  padding: 10px;
-  margin-bottom: 20px;
-  user-select: none;
-`;
-
-const NameInput = styled.input`
-  width: 433px;
-  height: 92px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border: 2px solid #bbbbbb;
+const NameInput = styled(Input)`
+  border-radius: 20px 20px 0 0;
   border-bottom: none;
-  padding-left: 20px;
-  :focus {
-    outline: #bbbbbb;
-  }
 `;
 
-const IdInput = styled.input`
-  width: 433px;
-  height: 92px;
-  border: 2px solid #bbbbbb;
-  border-bottom: none;
-  padding-left: 20px;
-  :focus {
-    outline: #bbbbbb;
-  }
-`;
-
-const PasswordInput = styled.input`
-  width: 433px;
-  height: 92px;
-  border: 2px solid #bbbbbb;
-  padding-left: 20px;
-  :focus {
-    outline: #bbbbbb;
-  }
+const PasswordInput = styled(Input)`
+  border-top: none;
   :nth-last-child(2) {
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-radius: 0 0 20px 20px;
   }
-`;
-
-const RegisterButton = styled.button`
-  width: 300px;
-  height: 64px;
-  margin-top: 39px;
-  font-size: 30px;
-  border: none;
-  color: white;
-  border-radius: 20px;
-  ${(props) =>
-    props.active
-      ? css`
-          background-color: ${({ theme }) => theme.colors.green};
-        `
-      : css`
-          background-color: #d9d9d9;
-        `}
 `;
 
 export default RegisterPage;
