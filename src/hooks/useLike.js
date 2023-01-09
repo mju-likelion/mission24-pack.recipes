@@ -5,7 +5,7 @@ const useLike = (sort, id) => {
   const queryClient = useQueryClient();
   return useMutation(
     (itemId) => {
-      postLike(itemId);
+      return postLike(itemId);
     },
     {
       onSuccess: () => {
