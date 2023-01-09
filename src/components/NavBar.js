@@ -28,16 +28,15 @@ const NavBar = () => {
 
   const isHoverMainCategory = () => {
     if (width > 375) {
-      if (width < 599)
-        setIsShowMainCategory((prev) => {
-          if (prev) {
-            setSelectedCategory(false);
-            setIsMobileCategory(false);
-            return false;
-          } else {
-            return true;
-          }
-        });
+      setIsShowMainCategory((prev) => {
+        if (prev) {
+          setSelectedCategory(false);
+          setIsMobileCategory(false);
+          return false;
+        } else {
+          return true;
+        }
+      });
     }
   };
 
