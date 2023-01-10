@@ -34,7 +34,7 @@ const Modal = ({ modalClose, sort }) => {
   const queryClient = useQueryClient();
 
   //추가하기 기능
-  const itemplus = async (itemId, sort) => {
+  const itemplus = async (itemId) => {
     await listUpdate.mutateAsync(itemId);
     modalClose();
     queryClient.invalidateQueries([
