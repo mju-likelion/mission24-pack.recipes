@@ -30,8 +30,7 @@ const Modal = ({ modalClose, sort }) => {
       return arr;
     });
   };
-
-  const listUpdate = usePlus(id, sort, itemName);
+  const listUpdate = usePlus(sort, id, itemName);
   const queryClient = useQueryClient();
 
   //추가하기 기능
