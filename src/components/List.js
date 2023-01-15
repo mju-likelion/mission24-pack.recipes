@@ -18,12 +18,13 @@ const List = () => {
 
   const modalClose = () => {
     setModalOpen(!modalOpen);
-    if (!modalOpen == true) {
+    if (!modalOpen) {
       document.body.style.overflow = 'hidden';
-    } else if (!modalOpen == false) {
+    } else {
       document.body.style.overflow = 'unset';
     }
   };
+
   const { category, categoryLoading } = useCategory();
   const categories = category?.categories;
 
