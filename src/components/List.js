@@ -18,7 +18,11 @@ const List = () => {
 
   const modalClose = () => {
     setModalOpen(!modalOpen);
-    // fetchList();
+    if (!modalOpen == true) {
+      document.body.style.overflow = 'hidden';
+    } else if (!modalOpen == false) {
+      document.body.style.overflow = 'unset';
+    }
   };
   const { category, categoryLoading } = useCategory();
   const categories = category?.categories;
