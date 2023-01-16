@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 export const postLike = async (itemId) => {
   if (!localStorage.getItem('accessToken')) {
-    toast('로그인 후 이용해주세요!');
+    toast('로그인 후 이용해 주세요!');
   } else {
     try {
       await Axios.post(`/items/${itemId}/like`);
@@ -19,7 +19,7 @@ export const postLike = async (itemId) => {
 
 export const dislike = async (itemId) => {
   if (!localStorage.getItem('accessToken')) {
-    toast('로그인 후 이용해주세요!');
+    toast('로그인 후 이용해 주세요!');
   } else {
     try {
       await Axios.delete(`/items/${itemId}/like`);
@@ -28,6 +28,25 @@ export const dislike = async (itemId) => {
         await postLike(itemId);
       } else {
         toast(e.response.data.errMsg);
+      }
+    }
+  }
+};
+
+export const addItem = async (id, itemName) => {
+  if (!localStorage.getItem('accessToken')) {
+    toast('로그인 후 이용해 주세요!');
+  } else {
+    try {
+      for (const item of itemName) {
+        await Axios.post('/items', {
+          categoryId: id,
+          name: item,
+        });
+      }
+    } catch (e) {
+      if (e.response.status === 500) {
+        toast('추가할 목록을 다시 입력해 주세요.');
       }
     }
   }
