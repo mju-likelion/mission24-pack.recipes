@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import useToast, { ToastElem } from '../hook/useToast';
+import useToast, { ToastElem } from '../hooks/useToast';
 
 /**
  *
@@ -10,12 +10,16 @@ import useToast, { ToastElem } from '../hook/useToast';
  */
 function ToastElement({ toast, msg }) {
   const toastRef = useRef();
+
   useEffect(() => {
     setTimeout(() => {
-      toastRef.current.style['animation-name'] = 'slideout';
-      toastRef.current.style['animation-duration'] = '0.3s';
+      if (toastRef.current) {
+        toastRef.current.style['animation-name'] = 'slideout';
+        toastRef.current.style['animation-duration'] = '0.3s';
+      }
     }, toast.disappearTime - 300);
   }, []);
+
   return (
     <>
       <ToastItem ref={toastRef}>{msg}</ToastItem>
@@ -29,9 +33,13 @@ function Toast() {
   return (
     <>
       <ToastWrapper>
-        {toasts.map((toast, index) => {
+        {toasts.map((toast) => {
           return (
-            <ToastElement key={index} toast={toast} msg={toast.toastMsg} />
+            <ToastElement
+              key={toast.index}
+              toast={toast}
+              msg={toast.toastMsg}
+            />
           );
         })}
       </ToastWrapper>
@@ -61,6 +69,8 @@ const ToastItem = styled.div`
   background-color: #d6e8e3;
   color: black;
   border-radius: 20px;
+
+  z-index: 200;
 
   animation-duration: 1s;
   animation-name: slidein;

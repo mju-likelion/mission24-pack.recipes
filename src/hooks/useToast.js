@@ -1,13 +1,12 @@
 import { atom, useRecoilState } from 'recoil';
+import { v4 } from 'uuid';
 
 export class ToastElem {
-  constructor(toastMsg, disappearTime, disappearCallback) {
+  constructor(toastMsg, disappearTime) {
     this.toastMsg = toastMsg;
+    this.index = v4();
 
     this.disappearTime = disappearTime;
-    this.toastTimeout = setTimeout(() => {
-      disappearCallback();
-    }, disappearTime);
   }
 
   /**
@@ -37,14 +36,19 @@ function useToast() {
    * @param {number} disappearTime
    */
   function addToast(toastMsg, disappearTime) {
-    const newToast = new ToastElem(toastMsg, disappearTime || 1000, () => {
+    const newToast = new ToastElem(toastMsg, disappearTime || 1000);
+
+    setTimeout(() => {
       setToast((prev) => {
         const elems = [...prev];
-        elems.splice(elems.findIndex((t) => t === newToast));
+        elems.splice(
+          elems.findIndex((t) => t === newToast),
+          1,
+        );
 
         return elems;
       });
-    });
+    }, disappearTime);
 
     setToast((prev) => [...prev, newToast]);
   }
