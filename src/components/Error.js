@@ -2,11 +2,11 @@ import { ReactComponent as ErrorIcon } from '../images/Error.svg';
 import React from 'react';
 import styled from 'styled-components';
 
-const Error = () => {
+const Error = ({ children }) => {
   return (
     <Wrapper>
       <ErrorIcon />
-      <Text>Error 404</Text>
+      <Text>{children}</Text>
     </Wrapper>
   );
 };
