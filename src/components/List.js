@@ -57,7 +57,7 @@ const List = () => {
 
   useEffect(() => {
     if (id) listFetch();
-  }, [id]);
+  }, [id, sort]);
 
   const postLike = useLike(sort, id);
   const deleteLike = useDislike(sort, id);
