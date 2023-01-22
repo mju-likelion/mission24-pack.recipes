@@ -1,147 +1,98 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import useToast from '../hooks/useToast';
-import Axios from '../lib/axios';
+import {
+  Input,
+  LoginButton as RegisterButton,
+  Title,
+  LoginContainer,
+} from './Login';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { tryRegister } from '../api/LoginRegister';
 
 function RegisterPage() {
+  const [isValid, setIsValid] = useState(false);
   const navigate = useNavigate();
-  const [, addToast] = useToast();
+  const { register, watch, handleSubmit, getValues } = useForm();
 
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  //버튼 비활성화를 위해 입력창값들이 바뀔 때마다 버튼 비활성화 여부 판단
+  useEffect(() => {
+    const subscribe = watch((data) => {
+      if (data.name && data.id && data.password && data.confirmPassword)
+        setIsValid(true);
+      else setIsValid(false);
+    });
+    return () => subscribe.unsubscribe();
+  }, [watch]);
 
-  const idHandle = (e) => setId(e.target.value);
-  const nameHandle = (e) => setName(e.target.value);
-  const passwordHandle = (e) => setPassword(e.target.value);
+  //유효성 검사에서 오류가 있을 때 토스트 메세지를 띄워줄 함수
+  function onInValid(error) {
+    if (error.id) toast(error.id.message, 2000);
+    else toast(error.confirmPassword.message, 2000);
+  }
 
-  const registerHandle = async () => {
+  const registerHandle = async (data) => {
     try {
-      await Axios.put('/users', { email: id, password: password, name: name });
-
-      addToast('회원가입 완료!', 2000);
+      await tryRegister(data);
+      toast('회원가입에 성공했습니다!');
       navigate('/login');
     } catch (e) {
       const errorCode = e.response.data.errorCode;
-      //console.log(errorCode);
+
       switch (errorCode) {
         case 'EMAIL_EXITS':
-          addToast('이미 존재하는 이메일입니다', 2000);
+          toast('이미 존재하는 이메일입니다');
           break;
         case 'NAME_EXISTS':
-          addToast('이미 사용중인 이름입니다', 2000);
+          toast('이미 사용중인 이름입니다');
           break;
       }
     }
   };
 
   return (
-    <>
-      <LoginContainer>
-        <Title>회원가입</Title>
-        <NameInput
-          placeholder='이름'
-          type={'text'}
-          value={name}
-          onChange={nameHandle}
-          id='name'
-        />
-        <IdInput
-          placeholder='아이디'
-          type={'text'}
-          value={id}
-          onChange={idHandle}
-          id='id'
-        />
-        <PasswordInput
-          placeholder='비밀번호'
-          type={'password'}
-          value={password}
-          onChange={passwordHandle}
-          id='password'
-        />
-        <RegisterButton onClick={registerHandle}>회원가입</RegisterButton>
-      </LoginContainer>
-    </>
+    <RegisterContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
+      <Title>회원가입</Title>
+      <NameInput placeholder='이름' type={'text'} {...register('name')} />
+      <Input placeholder='아이디' type={'text'} {...register('id')} />
+      <PasswordInput
+        placeholder='비밀번호'
+        type={'password'}
+        {...register('password')}
+      />
+
+      <PasswordInput
+        placeholder='비밀번호 확인'
+        type={'password'}
+        {...register('confirmPassword', {
+          validate: {
+            confirmPassword: (pw) =>
+              pw === getValues('password') || '동일한 비밀번호를 입력해주세요',
+          },
+        })}
+      />
+      <RegisterButton active={isValid} type='submit' disabled={!isValid}>
+        회원가입
+      </RegisterButton>
+    </RegisterContainer>
   );
 }
 
-const LoginContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-
-  margin-top: 10%;
+const RegisterContainer = styled(LoginContainer)`
   margin-bottom: 40px;
-
-  justify-content: center;
-  align-items: center;
 `;
 
-const Title = styled.div`
-  font-size: 40px;
-  color: ${({ theme }) => theme.colors.primary};
-
-  padding: 10px;
-  margin-bottom: 20px;
-  user-select: none;
-`;
-
-const NameInput = styled.input`
-  width: 433px;
-  height: 92px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-
-  border: 2px solid #bbbbbb;
+const NameInput = styled(Input)`
+  border-radius: 20px 20px 0 0;
   border-bottom: none;
-  padding-left: 20px;
-
-  :focus {
-    outline: #bbbbbb;
-  }
 `;
 
-const IdInput = styled.input`
-  width: 433px;
-  height: 92px;
-
-  border: 2px solid #bbbbbb;
-  border-bottom: none;
-  padding-left: 20px;
-
-  :focus {
-    outline: #bbbbbb;
+const PasswordInput = styled(Input)`
+  border-top: none;
+  :nth-last-child(2) {
+    border-radius: 0 0 20px 20px;
   }
-`;
-
-const PasswordInput = styled.input`
-  width: 433px;
-  height: 92px;
-
-  border: 2px solid #bbbbbb;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  padding-left: 20px;
-
-  :focus {
-    outline: #bbbbbb;
-  }
-`;
-
-const RegisterButton = styled.button`
-  width: 300px;
-  height: 64px;
-
-  margin-top: 39px;
-  font-size: 30px;
-
-  background-color: #d9d9d9;
-  border: none;
-  color: white;
-
-  border-radius: 20px;
 `;
 
 export default RegisterPage;

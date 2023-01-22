@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postLike } from '../api/List';
+import { toast } from 'react-toastify';
+import { addItem } from '../api/List';
 
-const useLike = (sort, id) => {
+const usePlus = (sort, id, itemName) => {
   const queryClient = useQueryClient();
   return useMutation(
-    (itemId) => {
-      return postLike(itemId);
+    () => {
+      addItem(id, itemName);
     },
     {
       onSuccess: () => {
@@ -13,8 +14,11 @@ const useLike = (sort, id) => {
           `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
         ]);
       },
+      onError: (err) => {
+        toast('글을 저장하지 못했습니다.', err);
+      },
     },
   );
 };
 
-export default useLike;
+export default usePlus;
