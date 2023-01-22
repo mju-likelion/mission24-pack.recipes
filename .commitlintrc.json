@@ -4,7 +4,7 @@
     "type-enum": [
       2,
       "always",
-      ["feat", "fix", "refactor", "style", "setting", "docs"]
+      ["feat", "fix", "refactor", "style", "setting", "docs", "chore"]
     ]
   }
 }
