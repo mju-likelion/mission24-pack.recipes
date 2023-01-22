@@ -61,10 +61,9 @@ const NavBar = () => {
   const onBackClick = () => {
     setIsShowDetailCategory(false);
   };
-
   const onMobileClick = () => {
-    if (width <= 375) {
-      if (width < 599) setIsMobileCategory(!isMobileCategory);
+    if (width >= 375) {
+      if (width <= 599) setIsMobileCategory(!isMobileCategory);
     }
   };
 
