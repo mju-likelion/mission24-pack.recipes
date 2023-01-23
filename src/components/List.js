@@ -31,7 +31,7 @@ const List = () => {
   const { name, id } = useRecoilValue(TitleAtom);
   const setTitleState = useSetRecoilState(TitleAtom);
 
-  const { list } = useList(sort, id);
+  const { list, listFetch } = useList(sort, id);
 
   const queryClient = useQueryClient();
 
@@ -55,6 +55,10 @@ const List = () => {
     fetch();
   }, [categoryLoading]);
 
+  useEffect(() => {
+    if (id) listFetch();
+  }, [id, sort]);
+
   const postLike = useLike(sort, id);
   const deleteLike = useDislike(sort, id);
 
@@ -71,7 +75,7 @@ const List = () => {
       `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
     ]);
   };
-
+  if (categoryLoading) return <LoadingComponent>Loading...</LoadingComponent>;
   return (
     <ListWrapper>
       <Header>
@@ -81,41 +85,38 @@ const List = () => {
           <button onClick={() => setSort('likeCount')}>인기순</button>
         </SortDiv>
       </Header>
-      {categoryLoading ? (
-        <LoadingComponent>Loading...</LoadingComponent>
-      ) : (
-        <ListBox>
-          <ListBoxWrapper>
-            {list?.items?.map((item, index) => (
-              <div key={index}>
-                <ListItemBox>
-                  <ListItem>{item.name}</ListItem>
-                </ListItemBox>
-                <LikeBox>
-                  {item?.likes ? (
-                    <RedLike
-                      onClick={() => {
-                        dislike(item._id);
-                      }}
-                    />
-                  ) : (
-                    <Like
-                      onClick={() => {
-                        like(item._id);
-                      }}
-                    />
-                  )}
-                  <LikeNum>{item.likeCount}</LikeNum>
-                </LikeBox>
-              </div>
-            ))}
-          </ListBoxWrapper>
-          <ButtonWrapper>
-            <Button onClick={modalClose}>추가하기</Button>
-          </ButtonWrapper>
-          {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
-        </ListBox>
-      )}
+      <ListBox>
+        <ListBoxWrapper>
+          {list?.items?.map((item, index) => (
+            <div key={index}>
+              <ListItemBox>
+                <ListItem>{item.name}</ListItem>
+              </ListItemBox>
+              <LikeBox>
+                {item?.likes ? (
+                  <RedLike
+                    onClick={() => {
+                      dislike(item._id);
+                    }}
+                  />
+                ) : (
+                  <Like
+                    onClick={() => {
+                      like(item._id);
+                    }}
+                  />
+                )}
+                <LikeNum>{item.likeCount}</LikeNum>
+              </LikeBox>
+            </div>
+          ))}
+        </ListBoxWrapper>
+        <ButtonWrapper>
+          <Button onClick={modalClose}>추가하기</Button>
+        </ButtonWrapper>
+        {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
+      </ListBox>
+      )
     </ListWrapper>
   );
 };
