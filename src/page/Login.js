@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { setCookie } from '../util/Cookie';
 import { tryLogin } from '../api/LoginRegister';
+import Loading from '../components/Loading';
 
 const LoginPage = function () {
   const { register, handleSubmit, watch } = useForm();
@@ -41,6 +42,7 @@ const LoginPage = function () {
 
   return (
     <LoginContainer onSubmit={handleSubmit(loginHandle)}>
+      <Loading />
       <Title>로그인</Title>
       <IdInput placeholder='아이디' type={'text'} {...register('id')} />
       <PasswordInput
