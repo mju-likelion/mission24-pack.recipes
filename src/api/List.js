@@ -46,7 +46,7 @@ export const addItem = async (id, itemName) => {
       }
     } catch (e) {
       if (e.response.status === 500) {
-        toast('추가할 목록을 다시 입력해 주세요.');
+        toast('추가할 아이템을 다시 입력해 주세요.');
       }
     }
   }

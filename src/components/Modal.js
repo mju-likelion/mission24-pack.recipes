@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
 import usePlus from '../hooks/usePlus';
 import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 const Modal = ({ modalClose, sort }) => {
   // 리스트 정보
@@ -35,11 +36,17 @@ const Modal = ({ modalClose, sort }) => {
 
   //추가하기 기능
   const itemplus = async (itemId) => {
+    const token = localStorage.getItem('accessToken');
+
     await listUpdate.mutateAsync(itemId);
     modalClose();
     queryClient.invalidateQueries([
       `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
     ]);
+
+    if (token && itemName != '') {
+      toast('아이템을 추가했습니다.');
+    }
   };
 
   return (

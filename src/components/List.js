@@ -116,7 +116,6 @@ const List = () => {
         </ButtonWrapper>
         {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
       </ListBox>
-      )
     </ListWrapper>
   );
 };
