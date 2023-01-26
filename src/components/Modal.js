@@ -31,17 +31,12 @@ const Modal = ({ modalClose, sort }) => {
       return arr;
     });
   };
+
   const listUpdate = usePlus(sort, id, itemName);
   const queryClient = useQueryClient();
-  const token = localStorage.getItem('accessToken');
+
   //추가하기 기능
   const itemplus = async (itemId) => {
-    if (!token) {
-      modalClose();
-      toast('로그인을 먼저 해 주세요!');
-      return;
-    }
-
     for (const item of itemName) {
       if (item.trim() === '') {
         toast('빈 값은 입력할 수 없습니다.');
