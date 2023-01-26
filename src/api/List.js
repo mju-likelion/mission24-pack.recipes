@@ -47,6 +47,8 @@ export const addItem = async (id, itemName) => {
     } catch (e) {
       if (e.response.status === 500) {
         toast('추가할 아이템을 다시 입력해 주세요.');
+      } else {
+        toast('올바른 아이템이 아닙니다.');
       }
     }
   }
