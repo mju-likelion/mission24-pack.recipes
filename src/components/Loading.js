@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as GreenApple } from '../images/greenApple.svg';
 
 const Loading = () => {
+  const [isRotated, setIsRotated] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsRotated(!isRotated);
+    }, 1000);
+  }, [isRotated]);
   return (
     <Backgroud>
       <LoadingContainer>
-        <StyledGreenApple />
+        <StyledGreenApple isRotated={isRotated} />
         <StyledText>loading</StyledText>
         <StyledText>· · ·</StyledText>
       </LoadingContainer>
@@ -32,6 +38,8 @@ const LoadingContainer = styled.div`
   text-align: center;
 `;
 const StyledGreenApple = styled(GreenApple)`
+  transform: ${(props) => (props.isRotated ? 'rotate(0)' : 'rotate(30deg)')};
+  transition: transform 1000ms ease;
   width: 97px;
   height: 54px;
 `;
