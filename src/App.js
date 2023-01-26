@@ -37,19 +37,6 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={defaultTheme}>
-        <meta name='title' property='og:title' content='잘챙기짐!' />
-        <meta name='type' property='og:type' content='website' />
-        <meta
-          name='url'
-          property='og:url'
-          content='https://www.pack.recipes/'
-        />
-        <meta name='image' property='og:image' content='/openGraphImg.png' />
-        <meta
-          name='description'
-          property='og:description'
-          content='떠날 땐 언제나? 잘챙기짐!'
-        />
         <GlobalStyle />
         <Header />
         <Routes>
