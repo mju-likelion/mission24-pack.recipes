@@ -33,10 +33,21 @@ const Modal = ({ modalClose, sort }) => {
   };
   const listUpdate = usePlus(sort, id, itemName);
   const queryClient = useQueryClient();
-
+  const token = localStorage.getItem('accessToken');
   //추가하기 기능
   const itemplus = async (itemId) => {
-    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      modalClose();
+      toast('로그인을 먼저 해 주세요!');
+      return;
+    }
+
+    for (const item of itemName) {
+      if (item.trim() === '') {
+        toast('빈 값은 입력할 수 없습니다.');
+        return;
+      }
+    }
 
     await listUpdate.mutateAsync(itemId);
     modalClose();
@@ -44,9 +55,7 @@ const Modal = ({ modalClose, sort }) => {
       `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
     ]);
 
-    if (token && itemName != '') {
-      toast('아이템을 추가했습니다.');
-    }
+    toast('아이템을 추가했습니다.');
   };
 
   return (
