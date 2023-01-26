@@ -10,9 +10,11 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { tryRegister } from '../api/LoginRegister';
+import Loading from '../components/Loading';
 
 function RegisterPage() {
   const [isValid, setIsValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { register, watch, handleSubmit, getValues } = useForm();
 
@@ -34,10 +36,13 @@ function RegisterPage() {
 
   const registerHandle = async (data) => {
     try {
+      setIsLoading(true);
       await tryRegister(data);
+      setIsLoading(false);
       toast('회원가입에 성공했습니다!');
       navigate('/login');
     } catch (e) {
+      setIsLoading(false);
       const errorCode = e.response.data.errorCode;
 
       switch (errorCode) {
@@ -53,6 +58,7 @@ function RegisterPage() {
 
   return (
     <RegisterContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
+      {isLoading && <Loading />}
       <Title>회원가입</Title>
       <NameInput placeholder='이름' type={'text'} {...register('name')} />
       <Input placeholder='아이디' type={'text'} {...register('id')} />

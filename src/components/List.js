@@ -11,6 +11,7 @@ import useCategory from '../hooks/useCategory';
 import useList from '../hooks/useList';
 import useLike from '../hooks/useLike';
 import useDislike from '../hooks/useDislike';
+import Loading from './Loading';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -75,9 +76,9 @@ const List = () => {
       `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
     ]);
   };
-  if (categoryLoading) return <LoadingComponent>Loading...</LoadingComponent>;
   return (
     <ListWrapper>
+      {categoryLoading && <Loading />}
       <Header>
         {name}
         <SortDiv>
@@ -116,17 +117,9 @@ const List = () => {
         </ButtonWrapper>
         {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
       </ListBox>
-      )
     </ListWrapper>
   );
 };
-
-const LoadingComponent = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 30px;
-  padding-top: 300px;
-`;
 
 const ListWrapper = styled.div`
   margin: 5px auto;

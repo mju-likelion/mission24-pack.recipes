@@ -7,6 +7,7 @@ import { useSetRecoilState } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
 import useCategory from '../hooks/useCategory';
 import { toast } from 'react-toastify';
+import Loading from './Loading';
 
 const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
@@ -75,24 +76,21 @@ const NavBar = () => {
 
   return (
     <>
-      {categoryLoading ? (
-        <LoadingComponent>Loading...</LoadingComponent>
-      ) : (
-        <NavBarStyled>
-          <CategoryBox
-            onMouseEnter={() => {
-              isHoverMainCategory();
+      {categoryLoading && <Loading />}
+      <NavBarStyled>
+        <CategoryBox
+          onMouseEnter={() => {
+            isHoverMainCategory();
+          }}
+        >
+          <CategoryIcon
+            onClick={() => {
+              onMobileClick();
             }}
-          >
-            <CategoryIcon
-              onClick={() => {
-                onMobileClick();
-              }}
-            />
-            <CategoryTitle>카테고리</CategoryTitle>
-          </CategoryBox>
-        </NavBarStyled>
-      )}
+          />
+          <CategoryTitle>카테고리</CategoryTitle>
+        </CategoryBox>
+      </NavBarStyled>
 
       {isMobileCategory && (
         <DropDownMenu>
@@ -344,13 +342,6 @@ const Back = styled.div`
 
     padding: 5px 0;
   }
-`;
-
-const LoadingComponent = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 30px;
-  padding-top: 300px;
 `;
 
 export default NavBar;

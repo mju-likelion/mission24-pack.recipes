@@ -11,6 +11,7 @@ import Loading from '../components/Loading';
 const LoginPage = function () {
   const { register, handleSubmit, watch } = useForm();
   const [isValid, setIsValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const subscribe = watch((data) => {
@@ -23,7 +24,9 @@ const LoginPage = function () {
 
   const loginHandle = async (data) => {
     try {
+      setIsLoading(true);
       const res = await tryLogin(data);
+      setIsLoading(false);
       const { accessToken, refreshToken } = res.data;
       localStorage.setItem('accessToken', accessToken);
       Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
@@ -31,6 +34,7 @@ const LoginPage = function () {
       location.href = '/';
       toast('로그인에 성공했습니다!');
     } catch (e) {
+      setIsLoading(false);
       const errorCode = e.response.data.errorCode;
       switch (errorCode) {
         case 'EMAIL_NOT_EXISTS':
@@ -42,7 +46,7 @@ const LoginPage = function () {
 
   return (
     <LoginContainer onSubmit={handleSubmit(loginHandle)}>
-      <Loading />
+      {isLoading && <Loading />}
       <Title>로그인</Title>
       <IdInput placeholder='아이디' type={'text'} {...register('id')} />
       <PasswordInput

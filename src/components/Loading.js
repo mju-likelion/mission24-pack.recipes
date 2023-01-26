@@ -12,7 +12,7 @@ const Loading = () => {
   return (
     <Backgroud>
       <LoadingContainer>
-        <StyledGreenApple isRotated={isRotated} />
+        <StyledGreenApple isrotated={isRotated ? 1 : 0} />
         <StyledText>loading</StyledText>
         <StyledText>· · ·</StyledText>
       </LoadingContainer>
@@ -38,7 +38,7 @@ const LoadingContainer = styled.div`
   text-align: center;
 `;
 const StyledGreenApple = styled(GreenApple)`
-  transform: ${(props) => (props.isRotated ? 'rotate(0)' : 'rotate(30deg)')};
+  transform: ${(props) => (props.isrotated ? 'rotate(0)' : 'rotate(30deg)')};
   transition: transform 1000ms ease;
   width: 97px;
   height: 54px;
