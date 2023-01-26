@@ -19,6 +19,12 @@ import Axios from './lib/axios';
 import styled from 'styled-components';
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ReactGA from 'react-ga';
+
+if (!window.location.href.includes('localhost')) {
+  ReactGA.initialize(process.env.REACT_APP_GA_ID);
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
 
 const defaultQueryFn = async ({ queryKey }) => {
   const { data } = await Axios.get(queryKey[0]);
