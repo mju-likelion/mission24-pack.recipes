@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { useQueryClient } from '@tanstack/react-query';
 import { ReactComponent as Like } from '../images/like.svg';
 import { ReactComponent as RedLike } from '../images/redLike.svg';
 import Modal from './Modal';
@@ -33,8 +32,6 @@ const List = () => {
 
   const { list, listFetch } = useList(sort, id);
 
-  const queryClient = useQueryClient();
-
   useEffect(() => {
     const fetch = async () => {
       if (!categoryLoading) {
@@ -64,16 +61,12 @@ const List = () => {
 
   const like = async (itemId) => {
     await postLike.mutateAsync(itemId);
-    queryClient.invalidateQueries([
-      `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
-    ]);
+    listFetch();
   };
 
   const dislike = async (itemId) => {
     await deleteLike.mutateAsync(itemId);
-    queryClient.invalidateQueries([
-      `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
-    ]);
+    listFetch();
   };
   if (categoryLoading) return <LoadingComponent>Loading...</LoadingComponent>;
   return (
