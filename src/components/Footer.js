@@ -7,7 +7,7 @@ function Footer() {
   return (
     <>
       <FooterWrapper>
-        <FooterEmail>mju@likelion.org</FooterEmail>
+        <FooterEmail>pack.recipes@gmail.com</FooterEmail>
         <FooterIcons>
           <GithubStyledIcon
             onClick={() =>
