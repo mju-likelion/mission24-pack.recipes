@@ -33,22 +33,41 @@ const FooterWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    height: 40px;
+  }
 `;
 
 const FooterEmail = styled.div`
   margin-left: 46px;
   letter-spacing: 1px;
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    font-size: 10px;
+    margin-left: 15px;
+  }
 `;
 
 const FooterIcons = styled.div`
   display: flex;
   margin-right: 60px;
   align-items: center;
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    margin-right: 16px;
+  }
 `;
 
 const VerticalLine = styled.div`
   height: 20px;
   border-left: 2px solid #424242;
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    border-left: 1px solid #424242;
+    width: 16px;
+    height: 12px;
+  }
 `;
 
 const GithubStyledIcon = styled(GithubIcon)`
@@ -56,12 +75,24 @@ const GithubStyledIcon = styled(GithubIcon)`
   margin-right: 19px;
   width: 24px;
   height: 24px;
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    margin-right: 15px;
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 const InstagramStyledIcon = styled(InstagramIcon)`
   margin-left: 19px;
   width: 24px;
   height: 24px;
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    margin-left: 0px;
+    width: 18px;
+    height: 18px;
+  }
 `;
 
 export default Footer;
