@@ -19,14 +19,7 @@ import Axios from './lib/axios';
 import styled from 'styled-components';
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ReactGA from 'react-ga4';
-// import { useEffect } from 'react';
-
-if (!window.location.href.includes('localhost')) {
-  ReactGA.initialize(process.env.REACT_APP_GA_ID);
-  ReactGA.set({ page: location.pathname });
-  ReactGA.send('pageview');
-}
+import RouteChangeTracker from './RouteChangeTracker';
 
 const defaultQueryFn = async ({ queryKey }) => {
   const { data } = await Axios.get(queryKey[0]);
@@ -42,6 +35,8 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  RouteChangeTracker();
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={defaultTheme}>
