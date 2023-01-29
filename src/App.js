@@ -22,21 +22,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import ReactGA from 'react-ga4';
 // import { useEffect } from 'react';
 
-// if (!window.location.href.includes('localhost')) {
-ReactGA.initialize(process.env.REACT_APP_GA_ID);
-ReactGA.set({ page: location.pathname });
-ReactGA.send('pageview');
-// }
-
-// console.log('zero');
-// useEffect(() => {
-//   console.log('a');
-//   if (!window.location.href.includes('localhost')) {
-//     console.log('b');
-//     ReactGA.initialize(process.env.REACT_APP_GA_ID);
-//     ReactGA.pageview(window.location.pathname + window.location.search);
-//   }
-// }, []);
+if (!window.location.href.includes('localhost')) {
+  ReactGA.initialize(process.env.REACT_APP_GA_ID);
+  ReactGA.set({ page: location.pathname });
+  ReactGA.send('pageview');
+}
 
 const defaultQueryFn = async ({ queryKey }) => {
   const { data } = await Axios.get(queryKey[0]);
