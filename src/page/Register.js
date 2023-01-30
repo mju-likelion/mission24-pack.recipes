@@ -42,10 +42,10 @@ function RegisterPage() {
 
       switch (errorCode) {
         case 'EMAIL_EXITS':
-          toast('이미 존재하는 이메일입니다');
+          toast('이미 존재하는 아이디입니다.');
           break;
         case 'NAME_EXISTS':
-          toast('이미 사용중인 이름입니다');
+          toast('이미 사용 중인 닉네임입니다.');
           break;
       }
     }
@@ -54,7 +54,7 @@ function RegisterPage() {
   return (
     <RegisterContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
       <Title>회원가입</Title>
-      <NameInput placeholder='이름' type={'text'} {...register('name')} />
+      <NameInput placeholder='닉네임' type={'text'} {...register('name')} />
       <Input placeholder='아이디' type={'text'} {...register('id')} />
       <PasswordInput
         placeholder='비밀번호'
