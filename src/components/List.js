@@ -12,6 +12,7 @@ import useList from '../hooks/useList';
 import useLike from '../hooks/useLike';
 import useDislike from '../hooks/useDislike';
 import Loading from './Loading';
+import Error from './Error';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -26,13 +27,13 @@ const List = () => {
     }
   };
 
-  const { category, categoryLoading } = useCategory();
+  const { category, categoryLoading, isCategoryError } = useCategory();
   const categories = category?.categories;
 
   const { name, id } = useRecoilValue(TitleAtom);
   const setTitleState = useSetRecoilState(TitleAtom);
 
-  const { list, listFetch } = useList(sort, id);
+  const { list, listFetch, isListError } = useList(sort, id);
 
   const queryClient = useQueryClient();
 
@@ -78,45 +79,51 @@ const List = () => {
   };
   return (
     <ListWrapper>
-      {categoryLoading && <Loading />}
-      <Header>
-        {name}
-        <SortDiv>
-          <button onClick={() => setSort('createdAt')}>최신순</button> |
-          <button onClick={() => setSort('likeCount')}>인기순</button>
-        </SortDiv>
-      </Header>
-      <ListBox>
-        <ListBoxWrapper>
-          {list?.items?.map((item, index) => (
-            <div key={index}>
-              <ListItemBox>
-                <ListItem>{item.name}</ListItem>
-              </ListItemBox>
-              <LikeBox>
-                {item?.likes ? (
-                  <RedLike
-                    onClick={() => {
-                      dislike(item._id);
-                    }}
-                  />
-                ) : (
-                  <Like
-                    onClick={() => {
-                      like(item._id);
-                    }}
-                  />
-                )}
-                <LikeNum>{item.likeCount}</LikeNum>
-              </LikeBox>
-            </div>
-          ))}
-        </ListBoxWrapper>
-        <ButtonWrapper>
-          <Button onClick={modalClose}>추가하기</Button>
-        </ButtonWrapper>
-        {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
-      </ListBox>
+      {isListError || isCategoryError ? (
+        <Error errorMsg='리스트 정보 가져오기를 실패했습니다.' />
+      ) : (
+        <>
+          {categoryLoading && <Loading />}
+          <Header>
+            {name}
+            <SortDiv>
+              <button onClick={() => setSort('createdAt')}>최신순</button> |
+              <button onClick={() => setSort('likeCount')}>인기순</button>
+            </SortDiv>
+          </Header>
+          <ListBox>
+            <ListBoxWrapper>
+              {list?.items?.map((item, index) => (
+                <div key={index}>
+                  <ListItemBox>
+                    <ListItem>{item.name}</ListItem>
+                  </ListItemBox>
+                  <LikeBox>
+                    {item?.likes ? (
+                      <RedLike
+                        onClick={() => {
+                          dislike(item._id);
+                        }}
+                      />
+                    ) : (
+                      <Like
+                        onClick={() => {
+                          like(item._id);
+                        }}
+                      />
+                    )}
+                    <LikeNum>{item.likeCount}</LikeNum>
+                  </LikeBox>
+                </div>
+              ))}
+            </ListBoxWrapper>
+            <ButtonWrapper>
+              <Button onClick={modalClose}>추가하기</Button>
+            </ButtonWrapper>
+            {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
+          </ListBox>
+        </>
+      )}
     </ListWrapper>
   );
 };
