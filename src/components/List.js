@@ -177,6 +177,8 @@ const SortDiv = styled.span`
   height: 30px;
   font-size: 20px;
   margin: 34px 12px 0 0;
+  user-select: none;
+
   button {
     background: none;
     border: none;
