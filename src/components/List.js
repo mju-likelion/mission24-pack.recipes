@@ -5,6 +5,7 @@ import { ReactComponent as Like } from '../images/like.svg';
 import { ReactComponent as RedLike } from '../images/redLike.svg';
 import { ReactComponent as Report } from '../images/Report.svg';
 import Modal from './Modal';
+import Alert from './Alert';
 import { TitleAtom } from '../atoms/TitleAtom';
 
 import useCategory from '../hooks/useCategory';
@@ -16,6 +17,11 @@ import { toast } from 'react-toastify';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [alertModalOpen, setAlertModalOpen] = useState(false);
+  const [alertModalDialog, setAlertModalDialog] = useState('');
+  const [reportItemId, setReportItemId] = useState('');
+
   const [sort, setSort] = useState('likeCount');
   const token = localStorage.getItem('accessToken');
 
@@ -79,12 +85,9 @@ const List = () => {
     listFetch();
   };
 
-  const reportPrompt = async (itemId) => {
-    if (!confirm('정말 신고하시겠습니까?')) {
-      return;
-    }
-
-    await report.mutateAsync(itemId);
+  const openAlert = async (alertDialog) => {
+    setAlertModalOpen(true);
+    setAlertModalDialog(alertDialog);
   };
 
   return (
@@ -124,7 +127,9 @@ const List = () => {
                 </LikeBox>
                 <ReportBox
                   onClick={() => {
-                    reportPrompt(item._id);
+                    //reportPrompt(item._id);
+                    openAlert('해당 아이템을 정말 신고하시겠습니까?');
+                    setReportItemId(item._id);
                   }}
                 >
                   <Report />
@@ -137,6 +142,16 @@ const List = () => {
             <Button onClick={modalClose}>추가하기</Button>
           </ButtonWrapper>
           {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
+          {alertModalOpen && (
+            <Alert
+              title={'신고하기'}
+              dialog={alertModalDialog}
+              onYes={async () => {
+                await report.mutateAsync(reportItemId);
+              }}
+              modalClose={() => setAlertModalOpen(false)}
+            />
+          )}
         </ListBox>
       )}
     </ListWrapper>
