@@ -12,8 +12,7 @@ import useCategory from '../hooks/useCategory';
 import useList from '../hooks/useList';
 import useLike from '../hooks/useLike';
 import useDislike from '../hooks/useDislike';
-
-import { report as reportCall } from '../api/Report';
+import useReport from '../hooks/useReport';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -60,6 +59,7 @@ const List = () => {
 
   const postLike = useLike(sort, id);
   const deleteLike = useDislike(sort, id);
+  const report = useReport();
 
   const like = async (itemId) => {
     await postLike.mutateAsync(itemId);
@@ -75,12 +75,12 @@ const List = () => {
     ]);
   };
 
-  const report = async (itemId) => {
+  const reportPrompt = async (itemId) => {
     if (!confirm('정말 신고하시겠습니까?')) {
       return;
     }
 
-    await reportCall(itemId);
+    await report.mutateAsync(itemId);
   };
 
   return (
@@ -120,7 +120,7 @@ const List = () => {
                 </LikeBox>
                 <ReportBox
                   onClick={() => {
-                    report(item._id);
+                    reportPrompt(item._id);
                   }}
                 >
                   <Report />
