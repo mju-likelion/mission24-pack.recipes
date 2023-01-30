@@ -3,6 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { ReactComponent as Like } from '../images/like.svg';
 import { ReactComponent as RedLike } from '../images/redLike.svg';
+import { ReactComponent as Report } from '../images/Report.svg';
 import Modal from './Modal';
 import { TitleAtom } from '../atoms/TitleAtom';
 
@@ -10,6 +11,7 @@ import useCategory from '../hooks/useCategory';
 import useList from '../hooks/useList';
 import useLike from '../hooks/useLike';
 import useDislike from '../hooks/useDislike';
+import useReport from '../hooks/useReport';
 import { toast } from 'react-toastify';
 
 const List = () => {
@@ -65,6 +67,7 @@ const List = () => {
 
   const postLike = useLike(sort, id);
   const deleteLike = useDislike(sort, id);
+  const report = useReport();
 
   const like = async (itemId) => {
     await postLike.mutateAsync(itemId);
@@ -75,7 +78,15 @@ const List = () => {
     await deleteLike.mutateAsync(itemId);
     listFetch();
   };
-  if (categoryLoading) return <LoadingComponent>Loading...</LoadingComponent>;
+
+  const reportPrompt = async (itemId) => {
+    if (!confirm('정말 신고하시겠습니까?')) {
+      return;
+    }
+
+    await report.mutateAsync(itemId);
+  };
+
   return (
     <ListWrapper>
       <Header>
@@ -85,37 +96,49 @@ const List = () => {
           <button onClick={() => setSort('likeCount')}>인기순</button>
         </SortDiv>
       </Header>
-      <ListBox>
-        <ListBoxWrapper>
-          {list?.items?.map((item, index) => (
-            <div key={index}>
-              <ListItemBox>
-                <ListItem>{item.name}</ListItem>
-              </ListItemBox>
-              <LikeBox>
-                {item?.likes ? (
-                  <RedLike
-                    onClick={() => {
-                      dislike(item._id);
-                    }}
-                  />
-                ) : (
-                  <Like
-                    onClick={() => {
-                      like(item._id);
-                    }}
-                  />
-                )}
-                <LikeNum>{item.likeCount}</LikeNum>
-              </LikeBox>
-            </div>
-          ))}
-        </ListBoxWrapper>
-        <ButtonWrapper>
-          <Button onClick={modalClose}>추가하기</Button>
-        </ButtonWrapper>
-        {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
-      </ListBox>
+      {categoryLoading ? (
+        <LoadingComponent>Loading...</LoadingComponent>
+      ) : (
+        <ListBox>
+          <ListBoxWrapper>
+            {list?.items?.map((item, index) => (
+              <ListElement key={index}>
+                <ListItemBox>
+                  <ListItem>{item.name}</ListItem>
+                </ListItemBox>
+                <LikeBox>
+                  {item?.likes ? (
+                    <RedLike
+                      onClick={() => {
+                        dislike(item._id);
+                      }}
+                    />
+                  ) : (
+                    <Like
+                      onClick={() => {
+                        like(item._id);
+                      }}
+                    />
+                  )}
+                  <LikeNum>{item.likeCount}</LikeNum>
+                </LikeBox>
+                <ReportBox
+                  onClick={() => {
+                    reportPrompt(item._id);
+                  }}
+                >
+                  <Report />
+                  <ReportText>신고하기</ReportText>
+                </ReportBox>
+              </ListElement>
+            ))}
+          </ListBoxWrapper>
+          <ButtonWrapper>
+            <Button onClick={modalClose}>추가하기</Button>
+          </ButtonWrapper>
+          {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
+        </ListBox>
+      )}
     </ListWrapper>
   );
 };
@@ -181,21 +204,46 @@ const ListBoxWrapper = styled.div`
 `;
 
 const ListItemBox = styled.div`
-  width: 344px;
+  width: 300px;
   font-size: 24px;
 `;
 
 const ListItem = styled.div`
-  width: 328px;
+  width: 300px;
   border-bottom: solid 2px #ffe5a4;
   font-size: 24px;
   margin: 34px 0 0 0;
 `;
 
+const ListElement = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 const LikeBox = styled.div`
+  margin-left: 16px;
+  margin-top: 34px;
   width: 16px;
   height: 30px;
-  margin: -26px 0 0 370px;
+`;
+
+const ReportText = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 40px;
+  font-size: 7px;
+  justify-content: center;
+`;
+
+const ReportBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  width: 24px;
+  height: 38px;
+  margin-left: 16px;
+  justify-content: space-between;
 `;
 
 const LikeNum = styled.div`
