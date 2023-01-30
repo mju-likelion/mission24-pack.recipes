@@ -154,6 +154,11 @@ const ListWrapper = styled.div`
   margin: 5px auto;
   width: 560px;
   min-height: 774px;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    width: 85%;
+    min-height: 508px;
+    margin: 5% auto 10%;
+  }
 `;
 
 const Header = styled.div`
@@ -163,6 +168,9 @@ const Header = styled.div`
   font-size: 44px;
   justify-content: space-between;
   align-items: flex-end;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    font-size: 40px;
+  }
 `;
 
 const SortDiv = styled.span`
@@ -173,6 +181,10 @@ const SortDiv = styled.span`
     background: none;
     border: none;
     cursor: pointer;
+  }
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    font-size: 14px;
+    margin: 34px 5% 0 0;
   }
 `;
 
@@ -194,7 +206,7 @@ const ListBoxWrapper = styled.div`
   &::-webkit-scrollbar-thumb {
     border-radius: 8px;
     background: ${({ theme }) => theme.colors.primary}; /* 스크롤바의 색상 */
-    height: 2%; /* 스크롤바의 길이 */
+    height: 1%; /* 스크롤바의 길이 */
   }
   &::-webkit-scrollbar-track {
     background: #fff; /* 스크롤바 뒷 배경 색상 */
@@ -204,6 +216,9 @@ const ListBoxWrapper = styled.div`
 const ListItemBox = styled.div`
   width: 300px;
   font-size: 24px;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    margin-left: 2%;
+  }
 `;
 
 const ListItem = styled.div`
@@ -211,6 +226,9 @@ const ListItem = styled.div`
   border-bottom: solid 2px #ffe5a4;
   font-size: 24px;
   margin: 34px 0 0 0;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    font-size: 22px;
+  }
 `;
 
 const ListElement = styled.div`
@@ -219,29 +237,29 @@ const ListElement = styled.div`
 `;
 
 const LikeBox = styled.div`
-  margin-left: 16px;
-  margin-top: 34px;
   width: 16px;
   height: 30px;
-`;
-
-const ReportText = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 40px;
-  font-size: 7px;
-  justify-content: center;
+  margin-left: 16px;
+  margin-top: 34px;
 `;
 
 const ReportBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
   width: 24px;
   height: 38px;
-  margin-left: 16px;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: 16px;
+`;
+
+const ReportText = styled.div`
+  width: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 7px;
 `;
 
 const LikeNum = styled.div`
@@ -261,8 +279,11 @@ const Button = styled.button`
   border: none;
   padding: 10px;
   color: white;
-  z-index: 100;
+  z-index: 50;
   margin: 50px 18px 0 0;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    margin: 7% 5% 0 0;
+  }
 `;
 
 export default List;
