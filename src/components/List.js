@@ -12,12 +12,19 @@ import useList from '../hooks/useList';
 import useLike from '../hooks/useLike';
 import useDislike from '../hooks/useDislike';
 import useReport from '../hooks/useReport';
+import { toast } from 'react-toastify';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [sort, setSort] = useState('likeCount');
+  const token = localStorage.getItem('accessToken');
 
   const modalClose = () => {
+    if (!token) {
+      toast('로그인을 먼저 해 주세요!');
+      return;
+    }
+
     setModalOpen(!modalOpen);
     if (!modalOpen) {
       document.body.style.overflow = 'hidden';

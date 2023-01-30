@@ -28,12 +28,11 @@ const LoginPage = function () {
       Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
       setCookie('refreshToken', refreshToken);
       location.href = '/';
-      toast('로그인에 성공했습니다!');
     } catch (e) {
       const errorCode = e.response.data.errorCode;
       switch (errorCode) {
         case 'EMAIL_NOT_EXISTS':
-          toast('존재하지 않는 계정입니다!');
+          toast('존재하지 않는 계정입니다. 다시 확인해 주세요.');
           break;
       }
     }
