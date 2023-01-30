@@ -169,7 +169,6 @@ const SortDiv = styled.span`
   height: 30px;
   font-size: 20px;
   margin: 34px 12px 0 0;
-
   button {
     background: none;
     border: none;
@@ -188,7 +187,6 @@ const ListBoxWrapper = styled.div`
   margin: 0 auto;
   height: 520px;
   width: 400px;
-
   overflow: auto;
   &::-webkit-scrollbar {
     width: 8px; /* 스크롤바의 너비 */
