@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { useQueryClient } from '@tanstack/react-query';
 import { ReactComponent as Like } from '../images/like.svg';
 import { ReactComponent as RedLike } from '../images/redLike.svg';
 import { ReactComponent as Report } from '../images/Report.svg';
@@ -33,9 +32,7 @@ const List = () => {
   const { name, id } = useRecoilValue(TitleAtom);
   const setTitleState = useSetRecoilState(TitleAtom);
 
-  const { list } = useList(sort, id);
-
-  const queryClient = useQueryClient();
+  const { list, listFetch } = useList(sort, id);
 
   useEffect(() => {
     const fetch = async () => {
@@ -57,22 +54,22 @@ const List = () => {
     fetch();
   }, [categoryLoading]);
 
+  useEffect(() => {
+    if (id) listFetch();
+  }, [id, sort]);
+
   const postLike = useLike(sort, id);
   const deleteLike = useDislike(sort, id);
   const report = useReport();
 
   const like = async (itemId) => {
     await postLike.mutateAsync(itemId);
-    queryClient.invalidateQueries([
-      `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
-    ]);
+    listFetch();
   };
 
   const dislike = async (itemId) => {
     await deleteLike.mutateAsync(itemId);
-    queryClient.invalidateQueries([
-      `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
-    ]);
+    listFetch();
   };
 
   const reportPrompt = async (itemId) => {
