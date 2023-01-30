@@ -14,8 +14,6 @@ export const report = async (itemId) => {
         toast(e.response.data.errorMsg);
       } else {
         toast('알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-
-        console.log(e);
       }
     }
   }
