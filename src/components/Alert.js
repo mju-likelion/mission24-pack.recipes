@@ -2,39 +2,45 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as OutButton } from '../images/outButton.svg';
 
-const Alert = ({ title, dialog, modalClose, onYes, onNo }) => {
+const Alert = ({
+  title,
+  dialog,
+  modalCloseDelegate,
+  onYesHandler,
+  onNoHandler,
+}) => {
   // 리스트 정보
 
   // 모달 백그라운드 구분
   const outside = useRef();
   const inside = useRef();
 
-  const clickYes = () => {
-    if (onYes) {
-      onYes();
+  const modalClickYes = () => {
+    if (onYesHandler) {
+      onYesHandler();
     }
 
-    modalClose();
+    modalCloseDelegate();
   };
 
-  const clickNo = () => {
-    if (onNo) {
-      onNo();
+  const modalClickNo = () => {
+    if (onNoHandler) {
+      onNoHandler();
     }
 
-    modalClose();
+    modalCloseDelegate();
   };
 
   return (
     <>
-      <ModalBg ref={outside} onClick={modalClose} />
+      <ModalBg ref={outside} onClick={modalCloseDelegate} />
       <ModalWrapper ref={inside}>
-        <CloseButton onClick={modalClose} />
+        <CloseButton onClick={modalCloseDelegate} />
         <Title>{title}</Title>
         <Description>{dialog}</Description>
         <ButtonWrapper>
-          <NoBtn onClick={() => clickNo()}>취소</NoBtn>
-          <YesBtn onClick={() => clickYes()}>확인</YesBtn>
+          <NoBtn onClick={() => modalClickNo()}>취소</NoBtn>
+          <YesBtn onClick={() => modalClickYes()}>확인</YesBtn>
         </ButtonWrapper>
       </ModalWrapper>
     </>
