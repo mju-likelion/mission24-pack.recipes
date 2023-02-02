@@ -154,6 +154,7 @@ const ListWrapper = styled.div`
   margin: 5px auto;
   width: 560px;
   min-height: 774px;
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
     width: 85%;
     min-height: 508px;
@@ -162,12 +163,13 @@ const ListWrapper = styled.div`
 `;
 
 const Header = styled.div`
-  display: flex;
-  margin-left: 24px;
   height: 74px;
-  font-size: 44px;
+  display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin-left: 24px;
+  font-size: 44px;
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
     font-size: 40px;
   }
@@ -184,6 +186,7 @@ const SortDiv = styled.span`
     border: none;
     cursor: pointer;
   }
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
     font-size: 14px;
     margin: 34px 5% 0 0;
@@ -202,6 +205,7 @@ const ListBoxWrapper = styled.div`
   height: 520px;
   width: 400px;
   overflow: auto;
+
   &::-webkit-scrollbar {
     width: 8px; /* 스크롤바의 너비 */
   }
@@ -218,6 +222,7 @@ const ListBoxWrapper = styled.div`
 const ListItemBox = styled.div`
   width: 300px;
   font-size: 24px;
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
     margin-left: 2%;
   }
@@ -228,6 +233,7 @@ const ListItem = styled.div`
   border-bottom: solid 2px #ffe5a4;
   font-size: 24px;
   margin: 34px 0 0 0;
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
     font-size: 22px;
   }
@@ -241,6 +247,7 @@ const ListElement = styled.div`
 const LikeBox = styled.div`
   width: 16px;
   height: 30px;
+
   margin-left: 16px;
   margin-top: 34px;
 `;
@@ -248,10 +255,12 @@ const LikeBox = styled.div`
 const ReportBox = styled.div`
   width: 24px;
   height: 38px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
   margin-top: 30px;
   margin-left: 16px;
 `;
@@ -261,6 +270,7 @@ const ReportText = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+
   font-size: 7px;
 `;
 
@@ -283,6 +293,7 @@ const Button = styled.button`
   color: white;
   z-index: 50;
   margin: 50px 18px 0 0;
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
     margin: 7% 5% 0 0;
   }

@@ -61,11 +61,13 @@ const ToastWrapper = styled.div`
 
 const ToastItem = styled.div`
   position: absolute;
+  width: 392px;
   height: 100px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 392px;
+
   background-color: #d6e8e3;
   color: black;
   border-radius: 20px;
