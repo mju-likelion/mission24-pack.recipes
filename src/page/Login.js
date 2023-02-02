@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Axios from '../lib/axios';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import { setCookie } from '../util/Cookie';
-import { tryLogin } from '../api/LoginRegister';
+import Loading from '../components/Loading';
+import { useLogin } from '../hooks/useAuth';
 
 const LoginPage = function () {
   const { register, handleSubmit, watch } = useForm();
   const [isValid, setIsValid] = useState(false);
-
+  const { mutateAsync, isLoading } = useLogin();
   useEffect(() => {
     const subscribe = watch((data) => {
       if (data.id && data.password) {
@@ -21,25 +19,12 @@ const LoginPage = function () {
   }, [watch]);
 
   const loginHandle = async (data) => {
-    try {
-      const res = await tryLogin(data);
-      const { accessToken, refreshToken } = res.data;
-      localStorage.setItem('accessToken', accessToken);
-      Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
-      setCookie('refreshToken', refreshToken);
-      location.href = '/';
-    } catch (e) {
-      const errorCode = e.response.data.errorCode;
-      switch (errorCode) {
-        case 'EMAIL_NOT_EXISTS':
-          toast('존재하지 않는 계정입니다. 다시 확인해 주세요.');
-          break;
-      }
-    }
+    await mutateAsync(data);
   };
 
   return (
     <LoginContainer onSubmit={handleSubmit(loginHandle)}>
+      {isLoading && <Loading />}
       <Title>로그인</Title>
       <IdInput placeholder='아이디' type={'text'} {...register('id')} />
       <PasswordInput
