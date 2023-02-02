@@ -195,9 +195,14 @@ const SortDiv = styled.span`
 
 const ListBox = styled.div`
   height: 630px;
+
   border-radius: 36px;
   background-color: ${({ theme }) => theme.colors.yellow};
   padding: 70px 0 0 0;
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    height: 508px;
+  }
 `;
 
 const ListBoxWrapper = styled.div`
@@ -217,6 +222,12 @@ const ListBoxWrapper = styled.div`
   &::-webkit-scrollbar-track {
     background: #fff; /* 스크롤바 뒷 배경 색상 */
   }
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    width: 95%;
+    height: 410px;
+    margin: 0 3%;
+  }
 `;
 
 const ListItemBox = styled.div`
@@ -224,6 +235,7 @@ const ListItemBox = styled.div`
   font-size: 24px;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
+    width: 70%;
     margin-left: 2%;
   }
 `;
@@ -235,7 +247,8 @@ const ListItem = styled.div`
   margin: 34px 0 0 0;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    font-size: 22px;
+    width: 100%;
+    font-size: 20px;
   }
 `;
 
@@ -287,12 +300,13 @@ const ButtonWrapper = styled.div`
 
 const Button = styled.button`
   background: #a2c79a;
+  margin: 50px 18px 0 0;
+  padding: 10px;
+
   border-radius: 10px;
   border: none;
-  padding: 10px;
   color: white;
   z-index: 50;
-  margin: 50px 18px 0 0;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
     margin: 7% 5% 0 0;
