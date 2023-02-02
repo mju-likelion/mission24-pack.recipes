@@ -187,8 +187,7 @@ const NavBarStyled = styled.div`
 const CategoryBox = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 20px;
-
+  margin-left: 40px;
   cursor: pointer;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
