@@ -8,6 +8,7 @@ import { TitleAtom } from '../atoms/TitleAtom';
 import useCategory from '../hooks/useCategory';
 import { toast } from 'react-toastify';
 import { ReactComponent as Logo } from '../images/logo.svg';
+import Loading from './Loading';
 
 const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
@@ -77,28 +78,25 @@ const NavBar = () => {
 
   return (
     <>
-      {categoryLoading ? (
-        <LoadingComponent>Loading...</LoadingComponent>
-      ) : (
-        <NavBarStyled>
-          <Link to={'/'}>
-            <MoblieLogo />
-          </Link>
+      {categoryLoading && <Loading />}
+      <NavBarStyled>
+        <Link to={'/'}>
+          <MoblieLogo />
+        </Link>
 
-          <CategoryBox
-            onMouseEnter={() => {
-              isHoverMainCategory();
+        <CategoryBox
+          onMouseEnter={() => {
+            isHoverMainCategory();
+          }}
+        >
+          <CategoryIcon
+            onClick={() => {
+              onMobileClick();
             }}
-          >
-            <CategoryIcon
-              onClick={() => {
-                onMobileClick();
-              }}
-            />
-            <CategoryTitle>카테고리</CategoryTitle>
-          </CategoryBox>
-        </NavBarStyled>
-      )}
+          />
+          <CategoryTitle>카테고리</CategoryTitle>
+        </CategoryBox>
+      </NavBarStyled>
 
       {isMobileCategory && (
         <DropDownMenu>
@@ -348,13 +346,6 @@ const Back = styled.div`
 
     padding: 5px 0;
   }
-`;
-
-const LoadingComponent = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 30px;
-  padding-top: 300px;
 `;
 
 const MoblieLogo = styled(Logo)`
