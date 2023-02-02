@@ -9,14 +9,14 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { tryRegister } from '../api/LoginRegister';
 import Loading from '../components/Loading';
+import { useRegister } from '../hooks/useAuth';
 
 function RegisterPage() {
   const [isValid, setIsValid] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { register, watch, handleSubmit, getValues } = useForm();
+  const { mutateAsync, isLoading } = useRegister();
 
   //버튼 비활성화를 위해 입력창값들이 바뀔 때마다 버튼 비활성화 여부 판단
   useEffect(() => {
@@ -35,25 +35,8 @@ function RegisterPage() {
   }
 
   const registerHandle = async (data) => {
-    try {
-      setIsLoading(true);
-      await tryRegister(data);
-      setIsLoading(false);
-      toast('회원가입에 성공했습니다!');
-      navigate('/login');
-    } catch (e) {
-      setIsLoading(false);
-      const errorCode = e.response.data.errorCode;
-
-      switch (errorCode) {
-        case 'EMAIL_EXITS':
-          toast('이미 존재하는 아이디입니다.');
-          break;
-        case 'NAME_EXISTS':
-          toast('이미 사용 중인 닉네임입니다.');
-          break;
-      }
-    }
+    await mutateAsync(data);
+    navigate('/login');
   };
 
   return (
