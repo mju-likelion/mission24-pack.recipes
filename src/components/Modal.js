@@ -89,6 +89,7 @@ const ModalBg = styled.div`
 
   background: rgba(0, 0, 0, 0.2);
 `;
+
 const ModalWrapper = styled.div`
   position: fixed;
   top: 50%;
