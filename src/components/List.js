@@ -11,10 +11,10 @@ import useCategory from '../hooks/useCategory';
 import useList from '../hooks/useList';
 import useLike from '../hooks/useLike';
 import useDislike from '../hooks/useDislike';
-import Loading from './Loading';
-import Error from './Error';
 import useReport from '../hooks/useReport';
 import { toast } from 'react-toastify';
+import Loading from './Loading';
+import Error from './Error';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -87,6 +87,7 @@ const List = () => {
 
     await report.mutateAsync(itemId);
   };
+
   return (
     <ListWrapper>
       {isListError || isCategoryError ? (

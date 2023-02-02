@@ -7,8 +7,8 @@ import { useSetRecoilState } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
 import useCategory from '../hooks/useCategory';
 import { toast } from 'react-toastify';
-import Loading from './Loading';
 import { ReactComponent as Logo } from '../images/logo.svg';
+import Loading from './Loading';
 
 const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
@@ -88,13 +88,14 @@ const NavBar = () => {
           onMouseEnter={() => {
             isHoverMainCategory();
           }}
-        />
-        <CategoryIcon
-          onClick={() => {
-            onMobileClick();
-          }}
-        />
-        <CategoryTitle>카테고리</CategoryTitle>
+        >
+          <CategoryIcon
+            onClick={() => {
+              onMobileClick();
+            }}
+          />
+          <CategoryTitle>카테고리</CategoryTitle>
+        </CategoryBox>
       </NavBarStyled>
       {isMobileCategory && (
         <DropDownMenu>

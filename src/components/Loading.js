@@ -35,6 +35,7 @@ const Backgroud = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 120;
 `;
 
 const LoadingContainer = styled.div`
