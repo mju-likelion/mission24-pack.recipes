@@ -28,7 +28,7 @@ const NavBar = () => {
   const width = document.body.clientWidth;
 
   const isHoverMainCategory = () => {
-    if (width > 375) {
+    if (width > 599) {
       setIsShowMainCategory((prev) => {
         if (prev) {
           setSelectedCategory(false);
