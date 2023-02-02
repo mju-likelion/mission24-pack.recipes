@@ -107,11 +107,12 @@ const ButtonWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const YesBtn = styled.div`
+const YesBtn = styled.button`
   width: 147px;
   height: 54px;
   background-color: white;
   border-radius: 10px;
+  border: none;
 
   display: flex;
   justify-content: center;
@@ -120,11 +121,12 @@ const YesBtn = styled.div`
   font-size: 22px;
 `;
 
-const NoBtn = styled.div`
+const NoBtn = styled.button`
   width: 147px;
   height: 54px;
   background-color: white;
   border-radius: 10px;
+  border: none;
 
   display: flex;
   justify-content: center;
