@@ -14,6 +14,7 @@ import useDislike from '../hooks/useDislike';
 import useReport from '../hooks/useReport';
 import { toast } from 'react-toastify';
 import Loading from './Loading';
+import Error from './Error';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -34,13 +35,13 @@ const List = () => {
     }
   };
 
-  const { category, categoryLoading } = useCategory();
+  const { category, categoryLoading, isCategoryError } = useCategory();
   const categories = category?.categories;
 
   const { name, id } = useRecoilValue(TitleAtom);
   const setTitleState = useSetRecoilState(TitleAtom);
 
-  const { list, listFetch } = useList(sort, id);
+  const { list, listFetch, isListError } = useList(sort, id);
 
   useEffect(() => {
     const fetch = async () => {
@@ -79,7 +80,6 @@ const List = () => {
     await deleteLike.mutateAsync(itemId);
     listFetch();
   };
-
   const reportPrompt = async (itemId) => {
     if (!confirm('정말 신고하시겠습니까?')) {
       return;
@@ -90,54 +90,59 @@ const List = () => {
 
   return (
     <ListWrapper>
-      {categoryLoading && <Loading />}
-      <Header>
-        {name}
-        <SortDiv>
-          <button onClick={() => setSort('createdAt')}>최신순</button> |
-          <button onClick={() => setSort('likeCount')}>인기순</button>
-        </SortDiv>
-      </Header>
-      {categoryLoading && <Loading />}
-      <ListBox>
-        <ListBoxWrapper>
-          {list?.items?.map((item, index) => (
-            <ListElement key={index}>
-              <ListItemBox>
-                <ListItem>{item.name}</ListItem>
-              </ListItemBox>
-              <LikeBox>
-                {item?.likes ? (
-                  <RedLike
+      {isListError || isCategoryError ? (
+        <Error errorMsg='리스트 정보 가져오기를 실패했습니다.' />
+      ) : (
+        <>
+          {categoryLoading && <Loading />}
+          <Header>
+            {name}
+            <SortDiv>
+              <button onClick={() => setSort('createdAt')}>최신순</button> |
+              <button onClick={() => setSort('likeCount')}>인기순</button>
+            </SortDiv>
+          </Header>
+          <ListBox>
+            <ListBoxWrapper>
+              {list?.items?.map((item, index) => (
+                <ListElement key={index}>
+                  <ListItemBox>
+                    <ListItem>{item.name}</ListItem>
+                  </ListItemBox>
+                  <LikeBox>
+                    {item?.likes ? (
+                      <RedLike
+                        onClick={() => {
+                          dislike(item._id);
+                        }}
+                      />
+                    ) : (
+                      <Like
+                        onClick={() => {
+                          like(item._id);
+                        }}
+                      />
+                    )}
+                    <LikeNum>{item.likeCount}</LikeNum>
+                  </LikeBox>
+                  <ReportBox
                     onClick={() => {
-                      dislike(item._id);
+                      reportPrompt(item._id);
                     }}
-                  />
-                ) : (
-                  <Like
-                    onClick={() => {
-                      like(item._id);
-                    }}
-                  />
-                )}
-                <LikeNum>{item.likeCount}</LikeNum>
-              </LikeBox>
-              <ReportBox
-                onClick={() => {
-                  reportPrompt(item._id);
-                }}
-              >
-                <Report />
-                <ReportText>신고하기</ReportText>
-              </ReportBox>
-            </ListElement>
-          ))}
-        </ListBoxWrapper>
-        <ButtonWrapper>
-          <Button onClick={modalClose}>추가하기</Button>
-        </ButtonWrapper>
-        {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
-      </ListBox>
+                  >
+                    <Report />
+                    <ReportText>신고하기</ReportText>
+                  </ReportBox>
+                </ListElement>
+              ))}
+            </ListBoxWrapper>
+            <ButtonWrapper>
+              <Button onClick={modalClose}>추가하기</Button>
+            </ButtonWrapper>
+            {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
+          </ListBox>
+        </>
+      )}
     </ListWrapper>
   );
 };

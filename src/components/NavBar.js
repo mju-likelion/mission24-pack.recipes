@@ -97,7 +97,6 @@ const NavBar = () => {
           <CategoryTitle>카테고리</CategoryTitle>
         </CategoryBox>
       </NavBarStyled>
-
       {isMobileCategory && (
         <DropDownMenu>
           <MobileMenu
