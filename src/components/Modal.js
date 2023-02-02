@@ -198,11 +198,12 @@ const ListText = styled.input`
 `;
 
 const ListLine = styled.hr`
+  width: auto;
+  height: 1px;
   display: flex;
   align-items: center;
-  width: auto;
   margin-bottom: 5%;
-  height: 1px;
+
   border: solid 1px #9bb89e;
   background-color: #9bb89e;
 `;
