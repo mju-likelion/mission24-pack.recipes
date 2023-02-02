@@ -73,7 +73,11 @@ const List = () => {
 
   const postLike = useLike(sort, id);
   const deleteLike = useDislike(sort, id);
-  const report = useReport();
+  const reportQuery = useReport();
+
+  const report = async () => {
+    await reportQuery.mutateAsync(reportItemId);
+  };
 
   const like = async (itemId) => {
     await postLike.mutateAsync(itemId);
@@ -127,7 +131,6 @@ const List = () => {
                 </LikeBox>
                 <ReportBox
                   onClick={() => {
-                    //reportPrompt(item._id);
                     openAlert('해당 아이템을 정말 신고하시겠습니까?');
                     setReportItemId(item._id);
                   }}
@@ -146,9 +149,7 @@ const List = () => {
             <Alert
               title={'신고하기'}
               dialog={alertModalDialog}
-              onYes={async () => {
-                await report.mutateAsync(reportItemId);
-              }}
+              onYes={() => report()}
               modalClose={() => setAlertModalOpen(false)}
             />
           )}
