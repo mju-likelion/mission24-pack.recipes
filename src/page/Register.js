@@ -43,7 +43,7 @@ function RegisterPage() {
     <RegisterContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
       {isLoading && <Loading />}
       <Title>회원가입</Title>
-      <NameInput placeholder='이름' type={'text'} {...register('name')} />
+      <NameInput placeholder='닉네임' type={'text'} {...register('name')} />
       <Input placeholder='아이디' type={'text'} {...register('id')} />
       <PasswordInput
         placeholder='비밀번호'

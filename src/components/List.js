@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { useQueryClient } from '@tanstack/react-query';
 import { ReactComponent as Like } from '../images/like.svg';
 import { ReactComponent as RedLike } from '../images/redLike.svg';
+import { ReactComponent as Report } from '../images/Report.svg';
 import Modal from './Modal';
 import { TitleAtom } from '../atoms/TitleAtom';
 
@@ -11,13 +11,21 @@ import useCategory from '../hooks/useCategory';
 import useList from '../hooks/useList';
 import useLike from '../hooks/useLike';
 import useDislike from '../hooks/useDislike';
+import useReport from '../hooks/useReport';
+import { toast } from 'react-toastify';
 import Loading from './Loading';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [sort, setSort] = useState('likeCount');
+  const token = localStorage.getItem('accessToken');
 
   const modalClose = () => {
+    if (!token) {
+      toast('로그인을 먼저 해 주세요!');
+      return;
+    }
+
     setModalOpen(!modalOpen);
     if (!modalOpen) {
       document.body.style.overflow = 'hidden';
@@ -33,8 +41,6 @@ const List = () => {
   const setTitleState = useSetRecoilState(TitleAtom);
 
   const { list, listFetch } = useList(sort, id);
-
-  const queryClient = useQueryClient();
 
   useEffect(() => {
     const fetch = async () => {
@@ -62,20 +68,26 @@ const List = () => {
 
   const postLike = useLike(sort, id);
   const deleteLike = useDislike(sort, id);
+  const report = useReport();
 
   const like = async (itemId) => {
     await postLike.mutateAsync(itemId);
-    queryClient.invalidateQueries([
-      `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
-    ]);
+    listFetch();
   };
 
   const dislike = async (itemId) => {
     await deleteLike.mutateAsync(itemId);
-    queryClient.invalidateQueries([
-      `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
-    ]);
+    listFetch();
   };
+
+  const reportPrompt = async (itemId) => {
+    if (!confirm('정말 신고하시겠습니까?')) {
+      return;
+    }
+
+    await report.mutateAsync(itemId);
+  };
+
   return (
     <ListWrapper>
       {categoryLoading && <Loading />}
@@ -86,10 +98,11 @@ const List = () => {
           <button onClick={() => setSort('likeCount')}>인기순</button>
         </SortDiv>
       </Header>
+      {categoryLoading && <Loading />}
       <ListBox>
         <ListBoxWrapper>
           {list?.items?.map((item, index) => (
-            <div key={index}>
+            <ListElement key={index}>
               <ListItemBox>
                 <ListItem>{item.name}</ListItem>
               </ListItemBox>
@@ -109,7 +122,15 @@ const List = () => {
                 )}
                 <LikeNum>{item.likeCount}</LikeNum>
               </LikeBox>
-            </div>
+              <ReportBox
+                onClick={() => {
+                  reportPrompt(item._id);
+                }}
+              >
+                <Report />
+                <ReportText>신고하기</ReportText>
+              </ReportBox>
+            </ListElement>
           ))}
         </ListBoxWrapper>
         <ButtonWrapper>
@@ -175,21 +196,46 @@ const ListBoxWrapper = styled.div`
 `;
 
 const ListItemBox = styled.div`
-  width: 344px;
+  width: 300px;
   font-size: 24px;
 `;
 
 const ListItem = styled.div`
-  width: 328px;
+  width: 300px;
   border-bottom: solid 2px #ffe5a4;
   font-size: 24px;
   margin: 34px 0 0 0;
 `;
 
+const ListElement = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 const LikeBox = styled.div`
+  margin-left: 16px;
+  margin-top: 34px;
   width: 16px;
   height: 30px;
-  margin: -26px 0 0 370px;
+`;
+
+const ReportText = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 40px;
+  font-size: 7px;
+  justify-content: center;
+`;
+
+const ReportBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  width: 24px;
+  height: 38px;
+  margin-left: 16px;
+  justify-content: space-between;
 `;
 
 const LikeNum = styled.div`

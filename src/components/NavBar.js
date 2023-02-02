@@ -7,6 +7,7 @@ import { useSetRecoilState } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
 import useCategory from '../hooks/useCategory';
 import { toast } from 'react-toastify';
+import { ReactComponent as Logo } from '../images/logo.svg';
 import Loading from './Loading';
 
 const NavBar = () => {
@@ -62,6 +63,7 @@ const NavBar = () => {
   const onBackClick = () => {
     setIsShowDetailCategory(false);
   };
+
   const onMobileClick = () => {
     if (width >= 375) {
       if (width <= 599) setIsMobileCategory(!isMobileCategory);
@@ -78,6 +80,10 @@ const NavBar = () => {
     <>
       {categoryLoading && <Loading />}
       <NavBarStyled>
+        <Link to={'/'}>
+          <MoblieLogo />
+        </Link>
+
         <CategoryBox
           onMouseEnter={() => {
             isHoverMainCategory();
@@ -135,6 +141,7 @@ const NavBar = () => {
           ))}
         </DropDownMenu>
       )}
+
       {isShowDetailCategory && category?.categories[selectedCategory] ? (
         <SubThemeBox>
           {category?.categories[selectedCategory]?.downCategories.map(
@@ -324,9 +331,6 @@ const SubTheme = styled.div`
       color: #a2c79a;
     }
   }
-
-  @media screen and (max-width: 599px) {
-  }
 `;
 
 const Back = styled.div`
@@ -341,6 +345,15 @@ const Back = styled.div`
     align-items: center;
 
     padding: 5px 0;
+  }
+`;
+
+const MoblieLogo = styled(Logo)`
+  display: none;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    width: 126px;
+    display: block;
+    margin-left: 15px;
   }
 `;
 
