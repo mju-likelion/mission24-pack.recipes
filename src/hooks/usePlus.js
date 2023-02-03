@@ -15,7 +15,7 @@ const usePlus = (sort, id, itemName) => {
         ]);
       },
       onError: (err) => {
-        toast('글을 저장하지 못했습니다.', err);
+        toast('아이템을 저장하지 못했습니다.', err);
       },
     },
   );

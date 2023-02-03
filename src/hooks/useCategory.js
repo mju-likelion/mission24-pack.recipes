@@ -5,12 +5,14 @@ const useCategory = () => {
     data: category,
     isLoading: categoryLoading,
     error: categoryError,
+    isError: isCategoryError,
   } = useQuery(['/categories']);
 
   return {
     category,
     categoryLoading,
     categoryError,
+    isCategoryError,
   };
 };
 

@@ -7,6 +7,8 @@ import { useSetRecoilState } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
 import useCategory from '../hooks/useCategory';
 import { toast } from 'react-toastify';
+import { ReactComponent as Logo } from '../images/logo.svg';
+import Loading from './Loading';
 
 const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
@@ -27,7 +29,7 @@ const NavBar = () => {
   const width = document.body.clientWidth;
 
   const isHoverMainCategory = () => {
-    if (width > 375) {
+    if (width > 599) {
       setIsShowMainCategory((prev) => {
         if (prev) {
           setSelectedCategory(false);
@@ -61,6 +63,7 @@ const NavBar = () => {
   const onBackClick = () => {
     setIsShowDetailCategory(false);
   };
+
   const onMobileClick = () => {
     if (width >= 375) {
       if (width <= 599) setIsMobileCategory(!isMobileCategory);
@@ -75,25 +78,25 @@ const NavBar = () => {
 
   return (
     <>
-      {categoryLoading ? (
-        <LoadingComponent>Loading...</LoadingComponent>
-      ) : (
-        <NavBarStyled>
-          <CategoryBox
-            onMouseEnter={() => {
-              isHoverMainCategory();
-            }}
-          >
-            <CategoryIcon
-              onClick={() => {
-                onMobileClick();
-              }}
-            />
-            <CategoryTitle>카테고리</CategoryTitle>
-          </CategoryBox>
-        </NavBarStyled>
-      )}
+      {categoryLoading && <Loading />}
+      <NavBarStyled>
+        <Link to={'/'}>
+          <MoblieLogo />
+        </Link>
 
+        <CategoryBox
+          onMouseEnter={() => {
+            isHoverMainCategory();
+          }}
+        >
+          <CategoryIcon
+            onClick={() => {
+              onMobileClick();
+            }}
+          />
+          <CategoryTitle>카테고리</CategoryTitle>
+        </CategoryBox>
+      </NavBarStyled>
       {isMobileCategory && (
         <DropDownMenu>
           <MobileMenu
@@ -137,6 +140,7 @@ const NavBar = () => {
           ))}
         </DropDownMenu>
       )}
+
       {isShowDetailCategory && category?.categories[selectedCategory] ? (
         <SubThemeBox>
           {category?.categories[selectedCategory]?.downCategories.map(
@@ -180,8 +184,7 @@ const NavBarStyled = styled.div`
 const CategoryBox = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 20px;
-
+  margin-left: 40px;
   cursor: pointer;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
@@ -278,6 +281,7 @@ const MajorTopic = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  user-select: none;
 `;
 
 //카테고리 소분류 박스
@@ -314,6 +318,7 @@ const SubTheme = styled.div`
   align-items: center;
 
   padding: 5px 0;
+  user-select: none;
 
   :hover {
     animation-name: 'slidein';
@@ -325,9 +330,6 @@ const SubTheme = styled.div`
     to {
       color: #a2c79a;
     }
-  }
-
-  @media screen and (max-width: 599px) {
   }
 `;
 
@@ -346,11 +348,13 @@ const Back = styled.div`
   }
 `;
 
-const LoadingComponent = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 30px;
-  padding-top: 300px;
+const MoblieLogo = styled(Logo)`
+  display: none;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    width: 126px;
+    display: block;
+    margin-left: 15px;
+  }
 `;
 
 export default NavBar;

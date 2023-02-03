@@ -6,6 +6,7 @@ const useList = (sort, id) => {
     isLoading: listLoading,
     refetch: listFetch,
     error: listError,
+    isError: isListError,
   } = useQuery(
     [`/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`],
     { enabled: false },
@@ -16,6 +17,7 @@ const useList = (sort, id) => {
     listLoading,
     listFetch,
     listError,
+    isListError,
   };
 };
 
