@@ -29,11 +29,11 @@ yarn start
 - React.js, JavaScript
 
 • 상태 관리
-- Recoil
+- Recoil (Front)
+- React-Query (Back)
 
 • 페이지 스타일링
 - Styled-Components
-
 ```
 
 ## Git branch & Git Flow
@@ -57,6 +57,7 @@ yarn start
 | style    | 스타일 변경, 주석 제거 등                |
 | setting  | 빌드수행, 패키지 설치, 환경 설정 수정 등 |
 | docs     | readme 수정                              |
+| chore    | 코드, 문서 외 잡일                       |
 
 ## Member
 

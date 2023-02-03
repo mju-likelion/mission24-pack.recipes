@@ -2,11 +2,11 @@ import { ReactComponent as ErrorIcon } from '../images/Error.svg';
 import React from 'react';
 import styled from 'styled-components';
 
-const NotFound = () => {
+const Error = ({ errorMsg }) => {
   return (
     <Wrapper>
       <ErrorIcon />
-      <Text>Error 404</Text>
+      <Text>{errorMsg}</Text>
     </Wrapper>
   );
 };
@@ -25,4 +25,4 @@ const Text = styled.div`
   font-size: 30px;
 `;
 
-export default NotFound;
+export default Error;

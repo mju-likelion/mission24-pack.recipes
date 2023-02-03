@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
 import usePlus from '../hooks/usePlus';
 import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 const Modal = ({ modalClose, sort }) => {
   // 리스트 정보
@@ -30,16 +31,26 @@ const Modal = ({ modalClose, sort }) => {
       return arr;
     });
   };
+
   const listUpdate = usePlus(sort, id, itemName);
   const queryClient = useQueryClient();
 
   //추가하기 기능
   const itemplus = async (itemId) => {
+    for (const item of itemName) {
+      if (item.trim() === '') {
+        toast('빈 값은 입력할 수 없습니다.');
+        return;
+      }
+    }
+
     await listUpdate.mutateAsync(itemId);
     modalClose();
     queryClient.invalidateQueries([
       `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
     ]);
+
+    toast('아이템을 추가했습니다.');
   };
 
   return (
@@ -78,6 +89,7 @@ const ModalBg = styled.div`
 
   background: rgba(0, 0, 0, 0.2);
 `;
+
 const ModalWrapper = styled.div`
   position: fixed;
   top: 50%;
@@ -187,11 +199,12 @@ const ListText = styled.input`
 `;
 
 const ListLine = styled.hr`
+  width: auto;
+  height: 1px;
   display: flex;
   align-items: center;
-  width: auto;
   margin-bottom: 5%;
-  height: 1px;
+
   border: solid 1px #9bb89e;
   background-color: #9bb89e;
 `;

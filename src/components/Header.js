@@ -46,12 +46,16 @@ const Header = () => {
 };
 
 const HeaderWrapper = styled.header`
-  height: 100px;
+  height: 90px;
   padding: 0px 65px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    display: none;
+  }
 `;
 
 const LogoBox = styled(Logo)`
@@ -62,6 +66,7 @@ const LinkBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  user-select: none;
 `;
 
 const Button = styled.button`

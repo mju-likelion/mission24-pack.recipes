@@ -10,12 +10,10 @@ export const refreshAccessToken = async () => {
 };
 
 export const tryLogin = async (data) => {
-  const res = await Axios.post('/auth/login', {
+  return await Axios.post('/auth/login', {
     email: data.id,
     password: data.password,
   });
-
-  return res;
 };
 
 export const tryRegister = async (data) => {
