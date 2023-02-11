@@ -57,7 +57,7 @@ function App() {
               </>
             }
           />
-          <Route path='/*' element={<Error>Error 404</Error>} />
+          <Route path='/*' element={<Error errorMsg='Error 404' />} />
           <Route
             path='/register'
             element={
