@@ -60,12 +60,19 @@ function App() {
               </>
             }
           />
-          <Route path='/*' element={<Error errorMsg='Error 404' />} />
           <Route
             path='/register'
             element={
               <>
                 <RegisterPage />
+              </>
+            }
+          />
+          <Route
+            path='/*'
+            element={
+              <>
+                <Error errorMsg='Error 404' />
               </>
             }
           />
