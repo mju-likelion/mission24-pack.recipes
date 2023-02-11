@@ -89,6 +89,7 @@ const ModalBg = styled.div`
 
   background: rgba(0, 0, 0, 0.2);
 `;
+
 const ModalWrapper = styled.div`
   position: fixed;
   top: 50%;
@@ -198,11 +199,12 @@ const ListText = styled.input`
 `;
 
 const ListLine = styled.hr`
+  width: auto;
+  height: 1px;
   display: flex;
   align-items: center;
-  width: auto;
   margin-bottom: 5%;
-  height: 1px;
+
   border: solid 1px #9bb89e;
   background-color: #9bb89e;
 `;

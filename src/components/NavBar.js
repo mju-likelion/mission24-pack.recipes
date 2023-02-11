@@ -29,7 +29,7 @@ const NavBar = () => {
   const width = document.body.clientWidth;
 
   const isHoverMainCategory = () => {
-    if (width > 375) {
+    if (width > 599) {
       setIsShowMainCategory((prev) => {
         if (prev) {
           setSelectedCategory(false);
@@ -184,8 +184,7 @@ const NavBarStyled = styled.div`
 const CategoryBox = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 20px;
-
+  margin-left: 40px;
   cursor: pointer;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
@@ -282,6 +281,7 @@ const MajorTopic = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  user-select: none;
 `;
 
 //카테고리 소분류 박스
@@ -318,6 +318,7 @@ const SubTheme = styled.div`
   align-items: center;
 
   padding: 5px 0;
+  user-select: none;
 
   :hover {
     animation-name: 'slidein';

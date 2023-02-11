@@ -19,6 +19,7 @@ import Axios from './lib/axios';
 import styled from 'styled-components';
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import RouteChangeTracker from './RouteChangeTracker';
 
 const defaultQueryFn = async ({ queryKey }) => {
   const { data } = await Axios.get(queryKey[0]);
@@ -34,6 +35,8 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  RouteChangeTracker();
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={defaultTheme}>

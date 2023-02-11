@@ -66,6 +66,7 @@ const LinkBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  user-select: none;
 `;
 
 const Button = styled.button`

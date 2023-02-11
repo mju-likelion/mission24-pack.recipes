@@ -5,6 +5,7 @@ import { ReactComponent as Like } from '../images/like.svg';
 import { ReactComponent as RedLike } from '../images/redLike.svg';
 import { ReactComponent as Report } from '../images/Report.svg';
 import Modal from './Modal';
+import Alert from './Alert';
 import { TitleAtom } from '../atoms/TitleAtom';
 
 import useCategory from '../hooks/useCategory';
@@ -18,6 +19,11 @@ import Error from './Error';
 
 const List = () => {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [alertModalOpen, setAlertModalOpen] = useState(false);
+  const [alertModalDialog, setAlertModalDialog] = useState('');
+  const [reportItemId, setReportItemId] = useState('');
+
   const [sort, setSort] = useState('likeCount');
   const token = localStorage.getItem('accessToken');
 
@@ -69,7 +75,11 @@ const List = () => {
 
   const postLike = useLike(sort, id);
   const deleteLike = useDislike(sort, id);
-  const report = useReport();
+  const reportQuery = useReport();
+
+  const report = async () => {
+    await reportQuery.mutateAsync(reportItemId);
+  };
 
   const like = async (itemId) => {
     await postLike.mutateAsync(itemId);
@@ -80,12 +90,10 @@ const List = () => {
     await deleteLike.mutateAsync(itemId);
     listFetch();
   };
-  const reportPrompt = async (itemId) => {
-    if (!confirm('정말 신고하시겠습니까?')) {
-      return;
-    }
 
-    await report.mutateAsync(itemId);
+  const openAlert = async (alertDialog) => {
+    setAlertModalOpen(true);
+    setAlertModalDialog(alertDialog);
   };
 
   return (
@@ -127,7 +135,8 @@ const List = () => {
                   </LikeBox>
                   <ReportBox
                     onClick={() => {
-                      reportPrompt(item._id);
+                      openAlert('해당 아이템을 정말 신고하시겠습니까?');
+                      setReportItemId(item._id);
                     }}
                   >
                     <Report />
@@ -141,6 +150,14 @@ const List = () => {
             </ButtonWrapper>
             {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
           </ListBox>
+          {alertModalOpen && (
+            <Alert
+              title={'신고하기'}
+              dialog={alertModalDialog}
+              onYesHandler={() => report()}
+              modalCloseDelegate={() => setAlertModalOpen(false)}
+            />
+          )}
         </>
       )}
     </ListWrapper>
@@ -151,26 +168,41 @@ const ListWrapper = styled.div`
   margin: 5px auto;
   width: 560px;
   min-height: 774px;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    width: 85%;
+    min-height: 508px;
+    margin: 5% auto 10%;
+  }
 `;
 
 const Header = styled.div`
-  display: flex;
-  margin-left: 24px;
   height: 74px;
-  font-size: 44px;
+  display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin-left: 24px;
+  font-size: 44px;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    font-size: 40px;
+  }
 `;
 
 const SortDiv = styled.span`
   height: 30px;
   font-size: 20px;
   margin: 34px 12px 0 0;
+  user-select: none;
 
   button {
     background: none;
     border: none;
     cursor: pointer;
+    color: #424242;
+  }
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    font-size: 14px;
+    margin: 34px 5% 0 0;
   }
 `;
 
@@ -179,13 +211,15 @@ const ListBox = styled.div`
   border-radius: 36px;
   background-color: ${({ theme }) => theme.colors.yellow};
   padding: 70px 0 0 0;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    height: 508px;
+  }
 `;
 
 const ListBoxWrapper = styled.div`
   margin: 0 auto;
   height: 520px;
   width: 400px;
-
   overflow: auto;
   &::-webkit-scrollbar {
     width: 8px; /* 스크롤바의 너비 */
@@ -193,16 +227,25 @@ const ListBoxWrapper = styled.div`
   &::-webkit-scrollbar-thumb {
     border-radius: 8px;
     background: ${({ theme }) => theme.colors.primary}; /* 스크롤바의 색상 */
-    height: 2%; /* 스크롤바의 길이 */
+    height: 1%; /* 스크롤바의 길이 */
   }
   &::-webkit-scrollbar-track {
     background: #fff; /* 스크롤바 뒷 배경 색상 */
+  }
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    width: 95%;
+    height: 410px;
+    margin: 0 3%;
   }
 `;
 
 const ListItemBox = styled.div`
   width: 300px;
   font-size: 24px;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    width: 70%;
+    margin-left: 2%;
+  }
 `;
 
 const ListItem = styled.div`
@@ -210,6 +253,10 @@ const ListItem = styled.div`
   border-bottom: solid 2px #ffe5a4;
   font-size: 24px;
   margin: 34px 0 0 0;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    width: 100%;
+    font-size: 20px;
+  }
 `;
 
 const ListElement = styled.div`
@@ -218,29 +265,29 @@ const ListElement = styled.div`
 `;
 
 const LikeBox = styled.div`
-  margin-left: 16px;
-  margin-top: 34px;
   width: 16px;
   height: 30px;
-`;
-
-const ReportText = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 40px;
-  font-size: 7px;
-  justify-content: center;
+  margin-left: 16px;
+  margin-top: 34px;
 `;
 
 const ReportBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
   width: 24px;
   height: 38px;
-  margin-left: 16px;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: 16px;
+`;
+
+const ReportText = styled.div`
+  width: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 7px;
 `;
 
 const LikeNum = styled.div`
@@ -256,12 +303,15 @@ const ButtonWrapper = styled.div`
 
 const Button = styled.button`
   background: #a2c79a;
+  margin: 50px 18px 0 0;
+  padding: 10px;
   border-radius: 10px;
   border: none;
-  padding: 10px;
   color: white;
-  z-index: 100;
-  margin: 50px 18px 0 0;
+  z-index: 50;
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    margin: 7% 5% 0 0;
+  }
 `;
 
 export default List;
