@@ -53,7 +53,7 @@ export const LoginContainer = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 10% 0 10% 0;
+  margin: 5% 0 5% 0;
 `;
 
 export const Title = styled.div`

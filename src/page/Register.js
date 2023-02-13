@@ -76,7 +76,7 @@ function RegisterPage() {
 const RegisterContainer = styled(LoginContainer)`
   width: 100%;
   height: 100%;
-  margin-bottom: 40px;
+  margin: 3% 0 3% 0;
 `;
 
 const NameInput = styled(Input)`
