@@ -33,7 +33,7 @@ const LoginPage = function () {
         {...register('password')}
       />
       <LoginButton type='submit' active={isValid} disabled={!isValid}>
-        로그인
+        확인
       </LoginButton>
 
       <Link to={'/register'}>
@@ -50,8 +50,9 @@ export const LoginContainer = styled.form`
   justify-content: center;
   align-items: center;
   margin: 10% 0 30px 0;
+
   @media screen and (min-width: 375px) and (max-width: 599px) {
-    margin-bottom: 182px;
+    margin-bottom: 50%;
   }
 `;
 
@@ -59,22 +60,24 @@ export const Title = styled.div`
   font-size: 40px;
   color: ${({ theme }) => theme.colors.primary};
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10%;
   user-select: none;
 `;
 
 export const LoginButton = styled.button`
   width: 300px;
   height: 64px;
+
   margin-top: 39px;
   font-size: 30px;
   border: none;
   color: white;
   border-radius: 20px;
-  @media screen and (min-width: 375px) and(max-width: 599px) {
-    width: 150px;
-    height: 40px;
-    font-size: 20px;
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    width: 50%;
+    height: 50px;
+    font-size: 22px;
     border-radius: 10px;
   }
   background-color: ${(props) =>
@@ -87,7 +90,8 @@ const RegisterButton = styled.button`
   background: none;
   border: none;
   color: #aaaaaa;
-  @media screen and (min-width: 375px) and(max-width: 599px) {
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
     font-size: 18px;
   }
 `;
@@ -96,12 +100,15 @@ export const Input = styled.input`
   width: 433px;
   height: 92px;
   border: 2px solid #bbbbbb;
+  padding-left: 20px;
+
   :focus {
     outline: #bbbbbb;
   }
-  padding-left: 20px;
+
   @media screen and (min-width: 375px) and (max-width: 599px) {
-    width: 80%;
+    width: 76%;
+    height: 80px;
     font-size: 20px;
   }
 `;
