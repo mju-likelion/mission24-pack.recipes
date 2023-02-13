@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ReactComponent as Like } from '../images/like.svg';
 import { ReactComponent as RedLike } from '../images/redLike.svg';
 import { ReactComponent as Report } from '../images/Report.svg';
-import Modal from './Modal';
+import Modal from './ItemPlus';
 import Alert from './Alert';
 import { TitleAtom } from '../atoms/TitleAtom';
 
@@ -165,13 +165,14 @@ const List = () => {
 };
 
 const ListWrapper = styled.div`
-  margin: 5px auto;
+  margin: 2% auto;
   width: 560px;
   min-height: 774px;
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
     width: 85%;
-    min-height: 508px;
-    margin: 5% auto 10%;
+    min-height: 80vh;
+    margin: 2% auto 10%;
   }
 `;
 
@@ -180,10 +181,15 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+
   margin-left: 24px;
+  margin-bottom: 3%;
   font-size: 44px;
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    font-size: 40px;
+    width: 90%;
+    font-size: 36px;
+    margin-left: 8%;
   }
 `;
 
@@ -211,8 +217,10 @@ const ListBox = styled.div`
   border-radius: 36px;
   background-color: ${({ theme }) => theme.colors.yellow};
   padding: 70px 0 0 0;
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
     height: 508px;
+    padding: 12% 0 0 0;
   }
 `;
 
@@ -221,6 +229,8 @@ const ListBoxWrapper = styled.div`
   height: 520px;
   width: 400px;
   overflow: auto;
+  padding-left: 10px;
+  /* background-color: red; */
   &::-webkit-scrollbar {
     width: 8px; /* 스크롤바의 너비 */
   }
@@ -232,8 +242,9 @@ const ListBoxWrapper = styled.div`
   &::-webkit-scrollbar-track {
     background: #fff; /* 스크롤바 뒷 배경 색상 */
   }
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    width: 95%;
+    width: 90%;
     height: 410px;
     margin: 0 3%;
   }
@@ -242,6 +253,7 @@ const ListBoxWrapper = styled.div`
 const ListItemBox = styled.div`
   width: 300px;
   font-size: 24px;
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
     width: 70%;
     margin-left: 2%;
@@ -253,6 +265,7 @@ const ListItem = styled.div`
   border-bottom: solid 2px #ffe5a4;
   font-size: 24px;
   margin: 34px 0 0 0;
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
     width: 100%;
     font-size: 20px;
@@ -267,17 +280,20 @@ const ListElement = styled.div`
 const LikeBox = styled.div`
   width: 16px;
   height: 30px;
-  margin-left: 16px;
+
+  margin-left: 5%;
   margin-top: 34px;
 `;
 
 const ReportBox = styled.div`
   width: 24px;
   height: 38px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
   margin-top: 30px;
   margin-left: 16px;
 `;
@@ -303,12 +319,14 @@ const ButtonWrapper = styled.div`
 
 const Button = styled.button`
   background: #a2c79a;
-  margin: 50px 18px 0 0;
+  margin: 7% 14% 0 0;
   padding: 10px;
+
   border-radius: 10px;
   border: none;
   color: white;
   z-index: 50;
+
   @media screen and (max-width: 599px) and (min-width: 375px) {
     margin: 7% 5% 0 0;
   }

@@ -77,9 +77,15 @@ const ModalWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media screen and (max-width: 599px) and (min-width: 375px) {
-    width: 80%;
-    height: 45%;
+  /* 아이폰 SE UI */
+  @media screen and (max-width: 375px) {
+    width: 90%;
+    height: 38%;
+  }
+
+  @media screen and (max-width: 599px) and (min-width: 376px) {
+    width: 90%;
+    height: 30%;
   }
 `;
 
@@ -88,20 +94,45 @@ const CloseButton = styled(OutButton)`
   margin-left: 480px;
   margin-top: 30px;
 
-  @media screen and (max-width: 599px) and (min-width: 375px) {
-    margin-right: 30%;
-    margin-top: 5%;
+  /* 아이폰 SE UI  */
+  @media screen and (max-width: 375px) {
+    width: 8%;
+    margin-top: 6%;
+    margin-left: 80%;
+  }
+
+  @media screen and (max-width: 599px) and (min-width: 376px) {
+    margin-left: 78%;
+    margin-top: 0;
   }
 `;
 
 const Title = styled.div`
   font-size: 40px;
-  margin-bottom: 37px;
+  margin-bottom: 8%;
+
+  /* 아이폰 SE UI  */
+  @media screen and (max-width: 375px) {
+    font-size: 30px;
+    margin-bottom: 6%;
+    margin-top: 0;
+  }
+
+  @media screen and (max-width: 599px) and (min-width: 376px) {
+    font-size: 30px;
+    margin-bottom: 6%;
+    margin-top: 4%;
+  }
 `;
 
 const Description = styled.div`
   font-size: 24px;
   margin-bottom: 37px;
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    font-size: 16px;
+    margin-top: 2%;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -111,6 +142,17 @@ const ButtonWrapper = styled.div`
 
   flex-direction: row;
   justify-content: space-between;
+
+  /* 아이폰 SE UI  */
+  @media screen and (max-width: 375px) {
+    width: 70%;
+    margin-bottom: 5%;
+  }
+
+  @media screen and (max-width: 599px) and (min-width: 376px) {
+    width: 80%;
+    margin-bottom: 5%;
+  }
 `;
 
 const YesBtn = styled.button`
@@ -125,6 +167,19 @@ const YesBtn = styled.button`
   align-items: center;
 
   font-size: 22px;
+
+  /* 아이폰 SE UI  */
+  @media screen and (max-width: 375px) {
+    width: 100px;
+    height: 42px;
+
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: 599px) and (min-width: 376px) {
+    width: 110px;
+    height: 45px;
+  }
 `;
 
 const NoBtn = styled.button`
@@ -139,6 +194,19 @@ const NoBtn = styled.button`
   align-items: center;
 
   font-size: 22px;
+
+  /* 아이폰 SE UI  */
+  @media screen and (max-width: 375px) {
+    width: 100px;
+    height: 42px;
+
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: 599px) and (min-width: 376px) {
+    width: 110px;
+    height: 45px;
+  }
 `;
 
 export default Alert;

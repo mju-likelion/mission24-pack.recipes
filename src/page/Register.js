@@ -11,8 +11,9 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Loading from '../components/Loading';
 import { useRegister } from '../hooks/useAuth';
+import Header from '../components/Header';
 
-function RegisterPage() {
+const RegisterPage = () => {
   const [isValid, setIsValid] = useState(false);
   const navigate = useNavigate();
   const { register, watch, handleSubmit, getValues } = useForm();
@@ -40,36 +41,42 @@ function RegisterPage() {
   };
 
   return (
-    <RegisterContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
-      {isLoading && <Loading />}
-      <Title>회원가입</Title>
-      <NameInput placeholder='닉네임' type={'text'} {...register('name')} />
-      <Input placeholder='아이디' type={'text'} {...register('id')} />
-      <PasswordInput
-        placeholder='비밀번호'
-        type={'password'}
-        {...register('password')}
-      />
+    <>
+      <Header isDisplay isBtn={false} />
+      <RegisterContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
+        {isLoading && <Loading />}
+        <Title>회원가입</Title>
+        <NameInput placeholder='닉네임' type={'text'} {...register('name')} />
+        <Input placeholder='아이디' type={'text'} {...register('id')} />
+        <PasswordInput
+          placeholder='비밀번호'
+          type={'password'}
+          {...register('password')}
+        />
 
-      <PasswordInput
-        placeholder='비밀번호 확인'
-        type={'password'}
-        {...register('confirmPassword', {
-          validate: {
-            confirmPassword: (pw) =>
-              pw === getValues('password') || '동일한 비밀번호를 입력해주세요',
-          },
-        })}
-      />
-      <RegisterButton active={isValid} type='submit' disabled={!isValid}>
-        회원가입
-      </RegisterButton>
-    </RegisterContainer>
+        <PasswordInput
+          placeholder='비밀번호 확인'
+          type={'password'}
+          {...register('confirmPassword', {
+            validate: {
+              confirmPassword: (pw) =>
+                pw === getValues('password') ||
+                '동일한 비밀번호를 입력해주세요',
+            },
+          })}
+        />
+        <RegisterButton active={isValid} type='submit' disabled={!isValid}>
+          회원가입
+        </RegisterButton>
+      </RegisterContainer>
+    </>
   );
-}
+};
 
 const RegisterContainer = styled(LoginContainer)`
-  margin-bottom: 40px;
+  width: 100%;
+  height: 100%;
+  margin: 3% 0 3% 0;
 `;
 
 const NameInput = styled(Input)`
@@ -79,6 +86,7 @@ const NameInput = styled(Input)`
 
 const PasswordInput = styled(Input)`
   border-top: none;
+
   :nth-last-child(2) {
     border-radius: 0 0 20px 20px;
   }
