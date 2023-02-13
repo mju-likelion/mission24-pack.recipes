@@ -33,7 +33,7 @@ const queryClient = new QueryClient({
   },
 });
 
-function App() {
+const App = () => {
   RouteChangeTracker();
   return (
     <QueryClientProvider client={queryClient}>
@@ -53,9 +53,6 @@ function App() {
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/*' element={<Error errorMsg='Error 404' />} />
         </Routes>
-        {/* <Toast /> 
-        recoil로 만든 토스트메시지인데, 아직 삭제를 할지 말지 몰라서 우선 놔뒀습니다.
-        */}
         <StyledToastContainer
           position='bottom-center'
           autoClose={4000}
@@ -68,7 +65,7 @@ function App() {
       </ThemeProvider>
     </QueryClientProvider>
   );
-}
+};
 
 const StyledToastContainer = styled(ToastContainer)`
   display: flex;

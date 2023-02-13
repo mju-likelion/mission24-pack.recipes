@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as GithubIcon } from '../images/github.svg';
 
-function Footer() {
+const Footer = () => {
   return (
     <>
       <FooterWrapper>
@@ -20,7 +20,7 @@ function Footer() {
       </FooterWrapper>
     </>
   );
-}
+};
 
 const FooterWrapper = styled.div`
   width: 100%;

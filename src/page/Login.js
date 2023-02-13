@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 import { useLogin } from '../hooks/useAuth';
 import Header from '../components/Header';
 
-const LoginPage = function () {
+const LoginPage = () => {
   const { register, handleSubmit, watch } = useForm();
   const [isValid, setIsValid] = useState(false);
   const { mutateAsync, isLoading } = useLogin();
