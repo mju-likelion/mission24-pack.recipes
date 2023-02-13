@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ReactComponent as Like } from '../images/like.svg';
 import { ReactComponent as RedLike } from '../images/redLike.svg';
 import { ReactComponent as Report } from '../images/Report.svg';
-import Modal from './Modal';
+import Modal from './ItemPlus';
 import Alert from './Alert';
 import { TitleAtom } from '../atoms/TitleAtom';
 
