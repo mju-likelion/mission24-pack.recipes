@@ -228,6 +228,7 @@ const MobileMenuBox = styled.div`
 
 const MobileMenu = styled.button`
   display: none;
+  color: #424242;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
     display: flex;
