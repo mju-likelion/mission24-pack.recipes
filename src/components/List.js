@@ -171,7 +171,7 @@ const ListWrapper = styled.div`
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
     width: 85%;
-    min-height: 508px;
+    min-height: 80vh;
     margin: 2% auto 10%;
   }
 `;
