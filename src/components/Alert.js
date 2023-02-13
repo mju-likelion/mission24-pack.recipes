@@ -144,7 +144,7 @@ const ButtonWrapper = styled.div`
   justify-content: space-between;
 
   /* 아이폰 SE UI  */
-  @media screen and (width: 375px) {
+  @media screen and (max-width: 375px) {
     width: 70%;
     margin-bottom: 5%;
   }
@@ -169,7 +169,7 @@ const YesBtn = styled.button`
   font-size: 22px;
 
   /* 아이폰 SE UI  */
-  @media screen and (width: 375px) {
+  @media screen and (max-width: 375px) {
     width: 100px;
     height: 42px;
 
@@ -196,7 +196,7 @@ const NoBtn = styled.button`
   font-size: 22px;
 
   /* 아이폰 SE UI  */
-  @media screen and (width: 375px) {
+  @media screen and (max-width: 375px) {
     width: 100px;
     height: 42px;
 
