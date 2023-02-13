@@ -1,13 +1,12 @@
 import GlobalStyle from './styles/GlobalStyles';
 import NavBar from './components/NavBar';
-import Header from './components/Header';
+
 import 'normalize.css';
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './styles/theme';
 
 import LoginPage from './page/Login';
 import RegisterPage from './page/Register';
-// import Toast from './components/Toast';
 import Footer from './components/Footer';
 import ListBox from './components/List';
 import Error from './components/Error';
@@ -36,12 +35,10 @@ const queryClient = new QueryClient({
 
 function App() {
   RouteChangeTracker();
-
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={defaultTheme}>
         <GlobalStyle />
-        <Header />
         <Routes>
           <Route
             path='/'

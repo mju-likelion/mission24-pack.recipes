@@ -35,6 +35,8 @@ const FooterWrapper = styled.div`
   margin-top: 5%;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
+    position: fixed;
+    bottom: 0;
     height: 40px;
   }
 `;
