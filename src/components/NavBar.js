@@ -9,6 +9,7 @@ import useCategory from '../hooks/useCategory';
 import { toast } from 'react-toastify';
 import { ReactComponent as Logo } from '../images/logo.svg';
 import Loading from './Loading';
+import Header from '../components/Header';
 
 const NavBar = () => {
   const setTitle = useSetRecoilState(TitleAtom);
@@ -78,6 +79,7 @@ const NavBar = () => {
 
   return (
     <>
+      <Header isDisplay={false} isBtn />
       {categoryLoading && <Loading />}
       <NavBarStyled>
         <Link to={'/'}>
@@ -122,7 +124,6 @@ const NavBar = () => {
           )}
         </DropDownMenu>
       )}
-
       {isShowMainCategory && (
         <DropDownMenu>
           {category?.categories.map((Topic, index) => (
@@ -140,7 +141,6 @@ const NavBar = () => {
           ))}
         </DropDownMenu>
       )}
-
       {isShowDetailCategory && category?.categories[selectedCategory] ? (
         <SubThemeBox>
           {category?.categories[selectedCategory]?.downCategories.map(
@@ -168,6 +168,10 @@ const NavBar = () => {
     </>
   );
 };
+
+// const ListHeader = styled(Header)`
+//   background-color: red;
+// `;
 
 const NavBarStyled = styled.div`
   width: 100%;
@@ -228,6 +232,7 @@ const MobileMenuBox = styled.div`
 
 const MobileMenu = styled.button`
   display: none;
+  color: #424242;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
     display: flex;
