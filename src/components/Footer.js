@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-
 import { ReactComponent as GithubIcon } from '../images/github.svg';
-// import { ReactComponent as InstagramIcon } from '../images/instagram.svg';
 
 function Footer() {
   return (
@@ -32,12 +30,11 @@ const FooterWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  margin-top: 5%;
+  margin-top: 10%;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    position: fixed;
-    bottom: 0;
     height: 40px;
+    margin-top: 10%;
   }
 `;
 
@@ -46,7 +43,7 @@ const FooterEmail = styled.div`
   letter-spacing: 1px;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    font-size: 10px;
+    font-size: 12px;
     margin-left: 15px;
   }
 `;
@@ -62,14 +59,15 @@ const FooterIcons = styled.div`
 `;
 
 const GithubStyledIcon = styled(GithubIcon)`
-  background-color: #424242;
   width: 24px;
   height: 24px;
+  background-color: #424242;
   cursor: pointer;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
   }
 `;
 
