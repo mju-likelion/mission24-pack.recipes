@@ -52,23 +52,9 @@ function App() {
               </>
             }
           />
-          <Route
-            path='/login'
-            element={
-              <>
-                <LoginPage />
-              </>
-            }
-          />
-          <Route path='/*' element={<Error>Error 404</Error>} />
-          <Route
-            path='/register'
-            element={
-              <>
-                <RegisterPage />
-              </>
-            }
-          />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/*' element={<Error errorMsg='Error 404' />} />
         </Routes>
         {/* <Toast /> 
         recoil로 만든 토스트메시지인데, 아직 삭제를 할지 말지 몰라서 우선 놔뒀습니다.
