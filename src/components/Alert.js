@@ -77,9 +77,15 @@ const ModalWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media screen and (max-width: 599px) and (min-width: 375px) {
+  /* 아이폰 SE UI */
+  @media screen and (max-width: 375px) {
     width: 90%;
-    height: 32%;
+    height: 38%;
+  }
+
+  @media screen and (max-width: 599px) and (min-width: 376px) {
+    width: 90%;
+    height: 30%;
   }
 `;
 
@@ -89,7 +95,7 @@ const CloseButton = styled(OutButton)`
   margin-top: 30px;
 
   /* 아이폰 SE UI  */
-  @media screen and (width: 375px) {
+  @media screen and (max-width: 375px) {
     width: 8%;
     margin-top: 6%;
     margin-left: 80%;
@@ -105,9 +111,17 @@ const Title = styled.div`
   font-size: 40px;
   margin-bottom: 8%;
 
-  @media screen and (max-width: 599px) and (min-width: 375px) {
+  /* 아이폰 SE UI  */
+  @media screen and (max-width: 375px) {
     font-size: 30px;
     margin-bottom: 6%;
+    margin-top: 0;
+  }
+
+  @media screen and (max-width: 599px) and (min-width: 376px) {
+    font-size: 30px;
+    margin-bottom: 6%;
+    margin-top: 4%;
   }
 `;
 
@@ -117,6 +131,7 @@ const Description = styled.div`
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
     font-size: 16px;
+    margin-top: 2%;
   }
 `;
 
@@ -157,6 +172,8 @@ const YesBtn = styled.button`
   @media screen and (width: 375px) {
     width: 100px;
     height: 42px;
+
+    font-size: 20px;
   }
 
   @media screen and (max-width: 599px) and (min-width: 376px) {
@@ -182,6 +199,8 @@ const NoBtn = styled.button`
   @media screen and (width: 375px) {
     width: 100px;
     height: 42px;
+
+    font-size: 20px;
   }
 
   @media screen and (max-width: 599px) and (min-width: 376px) {
