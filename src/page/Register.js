@@ -42,7 +42,7 @@ function RegisterPage() {
 
   return (
     <>
-      <Header isDisplay={true} isBtn={false} />
+      <Header isDisplay isBtn={false} />
       <RegisterContainer onSubmit={handleSubmit(registerHandle, onInValid)}>
         {isLoading && <Loading />}
         <Title>회원가입</Title>

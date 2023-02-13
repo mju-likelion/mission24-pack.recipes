@@ -6,6 +6,7 @@ import { removeCookie } from '../util/Cookie';
 import { toast } from 'react-toastify';
 
 const Header = (props) => {
+  const { isDisplay, isBtn } = props;
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -22,12 +23,12 @@ const Header = (props) => {
   }, [isLogin]);
 
   return (
-    <HeaderContainer isDisplay={props.isDisplay}>
+    <HeaderContainer isDisplay={isDisplay}>
       <HeaderWrapper>
         <Link to={'/'}>
           <LogoBox />
         </Link>
-        <LinkBox isBtn={props.isBtn}>
+        <LinkBox isBtn={isBtn}>
           {isLogin ? (
             <Button onClick={handleLogout}>로그아웃</Button>
           ) : (
@@ -52,7 +53,7 @@ const HeaderContainer = styled.div`
   height: 90px;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    display: ${(props) => (props.isDisplay ? 'flex' : 'none')};
+    display: ${(props) => (props.isDisplay ? 'block' : 'none')};
   }
 `;
 

@@ -25,7 +25,7 @@ const LoginPage = function () {
 
   return (
     <>
-      <Header isDisplay={true} isBtn={false} />
+      <Header isDisplay isBtn={false} />
       <LoginContainer onSubmit={handleSubmit(loginHandle)}>
         {isLoading && <Loading />}
         <Title>로그인</Title>

@@ -79,7 +79,7 @@ const NavBar = () => {
 
   return (
     <>
-      <Header isDisplay={false} isBtn={true} />
+      <Header isDisplay={false} isBtn />
       {categoryLoading && <Loading />}
       <NavBarStyled>
         <Link to={'/'}>
