@@ -57,11 +57,16 @@ export const LoginContainer = styled.form`
 `;
 
 export const Title = styled.div`
-  font-size: 40px;
+  font-size: 50px;
   color: ${({ theme }) => theme.colors.primary};
   padding: 10px;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   user-select: none;
+
+  @media screen and (min-width: 375px) and (max-width: 599px) {
+    margin-bottom: 8%;
+    font-size: 40px;
+  }
 `;
 
 export const LoginButton = styled.button`
@@ -75,7 +80,7 @@ export const LoginButton = styled.button`
   border-radius: 20px;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    width: 50%;
+    width: 40%;
     height: 50px;
     font-size: 22px;
     border-radius: 10px;
