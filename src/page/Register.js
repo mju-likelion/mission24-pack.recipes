@@ -13,7 +13,7 @@ import Loading from '../components/Loading';
 import { useRegister } from '../hooks/useAuth';
 import Header from '../components/Header';
 
-function RegisterPage() {
+const RegisterPage = () => {
   const [isValid, setIsValid] = useState(false);
   const navigate = useNavigate();
   const { register, watch, handleSubmit, getValues } = useForm();
@@ -71,7 +71,7 @@ function RegisterPage() {
       </RegisterContainer>
     </>
   );
-}
+};
 
 const RegisterContainer = styled(LoginContainer)`
   width: 100%;
