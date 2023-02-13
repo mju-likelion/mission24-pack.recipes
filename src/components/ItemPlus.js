@@ -108,8 +108,8 @@ const ModalWrapper = styled.div`
   align-items: center;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    width: 80%;
-    height: 45%;
+    width: 90%;
+    height: 60%;
   }
 `;
 
@@ -119,8 +119,8 @@ const CloseButton = styled(OutButton)`
   margin-top: 30px;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    margin-right: 30%;
     margin-top: 5%;
+    margin-left: 80%;
   }
 `;
 
@@ -134,7 +134,9 @@ const Title = styled.p`
   line-height: 70px;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    margin-top: 10px;
+    font-size: 34px;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 `;
 
@@ -178,12 +180,16 @@ const ListWrapper = styled.div`
   &::-webkit-scrollbar-track {
     background: #ffffff; /* 스크롤바 뒷 배경 색상 */
   }
+
+  @media screen and (max-width: 599px) and (min-width: 375px) {
+    width: 80%;
+  }
 `;
 
 const ListText = styled.input`
   display: flex;
   justify-content: left;
-  margin-left: 20px;
+  margin-left: 2%;
   background: none;
   border: none;
   font-size: 25px;
@@ -193,7 +199,7 @@ const ListText = styled.input`
   }
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    padding: 2%;
+    padding: 1%;
     font-size: 20px;
   }
 `;
@@ -229,7 +235,9 @@ const AddButton = styled.button`
   }
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    padding: 2%;
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
   }
 `;
 
