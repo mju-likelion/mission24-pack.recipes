@@ -165,14 +165,14 @@ const List = () => {
 };
 
 const ListWrapper = styled.div`
-  margin: 5px auto;
+  margin: 2% auto;
   width: 560px;
   min-height: 774px;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
     width: 85%;
     min-height: 508px;
-    margin: 5% auto 10%;
+    margin: 2% auto 10%;
   }
 `;
 
@@ -183,13 +183,13 @@ const Header = styled.div`
   align-items: flex-end;
 
   margin-left: 24px;
+  margin-bottom: 3%;
   font-size: 44px;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
     width: 90%;
     font-size: 36px;
     margin-left: 8%;
-    margin-bottom: 3%;
   }
 `;
 
@@ -229,7 +229,8 @@ const ListBoxWrapper = styled.div`
   height: 520px;
   width: 400px;
   overflow: auto;
-
+  padding-left: 10px;
+  /* background-color: red; */
   &::-webkit-scrollbar {
     width: 8px; /* 스크롤바의 너비 */
   }
@@ -243,7 +244,7 @@ const ListBoxWrapper = styled.div`
   }
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    width: 95%;
+    width: 90%;
     height: 410px;
     margin: 0 3%;
   }
@@ -280,7 +281,7 @@ const LikeBox = styled.div`
   width: 16px;
   height: 30px;
 
-  margin-left: 16px;
+  margin-left: 5%;
   margin-top: 34px;
 `;
 
@@ -318,7 +319,7 @@ const ButtonWrapper = styled.div`
 
 const Button = styled.button`
   background: #a2c79a;
-  margin: 50px 18px 0 0;
+  margin: 7% 14% 0 0;
   padding: 10px;
 
   border-radius: 10px;
