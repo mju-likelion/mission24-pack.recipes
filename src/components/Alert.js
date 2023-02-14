@@ -97,13 +97,13 @@ const CloseButton = styled(OutButton)`
   /* 아이폰 SE UI  */
   @media screen and (max-width: 375px) {
     width: 8%;
-    margin-top: 6%;
+    margin-top: 6px;
     margin-left: 80%;
   }
 
   @media screen and (max-width: 599px) and (min-width: 376px) {
     margin-left: 78%;
-    margin-top: 0;
+    margin-top: 8px;
   }
 `;
 
