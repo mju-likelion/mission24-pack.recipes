@@ -83,10 +83,17 @@ const StyledToastContainer = styled(ToastContainer)`
   .Toastify__toast {
     box-shadow: none;
     background-color: ${({ theme }) => theme.colors.green};
+    color: ${({ theme }) => theme.colors.black};
     border-radius: 20px;
-    height: 100px;
+    height: 150px;
     width: 392px;
+    font-size: 25px;
     line-height: 30px;
+    @media screen and (max-width: 599px) and (min-width: 375px) {
+      font-size: 18px;
+      width: 250px;
+      height: 100px;
+    }
   }
 `;
 
