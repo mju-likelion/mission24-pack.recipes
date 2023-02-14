@@ -180,7 +180,7 @@ const ListWrapper = styled.div`
   width: 330px;
   height: 180px;
   overflow: auto;
-
+  margin-bottom: 10px;
   &::-webkit-scrollbar {
     width: 8px; /* 스크롤바의 너비 */
   }
