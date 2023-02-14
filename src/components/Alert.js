@@ -167,6 +167,7 @@ const YesBtn = styled.button`
   align-items: center;
 
   font-size: 22px;
+  color: #424242;
 
   /* 아이폰 SE UI  */
   @media screen and (max-width: 375px) {
@@ -193,6 +194,7 @@ const NoBtn = styled.button`
   justify-content: center;
   align-items: center;
 
+  color: #424242;
   font-size: 22px;
 
   /* 아이폰 SE UI  */
