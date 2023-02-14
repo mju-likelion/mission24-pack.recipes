@@ -182,7 +182,7 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: flex-end;
 
-  margin-left: 24px;
+  margin-left: 40px;
   margin-bottom: 2%;
   font-size: 44px;
 
@@ -196,7 +196,7 @@ const Header = styled.div`
 const SortDiv = styled.span`
   height: 30px;
   font-size: 20px;
-  margin: 34px 12px 0 0;
+  margin: 34px 25px 0 0;
   user-select: none;
 
   button {
