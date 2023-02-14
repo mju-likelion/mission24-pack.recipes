@@ -183,12 +183,12 @@ const Header = styled.div`
   align-items: flex-end;
 
   margin-left: 24px;
-  margin-bottom: 3%;
+  margin-bottom: 2%;
   font-size: 44px;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
     width: 90%;
-    font-size: 36px;
+    font-size: 30px;
     margin-left: 8%;
   }
 `;
@@ -207,8 +207,8 @@ const SortDiv = styled.span`
   }
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    font-size: 14px;
-    margin: 34px 5% 0 0;
+    font-size: 12px;
+    margin: 34px 10px -10px 0;
   }
 `;
 
