@@ -57,8 +57,10 @@ const Modal = ({ modalClose, sort }) => {
     <>
       <ModalBg ref={outside} onClick={modalClose} />
       <ModalWrapper ref={inside}>
-        <CloseButton onClick={modalClose} />
-        <Title>작성하기</Title>
+        <TopBox>
+          <CloseButton onClick={modalClose} />
+          <Title>작성하기</Title>
+        </TopBox>
         <ListWrapper>
           {listNumber.map((_, index) => (
             <div key={index}>
@@ -109,34 +111,41 @@ const ModalWrapper = styled.div`
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
     width: 90%;
-    height: 46%;
+    height: 47%;
   }
 `;
 
-const CloseButton = styled(OutButton)`
+const TopBox = styled.div`
+  width: 90%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const CloseButton = styled(OutButton)`
   margin-left: 480px;
   margin-top: 30px;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    margin-top: 5%;
-    margin-left: 80%;
+    width: 30px;
+    height: 30px;
+
+    margin-top: 15px;
+    margin-left: 90%;
   }
 `;
 
 const Title = styled.p`
   display: flex;
-  justify-content: center;
-  padding-bottom: 20px;
 
   font-weight: 400;
   font-size: 40px;
   line-height: 70px;
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    font-size: 34px;
     margin-top: 0;
     margin-bottom: 0;
+    font-size: 34px;
   }
 `;
 
@@ -158,7 +167,12 @@ const PlusButton = styled.div`
   }
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
-    margin-top: 5%;
+    width: 28px;
+    height: 28px;
+
+    margin: 14px 0 2px 0;
+    font-size: 26px;
+    line-height: 34px;
   }
 `;
 
@@ -181,18 +195,26 @@ const ListWrapper = styled.div`
     background: #ffffff; /* 스크롤바 뒷 배경 색상 */
   }
 
-  @media screen and (max-width: 599px) and (min-width: 375px) {
+  @media screen and (max-width: 375px) {
     width: 80%;
+    height: 55%;
+  }
+
+  @media screen and (max-width: 599px) and (min-width: 376px) {
+    width: 80%;
+    height: 36%;
+    /* background-color: orange; */
   }
 `;
 
 const ListText = styled.input`
   display: flex;
   justify-content: left;
-  margin-left: 2%;
+  margin-left: 8%;
   background: none;
   border: none;
   font-size: 25px;
+  color: #424242;
 
   :focus {
     outline: none;
@@ -205,7 +227,7 @@ const ListText = styled.input`
 `;
 
 const ListLine = styled.hr`
-  width: auto;
+  width: 85%;
   height: 1px;
   display: flex;
   align-items: center;
@@ -225,7 +247,7 @@ const AddButton = styled.button`
   font-size: 20px;
   border-radius: 10px;
   background: #ffffff;
-
+  color: #424242;
   margin-bottom: 23px;
   border: 0;
 
@@ -236,8 +258,9 @@ const AddButton = styled.button`
 
   @media screen and (max-width: 599px) and (min-width: 375px) {
     width: 100px;
-    height: 50px;
-    font-size: 20px;
+    height: 40px;
+    font-size: 15px;
+    margin: 10px 0;
   }
 `;
 
