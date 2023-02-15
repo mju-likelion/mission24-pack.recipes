@@ -7,7 +7,7 @@ import usePlus from '../hooks/usePlus';
 import { toast } from 'react-toastify';
 import useList from '../hooks/useList';
 
-const Modal = ({ modalClose, sort }) => {
+const ItemPlus = ({ modalClose, sort }) => {
   // 리스트 정보
   const [listNumber, setListNumber] = useState([0]);
   const [itemName, setItemName] = useState(['']);
@@ -71,7 +71,7 @@ const Modal = ({ modalClose, sort }) => {
           ))}
         </ListWrapper>
         <PlusButton onClick={ListAdding}>+</PlusButton>
-        <AddButton onClick={() => itemplus()}>추가하기</AddButton>
+        <AddButton onClick={itemplus}>추가하기</AddButton>
       </ModalWrapper>
     </>
   );
@@ -262,4 +262,4 @@ const AddButton = styled.button`
   }
 `;
 
-export default Modal;
+export default ItemPlus;
