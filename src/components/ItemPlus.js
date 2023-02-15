@@ -4,8 +4,8 @@ import { ReactComponent as OutButton } from '../images/outButton.svg';
 import { useRecoilValue } from 'recoil';
 import { TitleAtom } from '../atoms/TitleAtom';
 import usePlus from '../hooks/usePlus';
-import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import useList from '../hooks/useList';
 
 const Modal = ({ modalClose, sort }) => {
   // 리스트 정보
@@ -32,11 +32,12 @@ const Modal = ({ modalClose, sort }) => {
     });
   };
 
+  const { listFetch } = useList(sort, id);
+
   const listUpdate = usePlus(sort, id, itemName);
-  const queryClient = useQueryClient();
 
   //추가하기 기능
-  const itemplus = async (itemId) => {
+  const itemplus = async () => {
     for (const item of itemName) {
       if (item.trim() === '') {
         toast('빈 값은 입력할 수 없습니다.');
@@ -44,12 +45,9 @@ const Modal = ({ modalClose, sort }) => {
       }
     }
 
-    await listUpdate.mutateAsync(itemId);
+    await listUpdate.mutateAsync();
     modalClose();
-    queryClient.invalidateQueries([
-      `/items?categoryId=${id}&skip=0&limit=100&orderBy=${sort}:dsc`,
-    ]);
-
+    listFetch();
     toast('아이템을 추가했습니다.');
   };
 
@@ -73,7 +71,7 @@ const Modal = ({ modalClose, sort }) => {
           ))}
         </ListWrapper>
         <PlusButton onClick={ListAdding}>+</PlusButton>
-        <AddButton onClick={itemplus}>추가하기</AddButton>
+        <AddButton onClick={() => itemplus()}>추가하기</AddButton>
       </ModalWrapper>
     </>
   );
@@ -181,6 +179,7 @@ const ListWrapper = styled.div`
   height: 180px;
   overflow: auto;
   margin-bottom: 10px;
+
   &::-webkit-scrollbar {
     width: 8px; /* 스크롤바의 너비 */
   }
@@ -203,7 +202,6 @@ const ListWrapper = styled.div`
   @media screen and (max-width: 599px) and (min-width: 376px) {
     width: 80%;
     height: 36%;
-    /* background-color: orange; */
   }
 `;
 
