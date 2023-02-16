@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ReactComponent as Like } from '../images/like.svg';
 import { ReactComponent as RedLike } from '../images/redLike.svg';
 import { ReactComponent as Report } from '../images/Report.svg';
-import Modal from './ItemPlus';
+import ItemPlus from './ItemPlus';
 import Alert from './Alert';
 import { TitleAtom } from '../atoms/TitleAtom';
 
@@ -148,7 +148,7 @@ const List = () => {
             <ButtonWrapper>
               <Button onClick={modalClose}>추가하기</Button>
             </ButtonWrapper>
-            {modalOpen && <Modal sort={sort} modalClose={modalClose} />}
+            {modalOpen && <ItemPlus sort={sort} modalClose={modalClose} />}
           </ListBox>
           {alertModalOpen && (
             <Alert
