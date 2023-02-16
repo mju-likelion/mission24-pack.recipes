@@ -61,4 +61,5 @@ yarn start
 
 ## Member
 
-![제목을 입력해주세요_-001](https://user-images.githubusercontent.com/81766889/187050587-d1ac0588-e7d6-43b7-a65c-287641b53f35.png)
+![잘챙기짐리드미수정](https://user-images.githubusercontent.com/81766889/219333760-d50e930d-27ed-41ce-bcdd-1b664888737b.png)
+
