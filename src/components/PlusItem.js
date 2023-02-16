@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as OutButton } from '../images/outButton.svg';
 import { useRecoilValue } from 'recoil';
@@ -6,6 +6,7 @@ import { TitleAtom } from '../atoms/TitleAtom';
 import usePlus from '../hooks/usePlus';
 import { toast } from 'react-toastify';
 import useList from '../hooks/useList';
+import Modal from './Modal';
 
 const ItemPlus = ({ modalClose, sort }) => {
   // 리스트 정보
@@ -14,10 +15,6 @@ const ItemPlus = ({ modalClose, sort }) => {
 
   // 해당 카테고리 id
   const { id } = useRecoilValue(TitleAtom);
-
-  // 모달 백그라운드 구분
-  const outside = useRef();
-  const inside = useRef();
 
   const ListAdding = () => {
     setListNumber((prev) => [...prev, 0]);
@@ -53,8 +50,7 @@ const ItemPlus = ({ modalClose, sort }) => {
 
   return (
     <>
-      <ModalBg ref={outside} onClick={modalClose} />
-      <ModalWrapper ref={inside}>
+      <Modal>
         <TopBox>
           <CloseButton onClick={modalClose} />
           <Title>작성하기</Title>
@@ -72,46 +68,10 @@ const ItemPlus = ({ modalClose, sort }) => {
         </ListWrapper>
         <PlusButton onClick={ListAdding}>+</PlusButton>
         <AddButton onClick={itemplus}>추가하기</AddButton>
-      </ModalWrapper>
+      </Modal>
     </>
   );
 };
-
-const ModalBg = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background: rgba(0, 0, 0, 0.2);
-`;
-
-const ModalWrapper = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  width: 560px;
-  height: auto;
-  z-index: 100;
-
-  background: #d6e8e3;
-  border-radius: 36px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  @media screen and (max-width: 599px) and (min-width: 375px) {
-    width: 90%;
-    height: 47%;
-  }
-`;
 
 const TopBox = styled.div`
   width: 90%;

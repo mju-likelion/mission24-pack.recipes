@@ -1,13 +1,15 @@
+import { Children } from 'react';
 import { useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as OutButton } from '../images/outButton.svg';
 
-const Alert = ({
+const Modal = ({
   title,
   dialog,
   modalCloseDelegate,
   onYesHandler,
   onNoHandler,
+  children,
 }) => {
   // 리스트 정보
 
@@ -36,12 +38,18 @@ const Alert = ({
       <ModalBg ref={outside} onClick={modalCloseDelegate} />
       <ModalWrapper ref={inside}>
         <CloseButton onClick={modalCloseDelegate} />
-        <Title>{title}</Title>
-        <Description>{dialog}</Description>
-        <ButtonWrapper>
-          <NoBtn onClick={() => modalClickNo()}>취소</NoBtn>
-          <YesBtn onClick={() => modalClickYes()}>확인</YesBtn>
-        </ButtonWrapper>
+        {children ? (
+          <Children />
+        ) : (
+          <>
+            <Title>{title}</Title>
+            <Description>{dialog}</Description>
+            <ButtonWrapper>
+              <NoBtn onClick={() => modalClickNo()}>취소</NoBtn>
+              <YesBtn onClick={() => modalClickYes()}>확인</YesBtn>
+            </ButtonWrapper>
+          </>
+        )}
       </ModalWrapper>
     </>
   );
@@ -97,13 +105,13 @@ const CloseButton = styled(OutButton)`
   /* 아이폰 SE UI  */
   @media screen and (max-width: 375px) {
     width: 8%;
-    margin-top: 6%;
+    margin-top: 6px;
     margin-left: 80%;
   }
 
   @media screen and (max-width: 599px) and (min-width: 376px) {
     margin-left: 78%;
-    margin-top: 0;
+    margin-top: 8px;
   }
 `;
 
@@ -167,6 +175,7 @@ const YesBtn = styled.button`
   align-items: center;
 
   font-size: 22px;
+  color: #424242;
 
   /* 아이폰 SE UI  */
   @media screen and (max-width: 375px) {
@@ -193,6 +202,7 @@ const NoBtn = styled.button`
   justify-content: center;
   align-items: center;
 
+  color: #424242;
   font-size: 22px;
 
   /* 아이폰 SE UI  */
@@ -209,4 +219,4 @@ const NoBtn = styled.button`
   }
 `;
 
-export default Alert;
+export default Modal;

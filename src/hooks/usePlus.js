@@ -6,7 +6,7 @@ const usePlus = (sort, id, itemName) => {
   const queryClient = useQueryClient();
   return useMutation(
     () => {
-      addItem(id, itemName);
+      return addItem(id, itemName);
     },
     {
       onSuccess: () => {
