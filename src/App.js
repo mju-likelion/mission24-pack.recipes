@@ -61,6 +61,7 @@ const App = () => {
           closeButton={false}
           limit={1}
         />
+
         <Footer />
       </ThemeProvider>
     </QueryClientProvider>
@@ -84,6 +85,7 @@ const StyledToastContainer = styled(ToastContainer)`
     font-size: 25px;
     line-height: 30px;
     margin-bottom: 80px;
+
     @media screen and (max-width: 599px) and (min-width: 375px) {
       font-size: 18px;
       width: 250px;

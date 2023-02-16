@@ -1,13 +1,15 @@
+import { Children } from 'react';
 import { useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as OutButton } from '../images/outButton.svg';
 
-const Alert = ({
+const Modal = ({
   title,
   dialog,
   modalCloseDelegate,
   onYesHandler,
   onNoHandler,
+  children,
 }) => {
   // 리스트 정보
 
@@ -36,12 +38,18 @@ const Alert = ({
       <ModalBg ref={outside} onClick={modalCloseDelegate} />
       <ModalWrapper ref={inside}>
         <CloseButton onClick={modalCloseDelegate} />
-        <Title>{title}</Title>
-        <Description>{dialog}</Description>
-        <ButtonWrapper>
-          <NoBtn onClick={() => modalClickNo()}>취소</NoBtn>
-          <YesBtn onClick={() => modalClickYes()}>확인</YesBtn>
-        </ButtonWrapper>
+        {children ? (
+          <Children />
+        ) : (
+          <>
+            <Title>{title}</Title>
+            <Description>{dialog}</Description>
+            <ButtonWrapper>
+              <NoBtn onClick={() => modalClickNo()}>취소</NoBtn>
+              <YesBtn onClick={() => modalClickYes()}>확인</YesBtn>
+            </ButtonWrapper>
+          </>
+        )}
       </ModalWrapper>
     </>
   );
@@ -211,4 +219,4 @@ const NoBtn = styled.button`
   }
 `;
 
-export default Alert;
+export default Modal;
